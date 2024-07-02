@@ -35,12 +35,6 @@ export default function Login({ navigation }: { navigation: NavigationProp<any> 
 }
 
 const styles = StyleSheet.create({
-    body: {
-        paddingTop: 25,
-        paddingHorizontal: 20,
-        height: '100%',
-        paddingBottom: 20
-    },
     title: {
         fontSize: 34,
         fontWeight: '900',
