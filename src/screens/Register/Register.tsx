@@ -33,12 +33,6 @@ export default function Register({ navigation }: { navigation: NavigationProp<an
 }
 
 const styles = StyleSheet.create({
-    body: {
-        paddingTop: 25,
-        paddingHorizontal: 20,
-        height: '100%',
-        paddingBottom: 20
-    },
     title: {
         fontSize: 34,
         fontWeight: '900',

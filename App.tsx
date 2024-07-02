@@ -6,6 +6,7 @@ import Login from 'src/screens/Login/Login';
 import Register from 'src/screens/Register/Register';
 import { Colors } from 'src/models/Colors/Colors';
 import Principal from 'src/screens/Principal/Principal';
+import PendingDeliveries from 'src/screens/PendingDeliveries/PendingDeliveries';
 
 function Home({ navigation }) {
   return (
@@ -24,6 +25,13 @@ function Home({ navigation }) {
         title="Principal"
         onPress={() => navigation.navigate('Principal')}
       />
+
+      <Button
+        title="Entregas pendientes"
+        onPress={() => navigation.navigate('PendingDeliveries')}
+      />
+
+
 
     </View>
   );
@@ -62,6 +70,12 @@ function App() {
           component={Principal}
           options={{
             headerShown: false
+          }} />
+        <Stack.Screen
+          name="PendingDeliveries"
+          component={PendingDeliveries}
+          options={{
+            title: 'Entregas Pendientes'
           }} />
 
       </Stack.Navigator>

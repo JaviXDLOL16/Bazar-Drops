@@ -11,7 +11,7 @@ const ScreenContainer: React.FC<ScreenContainerProps> = ({ children, style }) =>
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar />
-            <View style={style}>
+            <View style={[styles.body, style]}>
                 {children}
             </View>
         </SafeAreaView>
@@ -21,8 +21,12 @@ const ScreenContainer: React.FC<ScreenContainerProps> = ({ children, style }) =>
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.Dark
+        backgroundColor: Colors.Dark,
     },
+    body: {
+        paddingHorizontal: 20,
+        paddingTop: 25,
+    }
 });
 
 export default ScreenContainer;
