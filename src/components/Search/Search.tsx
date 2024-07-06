@@ -4,9 +4,9 @@ import { Colors } from 'src/models/Colors/Colors';
 import { Ionicons } from '@expo/vector-icons';
 
 
-export default function Search() {
+export default function Search({ style }) {
     return (
-        <View style={styles.searchContainer}>
+        <View style={[styles.searchContainer, style]}>
             <Ionicons name="search" size={24} color="white" />
             <TextInput style={styles.searchInput} placeholderTextColor="#888" />
         </View>
@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: Colors.Dark1,
         borderRadius: 30,
-        marginBottom: 20,
     },
     searchInput: {
         flex: 1,

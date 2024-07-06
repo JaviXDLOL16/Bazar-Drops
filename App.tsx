@@ -7,6 +7,7 @@ import Register from 'src/screens/Register/Register';
 import { Colors } from 'src/models/Colors/Colors';
 import Principal from 'src/screens/Principal/Principal';
 import PendingDeliveries from 'src/screens/PendingDeliveries/PendingDeliveries';
+import Policies from 'src/screens/Policies/Policies';
 
 function Home({ navigation }) {
   return (
@@ -29,6 +30,10 @@ function Home({ navigation }) {
       <Button
         title="Entregas pendientes"
         onPress={() => navigation.navigate('PendingDeliveries')}
+      />
+      <Button
+        title="Policies"
+        onPress={() => navigation.navigate('Policies')}
       />
 
 
@@ -76,6 +81,12 @@ function App() {
           component={PendingDeliveries}
           options={{
             title: 'Entregas Pendientes'
+          }} />
+        <Stack.Screen
+          name="Policies"
+          component={Policies}
+          options={{
+            title: 'Politicas'
           }} />
 
       </Stack.Navigator>
