@@ -1,59 +1,34 @@
-import React from "react";
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    FlatList,
-    Image,
-    StyleSheet,
-    TextInput,
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { NavigationProp } from "@react-navigation/native";
-import ScreenContainer from "src/components/layout/ScreenContainer";
-import { Colors } from "src/models/Colors/Colors";
-import Search from "src/components/Search/Search";
-import Filter from "src/components/Filter/Filter";
+import React from 'react';
+import { View, TouchableOpacity, FlatList, Image, StyleSheet, TextInput } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { NavigationProp } from '@react-navigation/native';
+import ScreenContainer from 'src/components/layout/ScreenContainer';
+import Search from 'src/components/Search/Search';
+import Filter from 'src/components/Filter/Filter';
+import Text from 'src/components/Texts/Text';
+import deliveryCard from './components/deliveryCard';
+import { Colors } from 'src/models/Colors/Colors';
 
 const deliveries = [
     {
-        id: "1",
-        date: "Para Domingo 01 de Septiembre 2024",
-        time: "12:30",
-        price: "$270",
-        contact: "961 242 8401",
-        image: "", // Cambia esto a la ruta correcta de tu imagen
+        id: '1',
+        date: new Date(2024, 8, 1),
+        time: '12:30',
+        price: '$270',
+        contact: '961 242 8401',
+        image: '', // Cambia esto a la ruta correcta de tu imagen
     },
     {
-        id: "2",
-        date: "Para Lunes 02 de Septiembre 2024",
-        time: "16:20",
-        price: "$180",
-        contact: "961 242 8401",
-        image: "", // Cambia esto a la ruta correcta de tu imagen
+        id: '2',
+        date: new Date(2024, 8, 2),
+        time: '16:20',
+        price: '$180',
+        contact: '961 242 8401',
+        image: '', // Cambia esto a la ruta correcta de tu imagen
     },
 ];
 
-export default function PendingDeliveries({
-    navigation,
-}: {
-    navigation: NavigationProp<any>;
-}) {
-    const renderItem = ({ item }) => (
-        <View style={styles.itemContainer}>
-            <Image source={item.image} style={styles.image} />
-            <View style={styles.detailsContainer}>
-                <Text style={styles.dateText}>{item.date}</Text>
-                <Text style={styles.smallText}>Por: Raúl Espada</Text>
-                <Text style={styles.smallText}>{item.contact}</Text>
-                <Text style={styles.smallText}>Selecciona para ver detalles</Text>
-            </View>
-            <View style={styles.timeContainer}>
-                <Text style={styles.timeText}>{item.time}</Text>
-                <Text style={styles.priceText}>{item.price}</Text>
-            </View>
-        </View>
-    );
+export default function PendingDeliveries({ navigation }: { navigation: NavigationProp<any> }) {
 
     return (
         <ScreenContainer>
@@ -68,8 +43,8 @@ export default function PendingDeliveries({
 
             <FlatList
                 data={deliveries}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id}
+                renderItem={deliveryCard}
+                keyExtractor={item => item.id}
             />
             <TouchableOpacity style={styles.addButton}>
                 <Text style={styles.addButtonText}>Agregar nueva entrega</Text>
@@ -101,51 +76,21 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         borderRadius: 10,
+        marginBottom: 20,
     },
     sortButton: {
         flexDirection: "row",
         alignItems: "center",
-    },
-    itemContainer: {
-        flexDirection: "row",
-        padding: 10,
-        margin: 10,
-        backgroundColor: "#444",
-        borderRadius: 10,
-    },
-    image: {
-        width: 60,
-        height: 60,
-        borderRadius: 10,
-    },
-    detailsContainer: {
-        flex: 1,
-        marginLeft: 10,
-    },
-    dateText: {
-        color: "white",
-        fontWeight: "bold",
-    },
-    smallText: {
-        color: "gray",
-    },
-    timeContainer: {
-        alignItems: "flex-end",
-    },
-    timeText: {
-        color: "white",
-    },
-    priceText: {
-        color: "#FFD700",
     },
     addButton: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
         padding: 15,
-        margin: 10,
-        backgroundColor: "#0056D2",
+        backgroundColor: Colors.Blue2,
         borderRadius: 10,
+        marginHorizontal: 'auto',
+        width: '80%',
     },
     addButtonText: {
         color: "white",
