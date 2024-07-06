@@ -1,6 +1,3 @@
-
-
-
 import React from 'react';
 import { View, TouchableOpacity, FlatList, Image, StyleSheet, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -35,14 +32,13 @@ export default function PendingDeliveries({ navigation }: { navigation: Navigati
 
     return (
         <ScreenContainer>
-
-            <Search />
+            <Search style={styles.search} />
 
             <View style={styles.filterContainer}>
-                <Filter title='Incluir vendidos' icon={'checkmark-circle'} />
-                <Filter title='Hoy' />
-                <Filter title='Esta semana' />
-                <Filter icon={'arrow-down'} />
+                <Filter title="Incluir vendidos" icon={"checkmark-circle"} />
+                <Filter title="Hoy" />
+                <Filter title="Esta semana" />
+                <Filter icon={"arrow-down"} />
             </View>
 
             <FlatList
@@ -56,37 +52,40 @@ export default function PendingDeliveries({ navigation }: { navigation: Navigati
             </TouchableOpacity>
         </ScreenContainer>
     );
-};
+}
 
 const styles = StyleSheet.create({
     header: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: "row",
+        alignItems: "center",
         padding: 15,
-        backgroundColor: '#000',
+        backgroundColor: "#000",
+    },
+
+    search: {
+        marginBottom: 20,
     },
     headerText: {
-        color: 'white',
+        color: "white",
         fontSize: 20,
-        fontWeight: 'bold',
+        fontWeight: "bold",
         marginLeft: 10,
     },
 
     filterContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
+        flexDirection: "row",
+        justifyContent: "space-around",
         borderRadius: 10,
         marginBottom: 20,
     },
     sortButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: "row",
+        alignItems: "center",
     },
-
     addButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
         padding: 15,
         backgroundColor: Colors.Blue2,
         borderRadius: 10,
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
         width: '80%',
     },
     addButtonText: {
-        color: 'white',
+        color: "white",
         marginRight: 10,
     },
 });
