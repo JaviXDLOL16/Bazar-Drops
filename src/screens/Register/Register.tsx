@@ -16,14 +16,12 @@ export default function Register({ navigation }: { navigation: NavigationProp<an
                 Registrarse
             </Text>
 
-
             <Input title='Nombre' requeriment='*Obligatorio' placeholder='Ingresa tu nombre' secureTextEntry />
             <Input title='Correo' requeriment='*Obligatorio' placeholder='Correo electronico' keyboardType='email-address' />
             <Input title='Contraseña' requeriment='*Obligatorio' placeholder='*****' secureTextEntry />
             <Input title='Contraseña' requeriment='*Obligatorio' placeholder='*****' secureTextEntry />
 
             <Text style={styles.notRegistedText}>Tipo de cuenta</Text>
-
 
             <Button title='Aceptar' onPress={() => { navigation.goBack() }} style={styles.button} />
 
