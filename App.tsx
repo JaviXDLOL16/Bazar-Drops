@@ -1,15 +1,20 @@
 import * as React from 'react';
 import { View, Text, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NativeStackScreenProps, createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from 'src/screens/Login/Login';
 import Register from 'src/screens/Register/Register';
 import { Colors } from 'src/models/Colors/Colors';
 import Principal from 'src/screens/Principal/Principal';
 import PendingDeliveries from 'src/screens/PendingDeliveries/PendingDeliveries';
 import Policies from 'src/screens/Policies/Policies';
+import SalesPeriods from 'src/screens/SalesPeriods/SalesPeriods';
 
-function Home({ navigation }) {
+
+type Props = NativeStackScreenProps<stackParamList, 'Home'>
+
+
+function Home({ navigation }: Props) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Home Screen</Text>
@@ -35,6 +40,12 @@ function Home({ navigation }) {
         title="Policies"
         onPress={() => navigation.navigate('Policies')}
       />
+      <Button
+        title="Periodos de venta"
+        onPress={() => navigation.navigate('SalesPeriods')}
+      />
+
+
 
 
 
@@ -42,7 +53,17 @@ function Home({ navigation }) {
   );
 }
 
-const Stack = createNativeStackNavigator();
+export type stackParamList = {
+  Home: undefined;
+  Login: undefined;
+  Register: undefined;
+  Principal: undefined;
+  PendingDeliveries: undefined;
+  Policies: undefined;
+  SalesPeriods: undefined;
+};
+
+const Stack = createNativeStackNavigator<stackParamList>();
 
 function App() {
   return (
@@ -54,7 +75,9 @@ function App() {
             headerStyle: { backgroundColor: Colors.Dark },
             headerTitleStyle: { color: Colors.White, fontSize: 24, fontWeight: '900' },
             headerBackTitleVisible: false,
-            contentStyle: { borderTopWidth: 2, borderTopColor: '#3F3F46' }
+            contentStyle: { borderTopWidth: 2, borderTopColor: '#3F3F46' },
+            headerBackImageSource: require('src/assets/images/back.png'),
+            headerTintColor: Colors.White
           }
         }
       >
@@ -87,6 +110,12 @@ function App() {
           component={Policies}
           options={{
             title: 'Politicas'
+          }} />
+        <Stack.Screen
+          name="SalesPeriods"
+          component={SalesPeriods}
+          options={{
+            title: 'Periodos de venta'
           }} />
 
       </Stack.Navigator>
