@@ -1,0 +1,1 @@
+export { default as backImage } from './images/headerBackImage.png';

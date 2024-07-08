@@ -1,7 +1,21 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, StyleSheet, ViewProps, ViewStyle } from 'react-native'
 import React from 'react'
 import { Colors } from 'src/models/Colors/Colors'
 import { Ionicons } from '@expo/vector-icons';
+import Text from '../Texts/Text';
+
+interface FilterContainerProps extends ViewProps {
+    children: React.ReactNode,
+    style?: ViewStyle
+}
+
+export function FilterContainer({ children, style }: FilterContainerProps) {
+    return (
+        <View style={[styles.filterContainer, style]}>
+            {children}
+        </View>
+    )
+}
 
 
 interface FilterProps {
@@ -13,7 +27,8 @@ interface FilterProps {
     color?: string
 }
 
-export default function Filter({ title, icon, width, fontSize = 11, iconSize = 24, color = 'white' }: FilterProps) {
+
+export function Filter({ title, icon, width, fontSize = 11, iconSize = 24, color = 'white' }: FilterProps) {
     return (
         <TouchableOpacity style={[styles.filterButton, { width: width }]}>
             {title && <Text style={[styles.filterText, { fontSize: fontSize }]}>{title}</Text>}
@@ -23,7 +38,11 @@ export default function Filter({ title, icon, width, fontSize = 11, iconSize = 2
 }
 
 const styles = StyleSheet.create({
-
+    filterContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 10,
+    },
     filterButton: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -32,7 +51,6 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     filterText: {
-        color: 'white',
         marginRight: 5,
         fontWeight: 'bold',
     },

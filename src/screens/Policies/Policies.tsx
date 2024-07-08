@@ -1,9 +1,14 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { stackParamList } from 'App';
 import React from 'react'
 import { Text, ScrollView } from 'react-native';
 import { } from 'react-native-gesture-handler';
 import ScreenContainer from "src/components/layout/ScreenContainer";
 
-export default function Policies() {
+type Props = NativeStackScreenProps<stackParamList, 'Policies'>
+
+
+export default function Policies({ navigation }: Props) {
     return (
         <ScreenContainer>
             <ScrollView>

@@ -1,18 +1,21 @@
 import { View, Image, StyleSheet } from 'react-native'
 import React from 'react'
-import { NavigationProp } from '@react-navigation/native'
 import ScreenContainer from 'src/components/layout/ScreenContainer'
 import Input from 'src/components/form/Input'
-import Button from 'src/components/form/Button'
 import { Colors } from 'src/models/Colors/Colors'
 import Text from 'src/components/Texts/Text'
+import { stackParamList } from 'App'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import Button from 'src/components/Buttons/Button'
 
-export default function Register({ navigation }: { navigation: NavigationProp<any> }) {
+type Props = NativeStackScreenProps<stackParamList, 'Register'>
+
+export default function Register({ navigation }: Props) {
     return (
-        <ScreenContainer style={styles.body}>
+        <ScreenContainer>
             <Image style={styles.image} source={require('src/assets/images/logo_horizontal.png')} />
 
-            <Text style={styles.title}>
+            <Text style={styles.title} fontWeight='black'>
                 Registrarse
             </Text>
 
@@ -23,7 +26,12 @@ export default function Register({ navigation }: { navigation: NavigationProp<an
 
             <Text style={styles.notRegistedText}>Tipo de cuenta</Text>
 
-            <Button title='Aceptar' onPress={() => { navigation.goBack() }} style={styles.button} />
+            <Button
+                title='Aceptar'
+                onPress={() => { navigation.goBack() }}
+                shadow={true}
+                size='ExtraLarge'
+            />
 
 
         </ScreenContainer>
