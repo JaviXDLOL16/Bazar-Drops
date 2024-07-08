@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, Animated } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { Ionicons } from "@expo/vector-icons";
 import Collapsible from 'react-native-collapsible';
 import { Colors } from 'src/models/Colors/Colors';
@@ -10,29 +10,10 @@ interface EditableSectionProps {
 
 const EditableSection: React.FC<EditableSectionProps> = ({ children }) => {
     const [expanded, setExpanded] = useState(false);
-    const [animation] = useState(new Animated.Value(0));
 
     const toggleExpand = () => {
-        if (expanded) {
-            Animated.timing(animation, {
-                toValue: 0,
-                duration: 300,
-                useNativeDriver: false,
-            }).start();
-        } else {
-            Animated.timing(animation, {
-                toValue: 1,
-                duration: 300,
-                useNativeDriver: false,
-            }).start();
-        }
         setExpanded(!expanded);
     };
-
-    const height = animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 200], // Cambia 200 al tamaño que necesites
-    });
 
     return (
         <>
@@ -43,9 +24,11 @@ const EditableSection: React.FC<EditableSectionProps> = ({ children }) => {
                 </View>
             </TouchableOpacity>
 
-            <Animated.View style={{ ...styles.expandedContent, height }}>
-                {expanded && children}
-            </Animated.View>
+            <Collapsible collapsed={!expanded}  >
+                <View style={styles.expandedContent}>
+                    {children}
+                </View>
+            </Collapsible>
         </>
     );
 };
@@ -62,11 +45,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     expandedContent: {
-        overflow: 'hidden',
-        backgroundColor: Colors.Dark2,
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
+        paddingHorizontal: 20,
+        paddingTop: 15,
     },
 });

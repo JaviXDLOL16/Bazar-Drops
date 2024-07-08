@@ -28,6 +28,11 @@ export default function Information() {
                     <Input title='Celular' placeholder='xxx-xxx-xxxx' requeriment='' />
                     <Input title='Contraseña' placeholder='Escribe la nueva contraseña' requeriment='' />
                 </EditableSection>
+                <EditableSection>
+                    <Input title='Nombre de usuario' placeholder='Nombre' requeriment='' />
+                    <Input title='Celular' placeholder='xxx-xxx-xxxx' requeriment='' />
+                    <Input title='Contraseña' placeholder='Escribe la nueva contraseña' requeriment='' />
+                </EditableSection>
             </View>
         </ScreenContainer>
     );
