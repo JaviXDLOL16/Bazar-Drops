@@ -8,6 +8,7 @@ import { Colors } from 'src/models/Colors/Colors';
 import Principal from 'src/screens/Principal/Principal';
 import PendingDeliveries from 'src/screens/PendingDeliveries/PendingDeliveries';
 import Policies from 'src/screens/Policies/Policies';
+import Information from 'src/screens/Information/Information';
 
 function Home({ navigation }) {
   return (
@@ -35,6 +36,11 @@ function Home({ navigation }) {
         title="Policies"
         onPress={() => navigation.navigate('Policies')}
       />
+      <Button
+        title="Information"
+        onPress={() => navigation.navigate('Information')}
+      />
+
 
 
 
@@ -88,7 +94,12 @@ function App() {
           options={{
             title: 'Politicas'
           }} />
-
+        <Stack.Screen
+          name="Information"
+          component={Information}
+          options={{
+            title: 'Informacion'
+          }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

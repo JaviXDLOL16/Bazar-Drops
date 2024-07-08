@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Colors } from 'src/models/Colors/Colors';
-import { CarouselCardsItems } from './CarouselCardsItems ';
+import { CarouselCardsItems } from './CarouseItems ';
 import Animated, { useSharedValue, useAnimatedScrollHandler } from 'react-native-reanimated';
 
 type CarouselCardsProps = {
@@ -13,7 +12,7 @@ const { width: windowWidth } = Dimensions.get('window');
 const ListItemWidth = windowWidth / 3.75;
 
 const CarouselCards: React.FC<CarouselCardsProps> = ({ data }) => {
-    const scrollX = useSharedValue(ListItemWidth);
+    const scrollX = useSharedValue(0); // Asegura que scrollX inicie desde el principio
 
     const scrollHandler = useAnimatedScrollHandler((event) => {
         scrollX.value = event.contentOffset.x;
@@ -27,9 +26,9 @@ const CarouselCards: React.FC<CarouselCardsProps> = ({ data }) => {
                     scrollEventThrottle={16}
                     onScroll={scrollHandler}
                     data={data}
-                    keyExtractor={(_, index: any) => index.toString()}
+                    keyExtractor={(_, index) => index.toString()}
                     horizontal
-                    snapToInterval={ListItemWidth} // Hace que las tarjetas se alineen al centro
+                    snapToInterval={ListItemWidth}
                     decelerationRate="fast"
                     showsHorizontalScrollIndicator={false}
                     renderItem={({ item, index }) => {
@@ -79,6 +78,7 @@ const styles = StyleSheet.create({
     },
     textSell: {
         fontSize: 16,
-        color: 'white',
+        fontWeight: '700',
+        color: Colors.Blue,
     },
 });

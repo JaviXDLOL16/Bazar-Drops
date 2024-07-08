@@ -1796,6 +1796,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/blur@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "@react-native-community/blur@npm:4.4.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 907adeba48ce148f7ba55791011e2cb4ede5c7b6a11497cc9631ad345e865a817dae23f066a39b75ac5fd15d4cbc1f03f4b2d2f0fd8c6a6084a11649c842698a
+  languageName: node
+  linkType: hard
+
 "@react-native-community/cli-clean@npm:13.6.8":
   version: 13.6.8
   resolution: "@react-native-community/cli-clean@npm:13.6.8"
@@ -2889,10 +2899,12 @@ __metadata:
   resolution: "bazar-drops@workspace:."
   dependencies:
     "@babel/core": ^7.20.0
+    "@react-native-community/blur": ^4.4.0
     "@react-navigation/native": ^6.1.17
     "@react-navigation/native-stack": ^6.9.26
     "@types/react": ~18.2.45
     expo: ~51.0.17
+    expo-blur: ~13.0.2
     expo-image: ~1.12.12
     expo-status-bar: ~1.12.1
     nativewind: ^4.0.1
@@ -4169,6 +4181,15 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: abf6afee29db1df356008b2260ecfd37eafdeeda989deeaf546d6c6857f82f71efe6d2f6e348d5bf0f077325f9ce2c8dad006ad5d8d2df35cdd9bf3dc15e714a
+  languageName: node
+  linkType: hard
+
+"expo-blur@npm:~13.0.2":
+  version: 13.0.2
+  resolution: "expo-blur@npm:13.0.2"
+  peerDependencies:
+    expo: "*"
+  checksum: 66badeee2002a6aed63b7e122bcd9efa514bf954a28844649a1312d3dca2c37f96cf075938850be7e56904c884c5165ae9606d553458cf8a6a9cf26f148be2b4
   languageName: node
   linkType: hard
 
