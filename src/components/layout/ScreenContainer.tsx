@@ -3,7 +3,7 @@ import { SafeAreaView, StatusBar, StyleSheet, View, ViewStyle } from 'react-nati
 import { Colors } from 'src/models/Colors/Colors';
 
 interface ScreenContainerProps {
-    children: ReactNode;
+    children?: ReactNode;
     style?: ViewStyle | ViewStyle[];
 }
 

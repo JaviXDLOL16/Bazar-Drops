@@ -8,6 +8,8 @@ import Filter from 'src/components/Filter/Filter';
 import Text from 'src/components/Texts/Text';
 import deliveryCard from './components/deliveryCard';
 import { Colors } from 'src/models/Colors/Colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { stackParamList } from 'App';
 
 const deliveries = [
     {
@@ -28,7 +30,9 @@ const deliveries = [
     },
 ];
 
-export default function PendingDeliveries({ navigation }: { navigation: NavigationProp<any> }) {
+type Props = NativeStackScreenProps<stackParamList, 'PendingDeliveries'>
+
+export default function PendingDeliveries({ navigation }: Props) {
 
     return (
         <ScreenContainer>

@@ -6,7 +6,7 @@ interface TextCustomProps extends TextPropsNative {
   children: React.ReactNode;
 }
 
-const Text: React.FC<TextCustomProps> = ({ style, children, ...rest }) => {
+export default function Text({ style, children, ...rest }: TextCustomProps) {
   return (
     <TextNative style={[styles.defaultStyle, style]} {...rest}>
       {children}
@@ -21,4 +21,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Text;

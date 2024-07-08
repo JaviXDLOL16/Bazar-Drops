@@ -3,13 +3,16 @@ import { Image, StyleSheet } from 'react-native'
 import Text from 'src/components/Texts/Text'
 import Input from 'src/components/form/Input'
 import ScreenContainer from 'src/components/layout/ScreenContainer'
-import { NavigationProp } from '@react-navigation/native';
 import { Colors } from 'src/models/Colors/Colors'
-import Button from 'src/components/form/Button'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { stackParamList } from 'App'
+import Button from 'src/components/Buttons/Button'
 
-export default function Login({ navigation }: { navigation: NavigationProp<any> }) {
+type Props = NativeStackScreenProps<stackParamList, 'Login'>
+
+export default function Login({ navigation }: Props) {
     return (
-        <ScreenContainer style={styles.body}>
+        <ScreenContainer>
             <Image style={styles.image} source={require('src/assets/images/logo_horizontal.png')} />
 
             <Text style={styles.title}>
@@ -27,7 +30,12 @@ export default function Login({ navigation }: { navigation: NavigationProp<any> 
 
             <Text style={styles.registerLink} suppressHighlighting={true} onPress={() => { navigation.navigate('Register') }}>Presiona Aqui</Text>
 
-            <Button title='Aceptar' onPress={() => { navigation.navigate('Principal') }} style={styles.button} />
+            <Button
+                title='Aceptar'
+                onPress={() => { navigation.navigate('Principal') }}
+                shadow={true}
+                size='ExtraLarge'
+            />
 
 
         </ScreenContainer>
@@ -59,12 +67,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600',
         color: Colors.Blue3,
-    },
-    button: {
-        backgroundColor: Colors.Blue,
-        padding: 15,
-        marginVertical: 10,
-        width: '80%',
     },
     image: {
         height: 125,
