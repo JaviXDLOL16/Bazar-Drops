@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationProp } from '@react-navigation/native';
 import ScreenContainer from 'src/components/layout/ScreenContainer';
 import Search from 'src/components/Search/Search';
-import Filter from 'src/components/Filter/Filter';
+import { Filter, FilterContainer } from 'src/components/Filter/Filter';
 import Text from 'src/components/Texts/Text';
 import deliveryCard from './components/deliveryCard';
 import { Colors } from 'src/models/Colors/Colors';
@@ -38,12 +38,12 @@ export default function PendingDeliveries({ navigation }: Props) {
         <ScreenContainer>
             <Search style={styles.search} />
 
-            <View style={styles.filterContainer}>
+            <FilterContainer>
                 <Filter title="Incluir vendidos" icon={"checkmark-circle"} />
                 <Filter title="Hoy" />
                 <Filter title="Esta semana" />
                 <Filter icon={"arrow-down"} />
-            </View>
+            </FilterContainer>
 
             <FlatList
                 data={deliveries}
@@ -76,12 +76,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
 
-    filterContainer: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        borderRadius: 10,
-        marginBottom: 20,
-    },
+
     sortButton: {
         flexDirection: "row",
         alignItems: "center",

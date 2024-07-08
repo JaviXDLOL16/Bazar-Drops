@@ -15,7 +15,7 @@ export default function Register({ navigation }: Props) {
         <ScreenContainer>
             <Image style={styles.image} source={require('src/assets/images/logo_horizontal.png')} />
 
-            <Text style={styles.title}>
+            <Text style={styles.title} fontWeight='black'>
                 Registrarse
             </Text>
 
