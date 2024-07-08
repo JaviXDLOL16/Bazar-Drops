@@ -14,8 +14,8 @@ interface InputProps extends TextInputPropsNative {
 const Input: React.FC<InputProps> = ({ placeholder, title, requeriment = 'Opcional', value, onChangeText, ...rest }) => {
     return (<View style={styles.container}>
         <View style={styles.headContainer}>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.requerimentText}>{requeriment}</Text>
+            <Text style={styles.title} fontWeight='extrabold' >{title}</Text>
+            <Text style={styles.requerimentText} fontWeight='light'>{requeriment}</Text>
         </View>
         <View style={[styles.inputContainer, false && { borderColor: Colors.InputError }]}>
 
@@ -47,12 +47,11 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     input: {
-        fontSize: 18,
+        fontSize: 20,
         color: '#fff',
     },
     title: {
-        fontWeight: '600',
-        fontSize: 20
+        fontSize: 20,
     },
     requerimentText: {
         fontSize: 13,

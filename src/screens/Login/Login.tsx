@@ -15,20 +15,20 @@ export default function Login({ navigation }: Props) {
         <ScreenContainer>
             <Image style={styles.image} source={require('src/assets/images/logo_horizontal.png')} />
 
-            <Text style={styles.title}>
+            <Text style={styles.title} fontWeight='black'>
                 Iniciar sesión
             </Text>
 
-            <Text style={styles.subtitle}>
+            <Text style={styles.subtitle} fontWeight='bold'>
                 Para accerder es necesario colocar tu correo electrónico
             </Text>
 
             <Input title='Correo' requeriment='*Obligatorio' placeholder='Correo electronico' keyboardType='email-address' />
             <Input title='Contraseña' requeriment='*Obligatorio' placeholder='*****' secureTextEntry />
 
-            <Text style={styles.notRegistedText}>¿Aun no te haz registrado?</Text>
+            <Text style={styles.notRegistedText} fontWeight='semibold'>¿Aun no te haz registrado?</Text>
 
-            <Text style={styles.registerLink} suppressHighlighting={true} onPress={() => { navigation.navigate('Register') }}>Presiona Aqui</Text>
+            <Text style={styles.registerLink} fontWeight='bold' suppressHighlighting={true} onPress={() => { navigation.navigate('Register') }}>Presiona Aqui</Text>
 
             <Button
                 title='Aceptar'
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 34,
         fontWeight: '900',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     subtitle: {
         textAlign: 'center',
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     },
     notRegistedText: {
         textAlign: 'center',
-        fontSize: 19,
+        fontSize: 20,
         fontWeight: '600',
         marginTop: 12,
         marginBottom: 22
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600',
         color: Colors.Blue3,
+        marginBottom: 15
     },
     image: {
         height: 125,
