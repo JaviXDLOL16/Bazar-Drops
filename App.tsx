@@ -9,6 +9,7 @@ import Principal from 'src/screens/Principal/Principal';
 import PendingDeliveries from 'src/screens/PendingDeliveries/PendingDeliveries';
 import Policies from 'src/screens/Policies/Policies';
 import SalesPeriods from 'src/screens/SalesPeriods/SalesPeriods';
+import Information from 'src/screens/Information/Information';
 
 
 type Props = NativeStackScreenProps<stackParamList, 'Home'>
@@ -45,6 +46,10 @@ function Home({ navigation }: Props) {
         onPress={() => navigation.navigate('SalesPeriods')}
       />
 
+      <Button
+        title="Information"
+        onPress={() => navigation.navigate('Information')}
+      />
 
 
 
@@ -117,7 +122,12 @@ function App() {
           options={{
             title: 'Periodos de venta'
           }} />
-
+        <Stack.Screen
+          name="Information"
+          component={Information}
+          options={{
+            title: 'Informacion'
+          }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
