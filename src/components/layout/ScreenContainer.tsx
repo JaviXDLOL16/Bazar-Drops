@@ -11,7 +11,7 @@ interface ScreenContainerProps {
 }
 
 
-const ScreenContainer: React.FC<ScreenContainerProps> = ({ children, style, scrollEnable = true }) => {
+const ScreenContainer: React.FC<ScreenContainerProps> = ({ children, style, scrollEnable = false }) => {
     const insets = useSafeAreaInsets();
     return (
         <View
