@@ -28,10 +28,10 @@ interface FilterProps {
 }
 
 
-export function Filter({ title, icon, width, fontSize = 11, iconSize = 24, color = 'white' }: FilterProps) {
+export function Filter({ title, icon, width, fontSize = 12, iconSize = 18, color = 'white' }: FilterProps) {
     return (
         <TouchableOpacity style={[styles.filterButton, { width: width }]}>
-            {title && <Text style={[styles.filterText, { fontSize: fontSize }]}>{title}</Text>}
+            {title && <Text fontWeight='bold' style={[styles.filterText, { fontSize: fontSize }]}>{title}</Text>}
             {icon && <Ionicons name={icon} size={iconSize} color={color} />}
         </TouchableOpacity>
     )
@@ -41,18 +41,17 @@ const styles = StyleSheet.create({
     filterContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginVertical: 10,
     },
     filterButton: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 10,
+        height: 35,
+        paddingHorizontal: 10,
         backgroundColor: Colors.Dark1,
         borderRadius: 20,
     },
     filterText: {
-        marginRight: 5,
-        fontWeight: 'bold',
+        paddingHorizontal: 2,
     },
 })
 
