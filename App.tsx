@@ -67,6 +67,7 @@ export type stackParamList = {
   PendingDeliveries: undefined;
   Policies: undefined;
   SalesPeriods: undefined;
+  Information: undefined;
 };
 
 const Stack = createNativeStackNavigator<stackParamList>();
@@ -123,15 +124,15 @@ function App() {
             options={{
               title: 'Periodos de venta'
             }} />
-            <Stack.Screen
-          name="Information"
-          component={Information}
-          options={{
-            title: 'Informacion'
-          }} />
+          <Stack.Screen
+            name="Information"
+            component={Information}
+            options={{
+              title: 'Informacion'
+            }} />
         </Stack.Navigator>
       </NavigationContainer>
-    </SafeAreaProvider>
+    </SafeAreaProvider>)
 }
 
 export default App;
