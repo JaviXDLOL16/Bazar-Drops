@@ -13,7 +13,7 @@ import {
 } from '@expo-google-fonts/mulish';
 
 interface TextCustomProps extends TextPropsNative {
-  style?: TextStyle;
+  style?: TextStyle | (Partial<TextStyle>)[];
   children: React.ReactNode;
   fontWeight?: '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | 'extralight' | 'light' | 'regular' | 'medium' | 'semibold' | 'bold' | 'extrabold' | 'black';
 }

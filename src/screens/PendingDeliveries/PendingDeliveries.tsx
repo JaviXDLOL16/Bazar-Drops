@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity, FlatList, Image, StyleSheet, TextInput } from 'react-native';
+import { TouchableOpacity, FlatList, Image, StyleSheet, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { NavigationProp } from '@react-navigation/native';
 import ScreenContainer from 'src/components/layout/ScreenContainer';
 import Search from 'src/components/Search/Search';
 import { Filter, FilterContainer } from 'src/components/Filter/Filter';
