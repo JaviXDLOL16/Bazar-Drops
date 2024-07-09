@@ -3,8 +3,11 @@ import React from 'react'
 import { Colors } from 'src/models/Colors/Colors';
 import { Ionicons } from '@expo/vector-icons';
 
+type SearchProps = {
+    style?: any
+}
 
-export default function Search({ style }) {
+export default function Search({ style }: SearchProps) {
     return (
         <View style={[styles.searchContainer, style]}>
             <Ionicons name="search" size={24} color="white" />
