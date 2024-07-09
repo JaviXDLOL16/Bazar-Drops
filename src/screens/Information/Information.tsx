@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     },
     contSection: {
         justifyContent: 'flex-end',
-        height: '70%',
+        height: '70.6%',
     },
     textCreateAccount: {
         color: Colors.White,
