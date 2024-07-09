@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, Platform, KeyboardAvoidingView, ViewStyle } from 'react-native';
 import { Ionicons } from "@expo/vector-icons";
 import Collapsible from 'react-native-collapsible';
 import { Colors } from 'src/models/Colors/Colors';
 
 interface EditableSectionProps {
     children: React.ReactNode;
+    title: String
+    style?: ViewStyle | ViewStyle[];
+    styleText?: ViewStyle | ViewStyle[];
+
 }
 
-const EditableSection: React.FC<EditableSectionProps> = ({ children }) => {
+const EditableSection: React.FC<EditableSectionProps> = ({ children, title, style, styleText }) => {
     const [expanded, setExpanded] = useState(false);
 
     const toggleExpand = () => {
@@ -17,27 +21,26 @@ const EditableSection: React.FC<EditableSectionProps> = ({ children }) => {
 
     return (
         <>
-            <TouchableOpacity onPress={toggleExpand} activeOpacity={0.8}>
-                <View style={styles.container}>
-                    <Text style={{ color: 'white', fontSize: 20 }}>Editar datos</Text>
-                    <Ionicons name={expanded ? "chevron-up" : "chevron-down"} size={24} color="white" />
-                </View>
+            <TouchableOpacity onPress={toggleExpand} activeOpacity={0.8} style={[styles.container, style]}>
+                <Text style={[styles.textTitle, styleText]}>{title}</Text>
+                <Ionicons name={expanded ? "chevron-down" : "chevron-up"} size={24} color="white" />
             </TouchableOpacity>
 
-            <Collapsible collapsed={!expanded}  >
-                <View style={styles.expandedContent}>
+            <Collapsible collapsed={!expanded}>
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    style={styles.expandedContent}
+                >
                     {children}
-                </View>
+                </KeyboardAvoidingView>
             </Collapsible>
         </>
     );
 };
 
-export default EditableSection;
-
 const styles = StyleSheet.create({
     container: {
-        height: 33,
+        height: 40,
         alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: Colors.Dark2,
@@ -48,4 +51,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingTop: 15,
     },
+    textTitle: {
+        color: 'white',
+        fontSize: 20,
+    }
 });
+
+export default EditableSection;

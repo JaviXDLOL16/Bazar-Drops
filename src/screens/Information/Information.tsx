@@ -1,39 +1,61 @@
+
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, TextInput } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, Platform, KeyboardAvoidingView } from 'react-native';
 import ScreenContainer from "src/components/layout/ScreenContainer";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from 'src/models/Colors/Colors';
 import EditableSection from '../../components/Modal/EditableSection';
 import Input from 'src/components/form/Input';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function Information() {
 
     return (
-        <ScreenContainer style={{ paddingHorizontal: 0 }}>
-            <View style={styles.containerInformation}>
-                <TouchableOpacity activeOpacity={0.8} style={styles.buttonPerson}>
-                    <Ionicons name="person" size={95} color="white" />
-                    <View style={styles.containerCamera}>
-                        <Ionicons name="camera" size={24} color="white" />
+        <ScreenContainer style={{ paddingHorizontal: 0, height: '100%' }}>
+            <KeyboardAwareScrollView
+                contentContainerStyle={styles.scrollContainer}
+                extraScrollHeight={Platform.OS === "ios" ? 20 : 100}
+                enableOnAndroid={true}
+                keyboardOpeningTime={0}
+                enableAutomaticScroll={Platform.OS === "ios"}
+            >
+                <View style={styles.containerInformation}>
+                    <TouchableOpacity activeOpacity={0.8} style={styles.buttonPerson}>
+                        <Ionicons name="person" size={95} color="white" />
+                        <View style={styles.containerCamera}>
+                            <Ionicons name="camera" size={24} color="white" />
+                        </View>
+                    </TouchableOpacity>
+                    <View style={styles.containerAccount}>
+                        <Text style={styles.textName}>Raul Arroyo</Text>
+                        <Text style={styles.textAccount}>Vendedor</Text>
                     </View>
-                </TouchableOpacity>
-                <View style={styles.containerAccount}>
-                    <Text style={styles.textName}>Raul Arroyo</Text>
-                    <Text style={styles.textAccount}>Vendedor</Text>
                 </View>
-            </View>
-            <View style={styles.contSection}>
-                <EditableSection>
-                    <Input title='Nombre de usuario' placeholder='Nombre' requeriment='' />
-                    <Input title='Celular' placeholder='xxx-xxx-xxxx' requeriment='' />
-                    <Input title='Contraseña' placeholder='Escribe la nueva contraseña' requeriment='' />
-                </EditableSection>
-                <EditableSection>
-                    <Input title='Nombre de usuario' placeholder='Nombre' requeriment='' />
-                    <Input title='Celular' placeholder='xxx-xxx-xxxx' requeriment='' />
-                    <Input title='Contraseña' placeholder='Escribe la nueva contraseña' requeriment='' />
-                </EditableSection>
-            </View>
+                <View style={styles.contSection}>
+                    <EditableSection title={'Editar datos'} style={{ marginTop: 60 }}>
+                        <Input title='Nombre de usuario' placeholder='Nombre' requeriment='' keyboardType='default' />
+                        <Input title='Correo electronico' placeholder='Correo@gmail.com' requeriment='' keyboardType='email-address' />
+                        <Input title='Celular' placeholder='xxx-xxx-xxxx' requeriment='' keyboardType='number-pad' />
+                        <Input title='Contraseña' placeholder='Escribe la nueva contraseña' requeriment='' keyboardType='default' />
+                    </EditableSection>
+                    <EditableSection title={'Preferencias'}>
+                        <TouchableOpacity>
+                            <Text style={styles.textCreateAccount}>Crear cuenta de comprador</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Text style={styles.textLeave}>Cerrar sesión</Text>
+                        </TouchableOpacity>
+                    </EditableSection>
+                    <EditableSection styleText={{ color: Colors.Red }} style={{ backgroundColor: '#1A1414' }} title={'Configuraciones críticas'}>
+                        <TouchableOpacity>
+                            <Text style={styles.textErase}>Borrar todos los registros de venta</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Text style={styles.textDelete}>Eliminar cuenta permanenteme</Text>
+                        </TouchableOpacity>
+                    </EditableSection>
+                </View>
+            </KeyboardAwareScrollView>
         </ScreenContainer>
     );
 }
@@ -46,9 +68,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 10,
-        marginBottom: 25,
+        marginBottom: 30,
         marginHorizontal: 20,
         marginTop: 35,
+
     },
     buttonPerson: {
         backgroundColor: Colors.Gray2,
@@ -81,11 +104,38 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         bottom: 1,
-        right: 10
+        right: 10,
+
+    },
+    scrollContainer: {
+        flexGrow: 1,
     },
     contSection: {
-        height: '60%',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        height: '70%',
+    },
+    textCreateAccount: {
+        color: Colors.White,
+        fontSize: 20,
+        height: 33
 
+    },
+    textLeave: {
+        color: Colors.White,
+        fontSize: 20,
+        fontWeight: '700',
+        height: 33
+    },
+    textErase: {
+        color: Colors.Red,
+        fontSize: 20,
+        height: 33
+    },
+    textDelete: {
+        color: Colors.Red,
+        fontSize: 20,
+        height: 33,
+        marginBottom: 20
     }
+
 });
