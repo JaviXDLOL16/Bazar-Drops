@@ -9,6 +9,7 @@ import Principal from 'src/screens/Principal/Principal';
 import PendingDeliveries from 'src/screens/PendingDeliveries/PendingDeliveries';
 import Policies from 'src/screens/Policies/Policies';
 import SalesPeriods from 'src/screens/SalesPeriods/SalesPeriods';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Information from 'src/screens/Information/Information';
 
 
@@ -72,65 +73,65 @@ const Stack = createNativeStackNavigator<stackParamList>();
 
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName='Home'
-        screenOptions={
-          {
-            headerStyle: { backgroundColor: Colors.Dark },
-            headerTitleStyle: { color: Colors.White, fontSize: 24, fontWeight: '900' },
-            headerBackTitleVisible: false,
-            contentStyle: { borderTopWidth: 2, borderTopColor: '#3F3F46' },
-            headerBackImageSource: require('src/assets/images/back.png'),
-            headerTintColor: Colors.White
+    <SafeAreaProvider >
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName='Home'
+          screenOptions={
+            {
+              headerStyle: { backgroundColor: Colors.Dark },
+              headerTitleStyle: { color: Colors.White, fontSize: 24, fontWeight: '900' },
+              headerBackTitleVisible: false,
+              headerBackImageSource: require('src/assets/images/back.png'),
+              headerTintColor: Colors.White,
+            }
           }
-        }
-      >
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen
-          name="Login"
-          component={Login} options={{
-            title: 'Bazar and Drops'
-          }} />
-        <Stack.Screen
-          name="Register"
-          component={Register}
-          options={{
-            title: 'Bazar and Drops'
-          }} />
-        <Stack.Screen
-          name="Principal"
-          component={Principal}
-          options={{
-            headerShown: false
-          }} />
-        <Stack.Screen
-          name="PendingDeliveries"
-          component={PendingDeliveries}
-          options={{
-            title: 'Entregas Pendientes'
-          }} />
-        <Stack.Screen
-          name="Policies"
-          component={Policies}
-          options={{
-            title: 'Politicas'
-          }} />
-        <Stack.Screen
-          name="SalesPeriods"
-          component={SalesPeriods}
-          options={{
-            title: 'Periodos de venta'
-          }} />
-        <Stack.Screen
+        >
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen
+            name="Login"
+            component={Login} options={{
+              title: 'Bazar and Drops'
+            }} />
+          <Stack.Screen
+            name="Register"
+            component={Register}
+            options={{
+              title: 'Bazar and Drops'
+            }} />
+          <Stack.Screen
+            name="Principal"
+            component={Principal}
+            options={{
+              headerShown: false
+            }} />
+          <Stack.Screen
+            name="PendingDeliveries"
+            component={PendingDeliveries}
+            options={{
+              title: 'Entregas Pendientes'
+            }} />
+          <Stack.Screen
+            name="Policies"
+            component={Policies}
+            options={{
+              title: 'Politicas'
+            }} />
+          <Stack.Screen
+            name="SalesPeriods"
+            component={SalesPeriods}
+            options={{
+              title: 'Periodos de venta'
+            }} />
+            <Stack.Screen
           name="Information"
           component={Information}
           options={{
             title: 'Informacion'
           }} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
 }
 
 export default App;
