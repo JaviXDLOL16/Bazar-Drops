@@ -1,60 +1,46 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, Animated } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, Platform, KeyboardAvoidingView, ViewStyle } from 'react-native';
 import { Ionicons } from "@expo/vector-icons";
 import Collapsible from 'react-native-collapsible';
 import { Colors } from 'src/models/Colors/Colors';
 
 interface EditableSectionProps {
     children: React.ReactNode;
+    title: String
+    style?: ViewStyle | ViewStyle[];
+    styleText?: ViewStyle | ViewStyle[];
+
 }
 
-const EditableSection: React.FC<EditableSectionProps> = ({ children }) => {
+const EditableSection: React.FC<EditableSectionProps> = ({ children, title, style, styleText }) => {
     const [expanded, setExpanded] = useState(false);
-    const [animation] = useState(new Animated.Value(0));
 
     const toggleExpand = () => {
-        if (expanded) {
-            Animated.timing(animation, {
-                toValue: 0,
-                duration: 300,
-                useNativeDriver: false,
-            }).start();
-        } else {
-            Animated.timing(animation, {
-                toValue: 1,
-                duration: 300,
-                useNativeDriver: false,
-            }).start();
-        }
         setExpanded(!expanded);
     };
 
-    const height = animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 200], // Cambia 200 al tamaño que necesites
-    });
-
     return (
         <>
-            <TouchableOpacity onPress={toggleExpand} activeOpacity={0.8}>
-                <View style={styles.container}>
-                    <Text style={{ color: 'white', fontSize: 20 }}>Editar datos</Text>
-                    <Ionicons name={expanded ? "chevron-up" : "chevron-down"} size={24} color="white" />
-                </View>
+            <TouchableOpacity onPress={toggleExpand} activeOpacity={0.8} style={[styles.container, style]}>
+                <Text style={[styles.textTitle, styleText]}>{title}</Text>
+                <Ionicons name={expanded ? "chevron-down" : "chevron-up"} size={24} color="white" />
             </TouchableOpacity>
 
-            <Animated.View style={{ ...styles.expandedContent, height }}>
-                {expanded && children}
-            </Animated.View>
+            <Collapsible collapsed={!expanded}>
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    style={styles.expandedContent}
+                >
+                    {children}
+                </KeyboardAvoidingView>
+            </Collapsible>
         </>
     );
 };
 
-export default EditableSection;
-
 const styles = StyleSheet.create({
     container: {
-        height: 33,
+        height: 40,
         alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: Colors.Dark2,
@@ -62,11 +48,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     expandedContent: {
-        overflow: 'hidden',
-        backgroundColor: Colors.Dark2,
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
+        paddingHorizontal: 20,
+        paddingTop: 15,
     },
+    textTitle: {
+        color: 'white',
+        fontSize: 20,
+    }
 });
+
+export default EditableSection;

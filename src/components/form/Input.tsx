@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, TextInput as TextInputNative, StyleSheet, TextInputProps as TextInputPropsNative } from 'react-native';
+import { View, TextInput as TextInputNative, StyleSheet, TextInputProps as TextInputPropsNative, Keyboard } from 'react-native';
 import { Colors } from 'src/models/Colors/Colors';
 import Text from '../Texts/Text';
 
-export type InputRequeriment = '*Obligatorio' | 'Recomendado' | 'Opcional';
+export type InputRequeriment = '*Obligatorio' | 'Recomendado' | 'Opcional' | '';
 
 interface InputProps extends TextInputPropsNative {
     placeholder?: string;
