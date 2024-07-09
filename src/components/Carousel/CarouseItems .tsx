@@ -16,16 +16,16 @@ type CarouselCardsItemsProps = {
 const CarouselCardsItems: React.FC<CarouselCardsItemsProps> = ({ imageSrc, index, nombre, talla, precio, scrollX, listItemWidth }) => {
     const animatedStyle = useAnimatedStyle(() => {
         const inputRange = [
-            (index - 2) * listItemWidth, // Elemento anterior al primero visible
-            (index - 1) * listItemWidth, // Primer elemento visible
-            index * listItemWidth,       // Segundo elemento visible (centrado)
-            (index + 1) * listItemWidth, // Tercer elemento visible
+            (index - 2) * listItemWidth,
+            (index - 1) * listItemWidth,
+            index * listItemWidth,
+            (index + 1) * listItemWidth,
         ];
 
         const scale = interpolate(
             scrollX.value,
             inputRange,
-            [0.9, 1, 0.9, 0.8], // Ajusta los valores de escala para la animación
+            [0.9, 1, 0.9, 0.8],
             Extrapolate.CLAMP
         );
 
