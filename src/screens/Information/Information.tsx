@@ -32,7 +32,7 @@ export default function Information() {
                     </View>
                 </View>
                 <View style={styles.contSection}>
-                    <EditableSection title={'Editar datos'} style={{ marginTop: 60 }}>
+                    <EditableSection title={'Editar datos'} >
                         <Input title='Nombre de usuario' placeholder='Nombre' requeriment='' keyboardType='default' />
                         <Input title='Correo electronico' placeholder='Correo@gmail.com' requeriment='' keyboardType='email-address' />
                         <Input title='Celular' placeholder='xxx-xxx-xxxx' requeriment='' keyboardType='number-pad' />
@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         marginBottom: 30,
         marginHorizontal: 20,
-        marginTop: 35,
 
     },
     buttonPerson: {
@@ -112,7 +111,6 @@ const styles = StyleSheet.create({
     },
     contSection: {
         justifyContent: 'flex-end',
-        height: '70%',
     },
     textCreateAccount: {
         color: Colors.White,
