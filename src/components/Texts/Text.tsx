@@ -18,7 +18,7 @@ interface TextCustomProps extends TextPropsNative {
   fontWeight?: '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | 'extralight' | 'light' | 'regular' | 'medium' | 'semibold' | 'bold' | 'extrabold' | 'black';
 }
 
-export default function Text({ style, children, fontWeight = '500', ...rest }: TextCustomProps) {
+export default function Text({ style, children, fontWeight = 'medium', ...rest }: TextCustomProps) {
   const [fontsLoaded] = useFonts({
     Mulish_200ExtraLight,
     Mulish_300Light,
