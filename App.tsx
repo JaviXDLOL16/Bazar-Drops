@@ -6,13 +6,12 @@ import Login from 'src/screens/Login/Login';
 import Register from 'src/screens/Register/Register';
 import { Colors } from 'src/models/Colors/Colors';
 import Principal from 'src/screens/Principal/Principal';
-import PendingDeliveries from 'src/screens/PendingDeliveries/PendingDeliveries';
 import Policies from 'src/screens/Policies/Policies';
 import SalesPeriods from 'src/screens/SalesPeriods/SalesPeriods';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Information from 'src/screens/Information/Information';
-import Authentication from 'src/screens/Authentication/Authentication';
 import BuyerRequest from 'src/screens/BuyerRequest/BuyerRequest';
+import DeliveryList from 'src/screens/DeliveryList/DeliveryList';
 
 
 type Props = NativeStackScreenProps<stackParamList, 'Home'>
@@ -38,7 +37,7 @@ function Home({ navigation }: Props) {
 
       <Button
         title="Entregas pendientes"
-        onPress={() => navigation.navigate('PendingDeliveries')}
+        onPress={() => navigation.navigate('DeliveryList')}
       />
       <Button
         title="Policies"
@@ -55,11 +54,6 @@ function Home({ navigation }: Props) {
       />
 
       <Button
-        title="Authentication"
-        onPress={() => navigation.navigate('Authentication')}
-      />
-
-      <Button
         title="BuyerRequest"
         onPress={() => navigation.navigate('BuyerRequest')}
       />
@@ -72,10 +66,12 @@ export type stackParamList = {
   Login: undefined;
   Register: undefined;
   Principal: undefined;
-  PendingDeliveries: undefined;
+  DeliveryList: undefined;
   Policies: undefined;
   SalesPeriods: undefined;
   Information: undefined;
+  BuyerRequest: undefined;
+
 };
 
 const Stack = createNativeStackNavigator<stackParamList>();
@@ -109,20 +105,14 @@ function App() {
               title: 'Bazar and Drops'
             }} />
           <Stack.Screen
-            name="Authentication"
-            component={Authentication}
-            options={{
-              title: 'Bazar and Drops'
-            }} />
-          <Stack.Screen
             name="Principal"
             component={Principal}
             options={{
               headerShown: false
             }} />
           <Stack.Screen
-            name="PendingDeliveries"
-            component={PendingDeliveries}
+            name="DeliveryList"
+            component={DeliveryList}
             options={{
               title: 'Entregas Pendientes'
             }} />

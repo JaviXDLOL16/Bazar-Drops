@@ -96,7 +96,7 @@ export default function BuyerRequest() {
         <ScreenContainer>
             <Search style={styles.search} />
             <FilterContainer>
-                <Filter title="Todos" icon={"checkmark-circle"} style={{ paddingHorizontal: 30, }} />
+                <Filter title="Todos" iconName={"checkmark-circle"} style={{ paddingHorizontal: 30, }} />
                 <View style={styles.contButtons}>
                     <Filter title="Hoy" style={{ paddingHorizontal: 20, marginRight: 10 }} />
                     <Filter title="Esta semana" style={{ paddingHorizontal: 20, }} />

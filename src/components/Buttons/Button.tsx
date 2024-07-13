@@ -1,6 +1,7 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, ViewStyle, TextStyle, TouchableOpacityProps } from 'react-native';
+import { TouchableOpacity, StyleSheet, ViewStyle, TextStyle, TouchableOpacityProps } from 'react-native';
 import { Colors } from 'src/models/Colors/Colors';
+import Text from '../Texts/Text';
 
 export type size = 'Small' | 'Medium' | 'Large' | 'ExtraLarge';
 
@@ -50,7 +51,7 @@ export default function Button({ title, onPress, style, textStyle, size = 'Large
             style={[styles.button, getButtonSizeStyle(), shadow && styles.shadow, style]}
             {...rest}
         >
-            <Text style={[styles.buttonText, getTextSizeStyle(), textStyle]}>{title}</Text>
+            <Text fontWeight='bold' style={[styles.buttonText, getTextSizeStyle(), textStyle]}>{title}</Text>
         </TouchableOpacity>
     );
 };

@@ -37,25 +37,6 @@ const CarouselItemsBuyer: React.FC<CarouselItemsBuyerProps> = ({ imageSrc, index
                     <Text style={styles.textData}>Numero: {numero}</Text>
                 </View>
             </View>
-            <View style={styles.contButtons}>
-                <View style={{ flex: 1, paddingRight: 5 }}>
-                    <Button
-                        title='Aceptar'
-                        size='Small'
-                    >
-
-                    </Button>
-                </View>
-                <View style={{ flex: 1, paddingLeft: 5 }}>
-                    <Button
-                        title='Aceptar'
-                        size='Small'
-                    >
-
-                    </Button>
-                </View>
-
-            </View>
         </View>
     );
 };
