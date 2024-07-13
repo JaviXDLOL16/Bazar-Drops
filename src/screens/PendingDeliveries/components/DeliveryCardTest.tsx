@@ -10,41 +10,13 @@ import { MaterialIcons } from '@expo/vector-icons';
 import formatDate, { getDateWithoutDayOfWeek, getDayOfWeekFormatted } from 'src/utils/formateDate';
 import { Delivery } from '../DeliveryList';
 
-
-export default function DeliveryCard({ item }: { item: Delivery }) {
+export default function DeliveryCardTest({ item }) {
     return (
-        <View style={styles.cardContainer}>
+        <View>
             <View style={styles.deliveryStatusContainer}>
                 <MaterialCommunityIcons name="clock-time-four" size={24} color="white" />
                 <Text fontWeight='regular' style={styles.delivetyTo}>Entrega a las <Text fontWeight='extrabold' style={styles.time}>{item.time}</Text></Text>
                 <Text fontWeight='bold' style={styles.statusText}>Pendiente</Text>
-                {/*<FontAwesome name="check" size={30} color="white" />*/}
-                {/*<FontAwesome name="close" size={30} color="white" />*/}
-            </View>
-            <View style={styles.principal}>
-                <View style={styles.details}>
-                    <Text fontWeight='semibold' style={styles.date}>{formatDate(item.date)}</Text>
-                    <View style={styles.locationContainer}>
-                        <Text style={styles.locationText}>Lugar de entrega {item.location}</Text>
-                        <Ionicons name="location" size={14} color={Colors.Gray2} />
-                    </View>
-                    <View style={styles.buyerContainer}>
-                        <Text fontWeight='bold' style={styles.buyerTitle}>Comprador</Text>
-                        <Text fontWeight='regular' style={styles.buyerName} numberOfLines={1}>Leonardo Yahel Espinosa</Text>
-                    </View>
-                    <View style={styles.cellNumberContainer}>
-
-                        <Text fontWeight='bold' style={styles.buyerCellNumber}>{item.contact}</Text>
-                        <MaterialIcons name="local-phone" size={18} color={Colors.White} />
-                        <MaterialIcons name="content-copy" size={16} color="white" />
-
-                    </View>
-                    <Text style={styles.moreDetails}>Selecciona para ver detalles</Text>
-                </View>
-                <View style={styles.imageAndPriceSide}>
-                    <Image source={item.image} style={styles.image} />
-                    <Text fontWeight='900' style={styles.price}>{item.price}</Text>
-                </View>
             </View>
         </View>
     )
@@ -146,8 +118,4 @@ const styles = StyleSheet.create({
     price: {
         fontSize: 18,
     },
-
-
-
-
 })

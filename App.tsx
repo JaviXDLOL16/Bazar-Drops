@@ -6,11 +6,11 @@ import Login from 'src/screens/Login/Login';
 import Register from 'src/screens/Register/Register';
 import { Colors } from 'src/models/Colors/Colors';
 import Principal from 'src/screens/Principal/Principal';
-import PendingDeliveries from 'src/screens/PendingDeliveries/PendingDeliveries';
 import Policies from 'src/screens/Policies/Policies';
 import SalesPeriods from 'src/screens/SalesPeriods/SalesPeriods';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Information from 'src/screens/Information/Information';
+import DeliveryList from 'src/screens/PendingDeliveries/DeliveryList';
 
 
 type Props = NativeStackScreenProps<stackParamList, 'Home'>
@@ -36,7 +36,7 @@ function Home({ navigation }: Props) {
 
       <Button
         title="Entregas pendientes"
-        onPress={() => navigation.navigate('PendingDeliveries')}
+        onPress={() => navigation.navigate('DeliveryList')}
       />
       <Button
         title="Policies"
@@ -64,7 +64,7 @@ export type stackParamList = {
   Login: undefined;
   Register: undefined;
   Principal: undefined;
-  PendingDeliveries: undefined;
+  DeliveryList: undefined;
   Policies: undefined;
   SalesPeriods: undefined;
   Information: undefined;
@@ -107,8 +107,8 @@ function App() {
               headerShown: false
             }} />
           <Stack.Screen
-            name="PendingDeliveries"
-            component={PendingDeliveries}
+            name="DeliveryList"
+            component={DeliveryList}
             options={{
               title: 'Entregas Pendientes'
             }} />
