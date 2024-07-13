@@ -10,7 +10,7 @@ import Policies from 'src/screens/Policies/Policies';
 import SalesPeriods from 'src/screens/SalesPeriods/SalesPeriods';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Information from 'src/screens/Information/Information';
-import DeliveryList from 'src/screens/PendingDeliveries/DeliveryList';
+import DeliveryList from 'src/screens/DeliveryList/DeliveryList';
 
 
 type Props = NativeStackScreenProps<stackParamList, 'Home'>
