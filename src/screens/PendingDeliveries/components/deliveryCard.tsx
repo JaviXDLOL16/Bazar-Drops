@@ -39,7 +39,7 @@ export default function deliveryCard({ item }) {
 const styles = StyleSheet.create({
     cardContainer: {
         flexDirection: 'row',
-        marginBottom: 10,
+        marginBottom: 15,
         backgroundColor: Colors.Dark2,
         borderRadius: 10,
         height: 100,

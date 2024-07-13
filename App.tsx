@@ -11,6 +11,8 @@ import Policies from 'src/screens/Policies/Policies';
 import SalesPeriods from 'src/screens/SalesPeriods/SalesPeriods';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Information from 'src/screens/Information/Information';
+import Authentication from 'src/screens/Authentication/Authentication';
+import BuyerRequest from 'src/screens/BuyerRequest/BuyerRequest';
 
 
 type Props = NativeStackScreenProps<stackParamList, 'Home'>
@@ -52,9 +54,15 @@ function Home({ navigation }: Props) {
         onPress={() => navigation.navigate('Information')}
       />
 
+      <Button
+        title="Authentication"
+        onPress={() => navigation.navigate('Authentication')}
+      />
 
-
-
+      <Button
+        title="BuyerRequest"
+        onPress={() => navigation.navigate('BuyerRequest')}
+      />
     </View>
   );
 }
@@ -101,6 +109,12 @@ function App() {
               title: 'Bazar and Drops'
             }} />
           <Stack.Screen
+            name="Authentication"
+            component={Authentication}
+            options={{
+              title: 'Bazar and Drops'
+            }} />
+          <Stack.Screen
             name="Principal"
             component={Principal}
             options={{
@@ -129,6 +143,12 @@ function App() {
             component={Information}
             options={{
               title: 'Informacion'
+            }} />
+          <Stack.Screen
+            name='BuyerRequest'
+            component={BuyerRequest}
+            options={{
+              title: 'Solicitudes de compra'
             }} />
         </Stack.Navigator>
       </NavigationContainer>

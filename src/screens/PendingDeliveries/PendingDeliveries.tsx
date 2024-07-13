@@ -27,38 +27,7 @@ const deliveries = [
         contact: '961 242 8401',
         image: '', // Cambia esto a la ruta correcta de tu imagen
     },
-    {
-        id: '3',
-        date: new Date(2024, 8, 1),
-        time: '12:30',
-        price: '$270',
-        contact: '961 242 8401',
-        image: '', // Cambia esto a la ruta correcta de tu imagen
-    },
-    {
-        id: '4',
-        date: new Date(2024, 8, 2),
-        time: '16:20',
-        price: '$180',
-        contact: '961 242 8401',
-        image: '', // Cambia esto a la ruta correcta de tu imagen
-    },
-    {
-        id: '5',
-        date: new Date(2024, 8, 1),
-        time: '12:30',
-        price: '$270',
-        contact: '961 242 8401',
-        image: '', // Cambia esto a la ruta correcta de tu imagen
-    },
-    {
-        id: '6',
-        date: new Date(2024, 8, 2),
-        time: '16:20',
-        price: '$180',
-        contact: '961 242 8401',
-        image: '', // Cambia esto a la ruta correcta de tu imagen
-    },
+
 ];
 
 type Props = NativeStackScreenProps<stackParamList, 'PendingDeliveries'>
@@ -116,14 +85,17 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        padding: 15,
+        padding: 8,
         backgroundColor: Colors.Blue2,
         borderRadius: 10,
         marginHorizontal: 'auto',
-        width: '80%',
+        width: '100%',
+        marginTop: 20,
     },
     addButtonText: {
-        color: "white",
-        marginRight: 10,
+        color: 'white',
+        fontSize: 20,
+        fontWeight: '600',
+        marginRight: 20
     },
 });

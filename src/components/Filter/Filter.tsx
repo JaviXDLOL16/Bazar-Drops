@@ -6,7 +6,7 @@ import Text from '../Texts/Text';
 
 interface FilterContainerProps extends ViewProps {
     children: React.ReactNode,
-    style?: ViewStyle
+    style?: ViewStyle | ViewStyle[];
 }
 
 export function FilterContainer({ children, style }: FilterContainerProps) {
@@ -25,12 +25,13 @@ interface FilterProps {
     fontSize?: number
     iconSize?: number
     color?: string
+    style?: ViewStyle | ViewStyle[];
 }
 
 
-export function Filter({ title, icon, width, fontSize = 12, iconSize = 18, color = 'white' }: FilterProps) {
+export function Filter({ title, icon, width, fontSize = 12, iconSize = 18, color = 'white', style }: FilterProps) {
     return (
-        <TouchableOpacity style={[styles.filterButton, { width: width }]}>
+        <TouchableOpacity style={[styles.filterButton, style, { width: width }]}>
             {title && <Text fontWeight='bold' style={[styles.filterText, { fontSize: fontSize }]}>{title}</Text>}
             {icon && <Ionicons name={icon} size={iconSize} color={color} />}
         </TouchableOpacity>
