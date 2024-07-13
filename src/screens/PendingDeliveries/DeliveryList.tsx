@@ -9,8 +9,8 @@ import { stackParamList } from 'App';
 import { prenda1 } from 'src/assets';
 import Button from 'src/components/Buttons/Button';
 import FilterForDeliveryStatus from './components/FilterForDeliveryStatus';
-import DeliveryCard from './components/DeliveryCard';
 import RecentFilterArrow from 'src/components/Filter/RecentFilterArrow';
+import Text from 'src/components/Texts/Text';
 
 type DeliveryStatus = 'sold' | 'canceled' | 'pending';
 
@@ -84,7 +84,7 @@ export default function DeliveryList({ navigation }: Props) {
                 <FlatList
                     showsVerticalScrollIndicator={false}
                     data={deliveries}
-                    renderItem={DeliveryCard}
+                    renderItem={({ item }) => <Text>{item.contact}</Text>}
                     keyExtractor={item => item.id}
                 />
             </View>
