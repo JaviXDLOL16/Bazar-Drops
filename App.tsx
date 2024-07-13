@@ -11,6 +11,7 @@ import SalesPeriods from 'src/screens/SalesPeriods/SalesPeriods';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Information from 'src/screens/Information/Information';
 import DeliveryList from 'src/screens/DeliveryList/DeliveryList';
+import NewSalesPeriod from 'src/screens/NewSalesPeriod/NewSalesPeriod';
 
 
 type Props = NativeStackScreenProps<stackParamList, 'Home'>
@@ -51,9 +52,10 @@ function Home({ navigation }: Props) {
         title="Information"
         onPress={() => navigation.navigate('Information')}
       />
-
-
-
+      <Button
+        title='Nuevo periodo de ventas'
+        onPress={() => navigation.navigate('NewSalesPeriod')}
+      />
 
     </View>
   );
@@ -68,6 +70,7 @@ export type stackParamList = {
   Policies: undefined;
   SalesPeriods: undefined;
   Information: undefined;
+  NewSalesPeriod: undefined;
 };
 
 const Stack = createNativeStackNavigator<stackParamList>();
@@ -129,6 +132,12 @@ function App() {
             component={Information}
             options={{
               title: 'Informacion'
+            }} />
+          <Stack.Screen
+            name="NewSalesPeriod"
+            component={NewSalesPeriod}
+            options={{
+              title: 'Nuevo periodo de ventas'
             }} />
         </Stack.Navigator>
       </NavigationContainer>
