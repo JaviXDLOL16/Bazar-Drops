@@ -47,11 +47,13 @@ export default function Information() {
                         </TouchableOpacity>
                     </EditableSection>
                     <EditableSection styleText={{ color: Colors.Red }} style={{ backgroundColor: '#1A1414' }} title={'Configuraciones críticas'}>
-                        <TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonEraser}>
                             <Text style={styles.textErase}>Borrar todos los registros de venta</Text>
+                            <Ionicons name="help-circle-outline" size={22} color={Colors.Red} />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonDelete}>
                             <Text style={styles.textDelete}>Eliminar cuenta permanenteme</Text>
+                            <Ionicons name="help-circle-outline" size={22} color={Colors.Red} />
                         </TouchableOpacity>
                     </EditableSection>
                 </View>
@@ -127,13 +129,26 @@ const styles = StyleSheet.create({
     textErase: {
         color: Colors.Red,
         fontSize: 20,
-        height: 33
+        height: 33,
+        marginRight: 10
+
     },
     textDelete: {
         color: Colors.Red,
         fontSize: 20,
         height: 33,
-        marginBottom: 20
+        marginRight: 10
+    },
+    buttonDelete: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingBottom: 30
+
+    },
+    buttonEraser: {
+        flexDirection: 'row',
+        alignItems: 'center',
+
     }
 
 });

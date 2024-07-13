@@ -10,6 +10,7 @@ import Policies from 'src/screens/Policies/Policies';
 import SalesPeriods from 'src/screens/SalesPeriods/SalesPeriods';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Information from 'src/screens/Information/Information';
+import BuyerRequest from 'src/screens/BuyerRequest/BuyerRequest';
 import DeliveryList from 'src/screens/DeliveryList/DeliveryList';
 
 
@@ -52,9 +53,10 @@ function Home({ navigation }: Props) {
         onPress={() => navigation.navigate('Information')}
       />
 
-
-
-
+      <Button
+        title="BuyerRequest"
+        onPress={() => navigation.navigate('BuyerRequest')}
+      />
     </View>
   );
 }
@@ -68,6 +70,8 @@ export type stackParamList = {
   Policies: undefined;
   SalesPeriods: undefined;
   Information: undefined;
+  BuyerRequest: undefined;
+
 };
 
 const Stack = createNativeStackNavigator<stackParamList>();
@@ -129,6 +133,12 @@ function App() {
             component={Information}
             options={{
               title: 'Informacion'
+            }} />
+          <Stack.Screen
+            name='BuyerRequest'
+            component={BuyerRequest}
+            options={{
+              title: 'Solicitudes de compra'
             }} />
         </Stack.Navigator>
       </NavigationContainer>
