@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, Platform, KeyboardAvoidingView, ViewStyle } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, Platform, KeyboardAvoidingView, ViewStyle, TextStyle } from 'react-native';
 import { Ionicons } from "@expo/vector-icons";
 import Collapsible from 'react-native-collapsible';
 import { Colors } from 'src/models/Colors/Colors';
@@ -8,7 +8,7 @@ interface EditableSectionProps {
     children: React.ReactNode;
     title: String
     style?: ViewStyle | ViewStyle[];
-    styleText?: ViewStyle | ViewStyle[];
+    styleText?: TextStyle | ViewStyle[];
 }
 
 const EditableSection: React.FC<EditableSectionProps> = ({ children, title, style, styleText }) => {

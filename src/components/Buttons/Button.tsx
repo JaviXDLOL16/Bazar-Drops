@@ -67,12 +67,11 @@ const styles = StyleSheet.create({
         shadowColor: Colors.Blue,
         shadowOffset: { width: 0, height: 8 },
         shadowOpacity: 0.3,
-        shadowRadius: 8,
+        shadowRadius: 10,
         elevation: 5,
     },
     buttonText: {
         color: Colors.White,
-        fontWeight: 'bold',
     },
     TextSmall: {
         fontSize: 12,
