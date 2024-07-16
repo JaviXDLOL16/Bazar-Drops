@@ -14,14 +14,14 @@ interface InputProps extends TextInputPropsNative {
 
 export default function Input({ placeholder, title, requeriment = 'Opcional', value, onChangeText, style, ...rest }: InputProps) {
     return (
-        <View style={[styles.container, style]}>
-            <View style={styles.headContainer}>
-                <Text style={styles.title} fontWeight='extrabold'>{title}</Text>
-                <Text style={styles.requerimentText} fontWeight='light'>{requeriment}</Text>
+        <View style={[inputStyles.container, style]}>
+            <View style={inputStyles.headContainer}>
+                <Text style={inputStyles.title} fontWeight='extrabold'>{title}</Text>
+                <Text style={inputStyles.requerimentText} fontWeight='light'>{requeriment}</Text>
             </View>
-            <View style={[styles.inputContainer, false && { borderColor: Colors.InputError }]}>
+            <View style={[inputStyles.inputContainer, false && { borderColor: Colors.InputError }]}>
                 <TextInputNative
-                    style={styles.input}
+                    style={inputStyles.input}
                     placeholder={placeholder}
                     placeholderTextColor="#ccc"
                     value={value}
@@ -29,12 +29,12 @@ export default function Input({ placeholder, title, requeriment = 'Opcional', va
                     {...rest}
                 />
             </View>
-            <Text style={styles.messageError}>{true && 'Debes llenar este campo'}</Text>
+            <Text style={inputStyles.messageError}>{false && 'Debes llenar este campo'}</Text>
         </View>
     );
 };
 
-const styles = StyleSheet.create({
+export const inputStyles = StyleSheet.create({
     container: {
         flexShrink: 1,
         paddingBottom: 10,
@@ -74,3 +74,5 @@ const styles = StyleSheet.create({
         marginTop: 2,
     },
 });
+
+

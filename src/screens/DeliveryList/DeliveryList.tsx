@@ -192,7 +192,7 @@ export default function DeliveryList({ navigation }: Props) {
                     keyExtractor={item => item.id}
                 />
             </View>
-            <Button title="Agregar nueva entrega" style={styles.newDeliveryButton} onPress={() => navigation.navigate('Home')} />
+            <Button title="Agregar nueva entrega" style={styles.newDeliveryButton} onPress={() => { }} />
         </ScreenContainer>
     );
 }

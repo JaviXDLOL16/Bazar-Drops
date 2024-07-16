@@ -12,6 +12,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Information from 'src/screens/Information/Information';
 import DeliveryList from 'src/screens/DeliveryList/DeliveryList';
 import NewSalesPeriod from 'src/screens/NewSalesPeriod/NewSalesPeriod';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 type Props = NativeStackScreenProps<stackParamList, 'Home'>
@@ -77,71 +78,74 @@ const Stack = createNativeStackNavigator<stackParamList>();
 
 function App() {
   return (
-    <SafeAreaProvider >
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName='Home'
-          screenOptions={
-            {
-              headerStyle: { backgroundColor: Colors.Dark },
-              headerTitleStyle: { color: Colors.White, fontSize: 24, fontWeight: '900' },
-              headerBackTitleVisible: false,
-              headerBackImageSource: require('src/assets/images/back.png'),
-              headerTintColor: Colors.White,
+    <GestureHandlerRootView>
+      <SafeAreaProvider >
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName='Home'
+            screenOptions={
+              {
+                headerStyle: { backgroundColor: Colors.Dark },
+                headerTitleStyle: { color: Colors.White, fontSize: 24, fontWeight: '900' },
+                headerBackTitleVisible: false,
+                headerBackImageSource: require('src/assets/images/back.png'),
+                headerTintColor: Colors.White,
+              }
             }
-          }
-        >
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen
-            name="Login"
-            component={Login} options={{
-              title: 'Bazar and Drops'
-            }} />
-          <Stack.Screen
-            name="Register"
-            component={Register}
-            options={{
-              title: 'Bazar and Drops'
-            }} />
-          <Stack.Screen
-            name="Principal"
-            component={Principal}
-            options={{
-              headerShown: false
-            }} />
-          <Stack.Screen
-            name="DeliveryList"
-            component={DeliveryList}
-            options={{
-              title: 'Entregas Pendientes'
-            }} />
-          <Stack.Screen
-            name="Policies"
-            component={Policies}
-            options={{
-              title: 'Politicas'
-            }} />
-          <Stack.Screen
-            name="SalesPeriods"
-            component={SalesPeriods}
-            options={{
-              title: 'Periodos de venta'
-            }} />
-          <Stack.Screen
-            name="Information"
-            component={Information}
-            options={{
-              title: 'Informacion'
-            }} />
-          <Stack.Screen
-            name="NewSalesPeriod"
-            component={NewSalesPeriod}
-            options={{
-              title: 'Nuevo periodo de ventas'
-            }} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>)
+          >
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen
+              name="Login"
+              component={Login} options={{
+                title: 'Bazar and Drops'
+              }} />
+            <Stack.Screen
+              name="Register"
+              component={Register}
+              options={{
+                title: 'Bazar and Drops'
+              }} />
+            <Stack.Screen
+              name="Principal"
+              component={Principal}
+              options={{
+                headerShown: false
+              }} />
+            <Stack.Screen
+              name="DeliveryList"
+              component={DeliveryList}
+              options={{
+                title: 'Entregas Pendientes'
+              }} />
+            <Stack.Screen
+              name="Policies"
+              component={Policies}
+              options={{
+                title: 'Politicas'
+              }} />
+            <Stack.Screen
+              name="SalesPeriods"
+              component={SalesPeriods}
+              options={{
+                title: 'Periodos de venta'
+              }} />
+            <Stack.Screen
+              name="Information"
+              component={Information}
+              options={{
+                title: 'Informacion'
+              }} />
+            <Stack.Screen
+              name="NewSalesPeriod"
+              component={NewSalesPeriod}
+              options={{
+                title: 'Nuevo periodo de ventas'
+              }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
+  );
 }
 
 export default App;
