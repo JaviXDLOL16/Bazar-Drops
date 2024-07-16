@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import React from "react";
 import ScreenContainer from "src/components/layout/ScreenContainer";
 import Search from "src/components/Search/Search";
@@ -8,6 +8,7 @@ import ButtonInformation from "src/components/Buttons/ButtonInformation";
 import { CarouselCards } from 'src/components/Carousel/CarouselCards '
 import { CarouselVertical } from 'src/components/Carousel/CarouselVertical'
 import ButtonNewGarment from "src/components/Buttons/ButtonNewGarment";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 
 const data = [
@@ -88,8 +89,11 @@ const data2 = [
 ]
 
 export default function Principal() {
+  const insets = useSafeAreaInsets();
   return (
-    <ScreenContainer>
+    <ScreenContainer style={{
+      paddingTop: Platform.OS === 'ios' ? insets.top : insets.top + 10,
+    }}>
       <View style={styles.containerHeader}>
         <View style={styles.containerSearch}>
           <Search />
