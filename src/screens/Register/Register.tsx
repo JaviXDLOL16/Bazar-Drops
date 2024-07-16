@@ -7,6 +7,8 @@ import Text from 'src/components/Texts/Text';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { stackParamList } from 'App';
 import Button from 'src/components/Buttons/Button';
+import TabButton from 'src/components/Buttons/TabButton';
+import AccountRadioButtons from 'src/components/form/AccountRadioButtons';
 
 type Props = NativeStackScreenProps<stackParamList, 'Register'>;
 
@@ -15,17 +17,18 @@ export default function Register({ navigation }: Props) {
         <ScreenContainer style={styles.container}>
             <View style={styles.content}>
                 <Image style={styles.image} source={require('src/assets/images/logo_horizontal.png')} />
-
-                <Text style={styles.title} fontWeight='black'>
-                    Registrarse
-                </Text>
+                <View style={styles.tabsContainer}>
+                    <TabButton title='Iniciar Sesión' onPress={() => { navigation.replace('Login') }} />
+                    <TabButton title='Registrarse' active />
+                </View>
 
                 <Input title='Nombre' requeriment='*Obligatorio' placeholder='Ingresa tu nombre' />
                 <Input title='Correo' requeriment='*Obligatorio' placeholder='Correo electrónico' keyboardType='email-address' />
-                <Input title='Contraseña' requeriment='*Obligatorio' placeholder='*****' secureTextEntry />
+                <Input title='Contraseña' requeriment='*Obligatorio' placeholder='Crea tu contraseña' secureTextEntry />
                 <Input title='Fecha de nacimiento' requeriment='*Obligatorio' placeholder='dd/mm/aaaa' />
 
-                <Text style={styles.notRegistedText}>Tipo de cuenta</Text>
+                <Text fontWeight='extrabold' style={styles.notRegistedText}>Tipo de cuenta</Text>
+                <AccountRadioButtons />
             </View>
 
             <Button
@@ -42,9 +45,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'space-between',
+
     },
     content: {
         flex: 1,
+    },
+    tabsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
     },
     title: {
         fontSize: 30,
@@ -53,9 +61,8 @@ const styles = StyleSheet.create({
         marginTop: -10
     },
     notRegistedText: {
-        textAlign: 'center',
-        fontSize: 20,
-        fontWeight: '600',
+        textAlign: 'left',
+        fontSize: 18,
         marginBottom: 20,
     },
     image: {

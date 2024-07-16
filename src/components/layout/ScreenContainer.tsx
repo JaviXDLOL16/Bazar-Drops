@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { ReactNode } from 'react';
 import { ScrollView, StyleSheet, View, ViewStyle, Platform } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from 'src/models/Colors/Colors';
 
 interface ScreenContainerProps {
@@ -10,15 +9,12 @@ interface ScreenContainerProps {
     scrollEnable?: boolean;
 }
 
-
 const ScreenContainer: React.FC<ScreenContainerProps> = ({ children, style, scrollEnable = false }) => {
-    const insets = useSafeAreaInsets();
     return (
         <View
             style={{
                 flex: 1,
                 backgroundColor: Colors.Dark,
-                paddingTop: insets.top,
             }}
         >
             <StatusBar style='light' />
@@ -41,9 +37,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.Dark,
         paddingHorizontal: 20,
-        marginTop: -20,
         paddingTop: 20,
-        paddingBottom: 30
+        paddingBottom: 30,
     },
 
 });

@@ -100,7 +100,7 @@ function App() {
       <SafeAreaProvider >
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName='Home'
+            initialRouteName='Login'
             screenOptions={
               {
                 headerStyle: { backgroundColor: Colors.Dark },
@@ -115,13 +115,14 @@ function App() {
             <Stack.Screen
               name="Login"
               component={Login} options={{
-                title: 'Bazar and Drops'
+                title: 'Bazar and Drops',
+
               }} />
             <Stack.Screen
               name="Register"
               component={Register}
               options={{
-                title: 'Bazar and Drops'
+                title: 'Bazar and Drops',
               }} />
             <Stack.Screen
               name="Principal"
