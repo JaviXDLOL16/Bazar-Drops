@@ -1,14 +1,30 @@
-
-import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, Platform, KeyboardAvoidingView } from 'react-native';
+import React, { useState } from 'react';
+import { View, TouchableOpacity, StyleSheet, Text, Platform, Image } from 'react-native';
 import ScreenContainer from "src/components/layout/ScreenContainer";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from 'src/models/Colors/Colors';
 import EditableSection from '../../components/Modal/EditableSection';
 import Input from 'src/components/form/Input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import * as ImagePicker from 'expo-image-picker';
+
 
 export default function Information() {
+    const [image, setImage] = useState<string | null>(null);
+
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
+        }
+    };
 
     return (
         <ScreenContainer style={{ paddingHorizontal: 0, height: '100%' }}>
@@ -20,8 +36,12 @@ export default function Information() {
                 enableAutomaticScroll={Platform.OS === "ios"}
             >
                 <View style={styles.containerInformation}>
-                    <TouchableOpacity activeOpacity={0.8} style={styles.buttonPerson}>
-                        <Ionicons name="person" size={95} color="white" />
+                    <TouchableOpacity activeOpacity={0.8} style={styles.buttonPerson} onPress={pickImage}>
+                        {image ? (
+                            <Image source={{ uri: image }} style={styles.image} />
+                        ) : (
+                            <Ionicons name="person" size={95} color="white" />
+                        )}
                         <View style={styles.containerCamera}>
                             <Ionicons name="camera" size={24} color="white" />
                         </View>
@@ -47,11 +67,13 @@ export default function Information() {
                         </TouchableOpacity>
                     </EditableSection>
                     <EditableSection styleText={{ color: Colors.Red }} style={{ backgroundColor: '#1A1414' }} title={'Configuraciones críticas'}>
-                        <TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonEraser}>
                             <Text style={styles.textErase}>Borrar todos los registros de venta</Text>
+                            <Ionicons name="help-circle-outline" size={22} color={Colors.Red} />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonDelete}>
                             <Text style={styles.textDelete}>Eliminar cuenta permanenteme</Text>
+                            <Ionicons name="help-circle-outline" size={22} color={Colors.Red} />
                         </TouchableOpacity>
                     </EditableSection>
                 </View>
@@ -127,13 +149,30 @@ const styles = StyleSheet.create({
     textErase: {
         color: Colors.Red,
         fontSize: 20,
-        height: 33
+        height: 33,
+        marginRight: 10
+
     },
     textDelete: {
         color: Colors.Red,
         fontSize: 20,
         height: 33,
-        marginBottom: 20
+        marginRight: 10
+    },
+    buttonDelete: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingBottom: 30
+
+    },
+    buttonEraser: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 100
     }
 
 });

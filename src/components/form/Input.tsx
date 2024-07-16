@@ -14,14 +14,26 @@ interface InputProps extends TextInputPropsNative {
 
 export default function Input({ placeholder, title, requeriment = 'Opcional', value, onChangeText, style, ...rest }: InputProps) {
     return (
-        <View style={[inputStyles.container, style]}>
-            <View style={inputStyles.headContainer}>
-                <Text style={inputStyles.title} fontWeight='extrabold'>{title}</Text>
-                <Text style={inputStyles.requerimentText} fontWeight='light'>{requeriment}</Text>
-            </View>
-            <View style={[inputStyles.inputContainer, false && { borderColor: Colors.InputError }]}>
+         <View style={styles.container}>
+            {(title || requeriment) && (
+                <View style={styles.headContainer}>
+                    {title && <Text style={styles.title} fontWeight='extrabold'>{title}</Text>}
+                    {requeriment && <Text style={styles.requerimentText} fontWeight='light'>{requeriment}</Text>}
+                </View>
+            )}
+            <View style={[styles.inputContainer, false && { borderColor: Colors.InputError }]}>
                 <TextInputNative
-                    style={inputStyles.input}
+                    style={styles.input}
+            <View style={styles.container}>
+            {(title || requeriment) && (
+                <View style={styles.headContainer}>
+                    {title && <Text style={styles.title} fontWeight='extrabold'>{title}</Text>}
+                    {requeriment && <Text style={styles.requerimentText} fontWeight='light'>{requeriment}</Text>}
+                </View>
+            )}
+            <View style={[styles.inputContainer, false && { borderColor: Colors.InputError }]}>
+                <TextInputNative
+                    style={styles.input}
                     placeholder={placeholder}
                     placeholderTextColor="#ccc"
                     value={value}
@@ -29,7 +41,7 @@ export default function Input({ placeholder, title, requeriment = 'Opcional', va
                     {...rest}
                 />
             </View>
-            <Text style={inputStyles.messageError}>{false && 'Debes llenar este campo'}</Text>
+            <Text style={styles.messageError}>{false && 'Debes llenar este campo'}</Text>
         </View>
     );
 };
@@ -45,15 +57,15 @@ export const inputStyles = StyleSheet.create({
         borderWidth: 2,
         borderColor: Colors.InputOutline,
         borderRadius: 8,
-        paddingHorizontal: 15,
+        paddingHorizontal: 10,
         paddingVertical: 10,
     },
     input: {
-        fontSize: 20,
+        fontSize: 18,
         color: '#fff',
     },
     title: {
-        fontSize: 20,
+        fontSize: 18,
     },
     requerimentText: {
         fontSize: 13,
@@ -63,16 +75,14 @@ export const inputStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-end',
-        marginBottom: 2,
-        paddingLeft: 10,
-        paddingRight: 8,
+        paddingHorizontal: 5,
+        marginBottom: 5,
     },
     messageError: {
         paddingHorizontal: 10,
         color: Colors.InputError,
         fontSize: 12,
-        marginTop: 2,
-    },
+    }> main
 });
 
 

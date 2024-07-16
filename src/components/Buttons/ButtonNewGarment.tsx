@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        paddingVertical: 8
+        padding: 8,
     },
     textGarment: {
         color: 'white',
