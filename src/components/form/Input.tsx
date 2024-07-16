@@ -9,47 +9,31 @@ interface InputProps extends TextInputPropsNative {
     placeholder?: string;
     title?: string;
     requeriment?: InputRequeriment;
-    style?: ViewStyle; // Cambié 'style' a opcional para mantener flexibilidad
+    style?: ViewStyle;
 }
 
-export default function Input({ placeholder, title, requeriment = 'Opcional', value, onChangeText, style, ...rest }: InputProps) {
+const Input: React.FC<InputProps> = ({ title, requeriment = '', style, ...rest }) => {
     return (
-         <View style={styles.container}>
+        <View style={[styles.container, style]}>
             {(title || requeriment) && (
                 <View style={styles.headContainer}>
                     {title && <Text style={styles.title} fontWeight='extrabold'>{title}</Text>}
                     {requeriment && <Text style={styles.requerimentText} fontWeight='light'>{requeriment}</Text>}
                 </View>
             )}
-            <View style={[styles.inputContainer, false && { borderColor: Colors.InputError }]}>
-                <TextInputNative
-                    style={styles.input}
-            <View style={styles.container}>
-            {(title || requeriment) && (
-                <View style={styles.headContainer}>
-                    {title && <Text style={styles.title} fontWeight='extrabold'>{title}</Text>}
-                    {requeriment && <Text style={styles.requerimentText} fontWeight='light'>{requeriment}</Text>}
-                </View>
-            )}
-            <View style={[styles.inputContainer, false && { borderColor: Colors.InputError }]}>
-                <TextInputNative
-                    style={styles.input}
-                    placeholder={placeholder}
-                    placeholderTextColor="#ccc"
-                    value={value}
-                    onChangeText={onChangeText}
-                    {...rest}
-                />
-            </View>
-            <Text style={styles.messageError}>{false && 'Debes llenar este campo'}</Text>
+            <TextInputNative
+                style={[styles.input, styles.inputContainer, false && { borderColor: Colors.InputError }]}
+                placeholderTextColor="#ccc"
+                {...rest}
+            />
+            {false && <Text style={styles.messageError}>{'Debes llenar este campo'}</Text>}
         </View>
     );
 };
 
-export const inputStyles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
-        flexShrink: 1,
-        paddingBottom: 10,
+        marginBottom: 15,
     },
     inputContainer: {
         width: '100%',
@@ -69,7 +53,7 @@ export const inputStyles = StyleSheet.create({
     },
     requerimentText: {
         fontSize: 13,
-        lineHeight: 20,
+        fontWeight: '200'
     },
     headContainer: {
         flexDirection: 'row',
@@ -82,7 +66,7 @@ export const inputStyles = StyleSheet.create({
         paddingHorizontal: 10,
         color: Colors.InputError,
         fontSize: 12,
-    }> main
+    }
 });
 
-
+export default Input;

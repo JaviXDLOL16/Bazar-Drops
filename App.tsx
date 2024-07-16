@@ -61,8 +61,6 @@ function Home({ navigation }: Props) {
         title='Nuevo periodo de ventas'
         onPress={() => navigation.navigate('NewSalesPeriod')}
       />
-
-    </View>
       <Button
         title="Solicitudes de compra"
         onPress={() => navigation.navigate('BuyerRequest')}
@@ -161,24 +159,24 @@ function App() {
               options={{
                 title: 'Nuevo periodo de ventas'
               }} />
-             <Stack.Screen
-            name='BuyerRequest'
-            component={BuyerRequest}
-            options={{
-              title: 'Solicitudes de compra'
-            }} />
-          <Stack.Screen
-            name='RegisterClothes'
-            component={RegisterClothes}
-            options={{
-              title: 'Nueva prenda'
-            }} />
-          <Stack.Screen
-            name='NewDelivery'
-            component={NewDelivery}
-            options={{
-              title: 'Nueva entrega'
-            }} />
+            <Stack.Screen
+              name='BuyerRequest'
+              component={BuyerRequest}
+              options={{
+                title: 'Solicitudes de compra'
+              }} />
+            <Stack.Screen
+              name='RegisterClothes'
+              component={RegisterClothes}
+              options={{
+                title: 'Nueva prenda'
+              }} />
+            <Stack.Screen
+              name='NewDelivery'
+              component={NewDelivery}
+              options={{
+                title: 'Nueva entrega'
+              }} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>
