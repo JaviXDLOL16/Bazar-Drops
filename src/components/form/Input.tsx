@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput as TextInputNative, StyleSheet, TextInputProps as TextInputPropsNative } from 'react-native';
+import { View, TextInput as TextInputNative, StyleSheet, TextInputProps as TextInputPropsNative, ViewStyle } from 'react-native';
 import { Colors } from 'src/models/Colors/Colors';
 import Text from '../Texts/Text';
 
@@ -9,11 +9,22 @@ interface InputProps extends TextInputPropsNative {
     placeholder?: string;
     title?: string;
     requeriment?: InputRequeriment;
+    style?: ViewStyle; // Cambié 'style' a opcional para mantener flexibilidad
 }
 
-const Input: React.FC<InputProps> = ({ placeholder, title, requeriment = '', value, onChangeText, ...rest }) => {
+export default function Input({ placeholder, title, requeriment = 'Opcional', value, onChangeText, style, ...rest }: InputProps) {
     return (
-        <View style={styles.container}>
+         <View style={styles.container}>
+            {(title || requeriment) && (
+                <View style={styles.headContainer}>
+                    {title && <Text style={styles.title} fontWeight='extrabold'>{title}</Text>}
+                    {requeriment && <Text style={styles.requerimentText} fontWeight='light'>{requeriment}</Text>}
+                </View>
+            )}
+            <View style={[styles.inputContainer, false && { borderColor: Colors.InputError }]}>
+                <TextInputNative
+                    style={styles.input}
+            <View style={styles.container}>
             {(title || requeriment) && (
                 <View style={styles.headContainer}>
                     {title && <Text style={styles.title} fontWeight='extrabold'>{title}</Text>}
@@ -30,14 +41,15 @@ const Input: React.FC<InputProps> = ({ placeholder, title, requeriment = '', val
                     {...rest}
                 />
             </View>
-            {false && <Text style={styles.messageError}>{'Debes llenar este campo'}</Text>}
+            <Text style={styles.messageError}>{false && 'Debes llenar este campo'}</Text>
         </View>
     );
 };
 
-const styles = StyleSheet.create({
+export const inputStyles = StyleSheet.create({
     container: {
-        marginBottom: 15,
+        flexShrink: 1,
+        paddingBottom: 10,
     },
     inputContainer: {
         width: '100%',
@@ -57,7 +69,7 @@ const styles = StyleSheet.create({
     },
     requerimentText: {
         fontSize: 13,
-        fontWeight: '200'
+        lineHeight: 20,
     },
     headContainer: {
         flexDirection: 'row',
@@ -70,7 +82,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         color: Colors.InputError,
         fontSize: 12,
-    }
+    }> main
 });
 
-export default Input;
+

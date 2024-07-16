@@ -41,6 +41,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.Dark,
         paddingHorizontal: 20,
+        marginTop: -20,
+        paddingTop: 20,
+        paddingBottom: 30
     },
 
 });
