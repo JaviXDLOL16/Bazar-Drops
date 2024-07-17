@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { View, Text, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { KeyboardProvider } from "react-native-keyboard-controller";
 import { NativeStackScreenProps, createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from 'src/screens/Login/Login';
 import Register from 'src/screens/Register/Register';
@@ -25,7 +24,7 @@ type Props = NativeStackScreenProps<stackParamList, 'Home'>
 function Home({ navigation }: Props) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
+      <Text>Global</Text>
       <Button
         title="Login"
         onPress={() => navigation.navigate('Login')}
