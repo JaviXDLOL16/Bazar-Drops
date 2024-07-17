@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { View, Text, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { KeyboardProvider } from "react-native-keyboard-controller";
 import { NativeStackScreenProps, createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from 'src/screens/Login/Login';
 import Register from 'src/screens/Register/Register';
@@ -17,6 +16,7 @@ import NewSalesPeriod from 'src/screens/NewSalesPeriod/NewSalesPeriod';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import RegisterClothes from 'src/screens/RegisterClothes/RegisterClothes';
 import NewDelivery from 'src/screens/NewDelivery/NewDelivery';
+import Authentication from 'src/screens/Authentication/Authentication';
 
 
 type Props = NativeStackScreenProps<stackParamList, 'Home'>
@@ -73,6 +73,10 @@ function Home({ navigation }: Props) {
         title="Nueva entrega"
         onPress={() => navigation.navigate('NewDelivery')}
       />
+      <Button
+        title="Authentication"
+        onPress={() => navigation.navigate('Authentication')}
+      />
     </View>
   );
 }
@@ -90,6 +94,7 @@ export type stackParamList = {
   BuyerRequest: undefined;
   RegisterClothes: undefined;
   NewDelivery: undefined;
+  Authentication: undefined;
 };
 
 const Stack = createNativeStackNavigator<stackParamList>();
@@ -100,7 +105,7 @@ function App() {
       <SafeAreaProvider >
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName='Login'
+            initialRouteName='Authentication'
             screenOptions={
               {
                 headerStyle: { backgroundColor: Colors.Dark },
@@ -177,6 +182,12 @@ function App() {
               component={NewDelivery}
               options={{
                 title: 'Nueva entrega'
+              }} />
+            <Stack.Screen
+              name='Authentication'
+              component={Authentication}
+              options={{
+                title: 'Bazar and Drops'
               }} />
           </Stack.Navigator>
         </NavigationContainer>
