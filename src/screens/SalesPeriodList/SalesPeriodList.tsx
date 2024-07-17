@@ -8,10 +8,10 @@ import { Filter, FilterContainer } from 'src/components/Filter/Filter'
 import PeriodCard from './components/PeriodCard'
 
 
-type Props = NativeStackScreenProps<stackParamList, 'SalesPeriods'>
+type Props = NativeStackScreenProps<stackParamList, 'SalesPeriodList'>
 
 
-export default function SalesPeriods({ navigation }: Props) {
+export default function SalesPeriodList({ navigation }: Props) {
     return (
         <ScreenContainer scrollEnable={false} style={styles.container}>
             <Button style={styles.AddPeriodButton} title='Nuevo periodo de ventas' onPress={() => navigation.navigate('Home')} size='Medium' />
