@@ -10,22 +10,21 @@ export default function Authentication() {
     const [activeTab, setActiveTab] = useState(0);
 
     return (
-        <ScreenContainer>
-            <Image style={styles.image} source={require('src/assets/images/logo_horizontal.png')} />
-            <Tabs style={{ marginBottom: 10 }} activeTab={activeTab} onSelectTab={setActiveTab} />
+        <ScreenContainer style={{ justifyContent: 'space-between' }}>
 
+            <View>
+                <Image style={styles.image} source={require('src/assets/images/logo_horizontal.png')} />
+                <Tabs style={{ marginBottom: 10 }} activeTab={activeTab} onSelectTab={setActiveTab} />
+            </View>
             <KeyboardAwareScrollView
-                contentContainerStyle={{ flexGrow: 1 }}
                 enableOnAndroid={true}
                 enableAutomaticScroll={Platform.OS === "ios"}
             >
-                <View>
-                    <View style={{ display: activeTab === 0 ? 'flex' : 'none' }}>
-                        <LoginForm />
-                    </View>
-                    <View style={{ display: activeTab === 1 ? 'flex' : 'none' }}>
-                        <RegisterForm />
-                    </View>
+                <View style={{ display: activeTab === 0 ? 'flex' : 'none' }}>
+                    <LoginForm />
+                </View>
+                <View style={{ display: activeTab === 1 ? 'flex' : 'none' }}>
+                    <RegisterForm />
                 </View>
             </KeyboardAwareScrollView>
         </ScreenContainer>

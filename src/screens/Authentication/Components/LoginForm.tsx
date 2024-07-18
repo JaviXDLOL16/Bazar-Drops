@@ -8,7 +8,7 @@ import { Colors } from 'src/models/Colors/Colors';
 function LoginForm() {
     return (
 
-        <View >
+        <View>
             <Text style={styles.subtitle} fontWeight='bold'>
                 Para acceder es necesario colocar tu correo electrónico
             </Text>

@@ -36,7 +36,7 @@ const Tabs: React.FC<TabsProps> = ({ activeTab, onSelectTab, style }) => {
                 style={styles.tab}
                 onPress={() => seleccionar(0)}
             >
-                <Text fontWeight={activeTab === 0 ? 'bold' : 'semibold'}>
+                <Text style={styles.texTab} fontWeight={activeTab === 0 ? 'bold' : 'semibold'}>
                     Iniciar sesión
                 </Text>
             </TouchableOpacity>
@@ -44,7 +44,7 @@ const Tabs: React.FC<TabsProps> = ({ activeTab, onSelectTab, style }) => {
                 style={styles.tab}
                 onPress={() => seleccionar(1)}
             >
-                <Text fontWeight={activeTab === 1 ? 'bold' : 'semibold'}>
+                <Text style={styles.texTab} fontWeight={activeTab === 1 ? 'bold' : 'semibold'}>
                     Registrarse
                 </Text>
             </TouchableOpacity>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     indicator: {
         position: 'absolute',
         width: 145, // Ajustar el ancho del indicador
-        height: 43,
+        height: 46,
         backgroundColor: Colors.Blue2,
         shadowColor: Colors.Blue2,
         shadowOffset: { width: 0, height: 10 },
@@ -80,6 +80,9 @@ const styles = StyleSheet.create({
         zIndex: 0,
         marginLeft: '8.5%'
     },
+    texTab: {
+        fontSize: 20
+    }
 });
 
 export default Tabs;

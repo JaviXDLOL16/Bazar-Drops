@@ -1,14 +1,15 @@
-import { Platform, StyleSheet, View } from "react-native";
+import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import React from "react";
 import ScreenContainer from "src/components/layout/ScreenContainer";
 import Search from "src/components/Search/Search";
-import ButtonEarrings from "src/components/Buttons/ButtonEarrings";
+import ButtonNotifications from "src/components/Buttons/ButtonNotifications";
 import ButtonAllPeriods from "src/components/Buttons/ButtonAllPeriods";
 import ButtonInformation from "src/components/Buttons/ButtonInformation";
 import { CarouselCards } from 'src/components/Carousel/CarouselCards '
 import { CarouselVertical } from 'src/components/Carousel/CarouselVertical'
 import ButtonNewGarment from "src/components/Buttons/ButtonNewGarment";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Colors } from "src/models/Colors/Colors";
 
 
 const data = [
@@ -94,12 +95,21 @@ export default function Principal() {
     <ScreenContainer style={{
       paddingTop: Platform.OS === 'ios' ? insets.top : insets.top + 10,
     }}>
+
       <View style={styles.containerHeader}>
-        <View style={styles.containerSearch}>
-          <Search />
-        </View>
-        <ButtonEarrings />
+        <ButtonNotifications
+          title='Solicitudes de venta'
+          number={5}
+        />
+        <ButtonNotifications
+          title='Entregas'
+          number={5}
+          style={{ backgroundColor: Colors.Blue, marginRight: 30 }}
+        />
         <ButtonInformation />
+      </View>
+      <View style={styles.contSearch}>
+        <Search />
       </View>
       <View style={styles.containerPeriods}>
         <ButtonAllPeriods />
@@ -119,16 +129,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 15
-  },
-  containerSearch: {
-    width: "55%",
   },
   containerPeriods: {
-    marginBottom: 15
+    marginBottom: 10
   },
   CaroselVertical: {
     marginTop: 10,
     marginBottom: 15
   },
+  contSearch: {
+    marginVertical: 20
+  }
 });

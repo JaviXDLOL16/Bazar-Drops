@@ -1,10 +1,11 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Colors } from 'src/models/Colors/Colors';
 import Animated, { useAnimatedStyle, interpolate, Extrapolate } from 'react-native-reanimated';
+import Text from '../Texts/Text';
 
 type CarouselCardsItemsProps = {
-    imageSrc: string;
+    imageSrc: any;
     index: number;
     nombre: string;
     talla: string;
@@ -20,12 +21,13 @@ const CarouselCardsItems: React.FC<CarouselCardsItemsProps> = ({ imageSrc, index
             (index - 1) * listItemWidth,
             index * listItemWidth,
             (index + 1) * listItemWidth,
+            (index + 2) * listItemWidth,
         ];
 
         const scale = interpolate(
             scrollX.value,
             inputRange,
-            [0.9, 1, 0.9, 0.8],
+            [0.9, 1, 0.9, 0.9, 0.9],
             Extrapolate.CLAMP
         );
 
@@ -39,12 +41,12 @@ const CarouselCardsItems: React.FC<CarouselCardsItemsProps> = ({ imageSrc, index
             <TouchableOpacity activeOpacity={0.8}>
                 <Image source={imageSrc} style={styles.image} />
                 <View style={styles.contData}>
-                    <Text style={styles.textName} numberOfLines={2} ellipsizeMode="tail">
+                    <Text fontWeight='light' style={styles.textName} numberOfLines={2} ellipsizeMode="tail">
                         {nombre}
                     </Text>
                     <View style={styles.contPrice}>
-                        <Text style={styles.textTalla}>Talla: {talla}</Text>
-                        <Text style={styles.textPrice}>${precio}</Text>
+                        <Text fontWeight='bold' style={styles.textTalla}>Talla: {talla}</Text>
+                        <Text fontWeight='bold' style={styles.textPrice}>${precio}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -56,7 +58,6 @@ export { CarouselCardsItems };
 
 const styles = StyleSheet.create({
     cardContainer: {
-        marginRight: 10,
         borderRadius: 15,
         backgroundColor: Colors.Dark2,
     },
@@ -74,8 +75,8 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         marginTop: 2,
-        fontWeight: '300',
         height: 40,
+        fontSize: 14
     },
     contPrice: {
         flexDirection: 'row',
@@ -86,12 +87,10 @@ const styles = StyleSheet.create({
     },
     textPrice: {
         color: Colors.Blue3,
-        fontWeight: '700',
-        fontSize: 12,
+        fontSize: 13,
     },
     textTalla: {
         color: 'white',
-        fontWeight: '700',
-        fontSize: 12,
+        fontSize: 13,
     },
 });

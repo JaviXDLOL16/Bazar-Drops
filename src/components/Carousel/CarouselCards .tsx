@@ -1,18 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Colors } from 'src/models/Colors/Colors';
 import { CarouselCardsItems } from './CarouseItems ';
 import Animated, { useSharedValue, useAnimatedScrollHandler } from 'react-native-reanimated';
+import Text from '../Texts/Text';
 
 type CarouselCardsProps = {
     data: { nombre: string; talla: string; precio: number; image: string; }[];
 };
 
 const { width: windowWidth } = Dimensions.get('window');
-const ListItemWidth = windowWidth / 3.75;
+const ListItemWidth = windowWidth / 3.5; // Ajuste para mostrar tres tarjetas completas
 
 const CarouselCards: React.FC<CarouselCardsProps> = ({ data }) => {
-    const scrollX = useSharedValue(0); // Asegura que scrollX inicie desde el principio
+    const scrollX = useSharedValue(0);
 
     const scrollHandler = useAnimatedScrollHandler((event) => {
         scrollX.value = event.contentOffset.x;
@@ -21,7 +22,7 @@ const CarouselCards: React.FC<CarouselCardsProps> = ({ data }) => {
     return (
         <>
             <View style={styles.containerAdd}>
-                <Text style={styles.textAdd}>Últimos agregados disponibles</Text>
+                <Text fontWeight='bold' style={styles.textAdd}>Últimos agregados disponibles</Text>
                 <Animated.FlatList
                     scrollEventThrottle={16}
                     onScroll={scrollHandler}
@@ -31,23 +32,22 @@ const CarouselCards: React.FC<CarouselCardsProps> = ({ data }) => {
                     snapToInterval={ListItemWidth}
                     decelerationRate="fast"
                     showsHorizontalScrollIndicator={false}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <CarouselCardsItems
-                                nombre={item.nombre}
-                                talla={item.talla}
-                                precio={item.precio}
-                                imageSrc={item.image}
-                                index={index}
-                                scrollX={scrollX}
-                                listItemWidth={ListItemWidth}
-                            />
-                        );
-                    }}
+                    renderItem={({ item, index }) => (
+                        <CarouselCardsItems
+                            nombre={item.nombre}
+                            talla={item.talla}
+                            precio={item.precio}
+                            imageSrc={item.image}
+                            index={index}
+                            scrollX={scrollX}
+                            listItemWidth={ListItemWidth}
+                        />
+                    )}
+                    contentContainerStyle={{ paddingHorizontal: 5 }} // Ajuste de padding horizontal
                 />
             </View>
             <TouchableOpacity activeOpacity={0.8} style={styles.buttonSell}>
-                <Text style={styles.textSell}>Ir a periodo actual de ventas</Text>
+                <Text fontWeight='extrabold' style={styles.textSell}>Ir a periodo actual de ventas</Text>
             </TouchableOpacity>
         </>
     );
@@ -64,8 +64,7 @@ const styles = StyleSheet.create({
     },
     textAdd: {
         color: 'white',
-        marginVertical: 12,
-        fontWeight: '600',
+        marginVertical: 15,
     },
     buttonSell: {
         height: 40,
@@ -78,7 +77,6 @@ const styles = StyleSheet.create({
     },
     textSell: {
         fontSize: 16,
-        fontWeight: '700',
         color: Colors.Blue,
     },
 });

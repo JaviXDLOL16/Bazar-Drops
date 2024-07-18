@@ -1,4 +1,169 @@
 
+import React, { useState } from 'react'
+import { Image, Modal, StyleSheet, TouchableOpacity, View } from 'react-native'
+import Text from 'src/components/Texts/Text'
+import { Colors } from 'src/models/Colors/Colors';
+import formatDate, { getDateWithoutDayOfWeek, getDayOfWeekFormatted } from 'src/utils/formateDate';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+
+
+
+
+
+
+
+import { Delivery, DeliveryStatus } from '../DeliveryList';
+import CustomModal from 'src/components/Modal/Modal';
+import ModalContent from './ModalContent';
+const statusIcon: { [key in DeliveryStatus]: keyof typeof FontAwesome.glyphMap } = {
+    pendiente: 'clock-o',
+    vendido: 'check-circle',
+    cancelado: 'times-circle',
+};
+
+const statusColors: { [key in DeliveryStatus]: string } = {
+    pendiente: Colors.Dark3,
+    vendido: Colors.Green,
+    cancelado: Colors.Red,
+};
+
+export default function DeliveryCard({ item }: { item: Delivery }) {
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+    };
+    return (
+        <View style={styles.contCard}>
+            <View style={styles.contImage}>
+                <Image source={item.image} style={styles.image} />
+            </View >
+            <View style={styles.contData}>
+                <Text numberOfLines={1} style={styles.textDate} fontWeight='bold'>{formatDate(item.date)}</Text>
+                <View style={styles.contBuyer}>
+                    <Ionicons style={styles.iconAccount} name="person-circle" size={18} color="white" />
+                    <Text fontWeight='semibold'>{item.buyer}</Text>
+                </View>
+                <View style={styles.contNumber}>
+                    <TouchableOpacity>
+                        <MaterialIcons name="content-copy" size={16} color="white" />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <MaterialIcons name="local-phone" size={16} color={Colors.White} />
+                    </TouchableOpacity>
+                    <Text fontWeight='bold'>{item.contact}</Text>
+                </View>
+                <TouchableOpacity style={styles.buttonSeeMore} onPress={toggleModal}>
+                    <Text style={styles.textSeeMore} fontWeight='light'>Ver mas detalles</Text>
+                </TouchableOpacity>
+                <CustomModal isVisible={isModalVisible} onClose={toggleModal}>
+                    <ModalContent
+                        item={item}
+                    />
+                </CustomModal>
+            </View>
+            <View style={[styles.contHour, { backgroundColor: statusColors[item.status] }]}>
+                <Text style={styles.textTime} fontWeight='extrabold'>{item.time}</Text>
+                <FontAwesome name={statusIcon[item.status]} size={32} color="white" />
+                <Text fontWeight='extrabold' style={styles.price}>${item.price}</Text>
+            </View>
+        </View>
+    )
+}
+
+
+
+const styles = StyleSheet.create({
+    contImage: {
+        height: 100,
+        width: 80,
+        marginVertical: 10
+    },
+    image: {
+        height: '100%',
+        width: '100%',
+        borderRadius: 5
+    },
+    contCard: {
+        backgroundColor: Colors.Dark2,
+        marginBottom: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: 10,
+        borderRadius: 10
+    },
+    textDate: {
+        fontSize: 16,
+    },
+    contHour: {
+        backgroundColor: Colors.Dark3,
+        width: 75,
+        gap: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderTopRightRadius: 10,
+        borderBottomRightRadius: 10,
+    },
+    contData: {
+        width: '50%',
+        gap: 3,
+        paddingVertical: 10
+    },
+    price: {
+        fontSize: 18,
+    },
+    textTime: {
+        fontSize: 16,
+        textAlign: 'center'
+    },
+    iconAccount: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 5
+
+    },
+    contBuyer: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    contNumber: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 7,
+    },
+    buttonSeeMore: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 5,
+    },
+    textSeeMore: {
+        fontSize: 14,
+
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 import { View, Image, StyleSheet } from 'react-native'
 import React from 'react'
 import { Colors } from 'src/models/Colors/Colors'
@@ -166,3 +331,4 @@ const styles = StyleSheet.create({
 
 
 })
+    */

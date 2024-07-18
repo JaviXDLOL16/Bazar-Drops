@@ -5,7 +5,7 @@ import Animated, { useAnimatedStyle, interpolate, Extrapolate } from 'react-nati
 import { Ionicons } from "@expo/vector-icons";
 
 type CarouseItemsVerticalProps = {
-    imageSrc: string;
+    imageSrc: any;
     index: number;
     nombre: string;
     talla: string;

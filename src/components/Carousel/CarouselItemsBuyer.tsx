@@ -66,6 +66,7 @@ const CarouselItemsBuyer: React.FC<CarouselItemsBuyerProps> = React.memo(({ imag
                                 </View>
                                 <View style={styles.contButtonSend}>
                                     <Button
+                                        onPress={() => { }}
                                         textStyle={{ fontSize: 16 }}
                                         title='Enviar'
                                         size='Small'
@@ -95,6 +96,7 @@ const CarouselItemsBuyer: React.FC<CarouselItemsBuyerProps> = React.memo(({ imag
                 <View style={styles.contButtons}>
                     <View style={{ flex: 1, paddingRight: 5 }}>
                         <Button
+                            onPress={() => { }}
                             style={{ backgroundColor: Colors.Blue3 }}
                             textStyle={{ fontSize: 16 }}
                             title='Aceptar'
@@ -103,6 +105,7 @@ const CarouselItemsBuyer: React.FC<CarouselItemsBuyerProps> = React.memo(({ imag
                     </View>
                     <View style={{ flex: 1, paddingLeft: 5 }}>
                         <Button
+                            onPress={() => { }}
                             textStyle={{ fontSize: 16 }}
                             title='Eliminar'
                             size='Small'
