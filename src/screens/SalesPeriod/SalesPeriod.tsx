@@ -4,7 +4,7 @@ import React from 'react'
 export default function SalesPeriod() {
     return (
         <View>
-            <Text>SalesPeriod</Text>
+            <Text>SalesPer</Text>
         </View>
     )
 }
