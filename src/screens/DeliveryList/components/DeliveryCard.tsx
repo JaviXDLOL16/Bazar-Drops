@@ -9,13 +9,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from "@expo/vector-icons";
-
-
-
-
-
-
-
 import { Delivery, DeliveryStatus } from '../DeliveryList';
 import CustomModal from 'src/components/Modal/Modal';
 import ModalContent from './ModalContent';
