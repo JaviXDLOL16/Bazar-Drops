@@ -2,11 +2,15 @@ import React from 'react'
 import { Colors } from 'src/models/Colors/Colors'
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity } from 'react-native';
+import useStackNavigation from 'src/hooks/useStackNavigation';
 
 
 export default function ButtonInformation() {
+
+    const navigation = useStackNavigation();
+
     return (
-        <TouchableOpacity style={styles.containerInformation}>
+        <TouchableOpacity style={styles.containerInformation} onPress={() => navigation.navigate('Information')}>
             <Ionicons name="person" size={28} color="white" />
         </TouchableOpacity>
     )

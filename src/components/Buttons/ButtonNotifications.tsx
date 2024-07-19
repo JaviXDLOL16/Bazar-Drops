@@ -12,9 +12,9 @@ interface ButtonProps extends TouchableOpacityProps {
 export default function ButtonNotifications({ title, number, style, ...rest }: ButtonProps) {
     return (
         <TouchableOpacity style={[styles.earringsContainer, style]} {...rest}>
-            <View style={styles.contNotification}>
+            {/*<View style={styles.contNotification}>
                 <Text fontWeight='bold' style={styles.textNotification}>{number}</Text>
-            </View>
+            </View>*/}
             <Text fontWeight='extrabold' style={styles.textEarrings}>{title}</Text>
         </TouchableOpacity>
     );

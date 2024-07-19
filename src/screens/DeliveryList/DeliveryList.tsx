@@ -168,40 +168,18 @@ const deliveries: Delivery[] = [
 
 type Props = NativeStackScreenProps<stackParamList, 'DeliveryList'>
 
-export default function DeliveryList({ navigation }: Props) {
-    const [filterForStatus, setFilterForStatus] = useState<DeliveryFilterStates>('pendiente');
-    const [filterInOrder, setFilterInOrder] = useState<'ascendente' | 'descendente'>('descendente');
-    const [filterForTime, setFilterForTime] = useState<'hoy' | 'estaSemana' | 'todos'>('todos');
+export default function DeliveryList({ navigation, route }: Props) {
+    const { status } = route.params ?? {};
+    const [filterForStatus, setFilterForStatus] = useState<DeliveryFilterStates>(status || 'pendiente');
+
+    console.log(status)
 
     const applyFilters = (deliveries: Delivery[]) => {
         let filteredDeliveries = deliveries;
 
-        // Filtro por estatus
         filteredDeliveries = filteredDeliveries.filter(delivery =>
             filterForStatus === 'todos' ? true : delivery.status === filterForStatus
         );
-
-        // Filtro por tiempo (hoy y esta semana)
-        const now = new Date();
-        if (filterForTime === 'hoy') {
-            filteredDeliveries = filteredDeliveries.filter(delivery =>
-                delivery.date.toDateString() === now.toDateString()
-            );
-        } else if (filterForTime === 'estaSemana') {
-            const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
-            filteredDeliveries = filteredDeliveries.filter(delivery =>
-                delivery.date >= startOfWeek
-            );
-        }
-
-        // Ordenar entregas por fecha
-        filteredDeliveries = filteredDeliveries.sort((a, b) => {
-            if (filterInOrder === 'ascendente') {
-                return a.date.getTime() - b.date.getTime();
-            } else {
-                return b.date.getTime() - a.date.getTime();
-            }
-        });
 
         return filteredDeliveries;
     };
@@ -213,13 +191,7 @@ export default function DeliveryList({ navigation }: Props) {
         <ScreenContainer style={styles.container}>
             <Search style={styles.search} />
             <FilterContainer style={styles.filterContainer}>
-                <View style={styles.statusFilterContainer}>
-                    <FilterForDeliveryStatus onChange={setFilterForStatus} />
-                </View>
-                <Filter title="Hoy" />
-                <Filter title="Esta semana" />
-                <Filter title="Todos" />
-                <RecentFilterArrow />
+                <FilterForDeliveryStatus onChange={setFilterForStatus} value={filterForStatus} />
             </FilterContainer>
             <View style={styles.scrollContainer}>
                 <FlatList
