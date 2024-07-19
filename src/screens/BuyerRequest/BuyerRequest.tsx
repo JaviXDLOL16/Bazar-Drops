@@ -16,6 +16,7 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/assets/images/prenda1.jpeg'),
+        lugar: 'Calle central y 6 norte poniente'
     },
     {
         nombre: 'Playera roja under armor',
@@ -25,6 +26,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/assets/images/Prueba2.jpeg'),
+        lugar: 'Calle central y 6 norte poniente'
+
     },
     {
         nombre: 'Playera gris trust',
@@ -34,6 +37,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/assets/images/prenda3.jpeg'),
+        lugar: 'Calle central y 6 norte poniente'
+
     },
     {
         nombre: 'Card 4',
@@ -43,6 +48,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/assets/images/prenda3.jpeg'),
+        lugar: 'Calle central y 6 norte poniente'
+
     },
     {
         nombre: 'Card 5',
@@ -52,6 +59,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/assets/images/prenda1.png'),
+        lugar: 'Calle central y 6 norte poniente'
+
     },
     {
         nombre: 'Playera roja under armor',
@@ -61,6 +70,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/assets/images/Prueba2.jpeg'),
+        lugar: 'Calle central y 6 norte poniente'
+
     },
     {
         nombre: 'Playera gris trust',
@@ -70,6 +81,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/assets/images/prenda3.jpeg'),
+        lugar: 'Calle central y 6 norte poniente'
+
     },
     {
         nombre: 'Card 4',
@@ -79,6 +92,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/assets/images/prenda3.jpeg'),
+        lugar: 'Calle central y 6 norte poniente'
+
     },
     {
         nombre: 'Card 5',
@@ -88,6 +103,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/assets/images/prenda1.png'),
+        lugar: 'Calle central y 6 norte poniente'
+
     },
     {
         nombre: 'Playera verde H&M',
@@ -97,7 +114,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/assets/images/prenda1.jpeg'),
-        oferta: 200
+        oferta: 200,
+        lugar: 'Calle central y 6 norte poniente',
     },
     {
         nombre: 'Playera roja under armor',
@@ -107,8 +125,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/assets/images/Prueba2.jpeg'),
-        oferta: 10
-
+        oferta: 10,
+        lugar: 'Calle central y 6 norte poniente',
     },
 ]
 

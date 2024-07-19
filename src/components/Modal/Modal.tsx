@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { View, StyleSheet, TouchableOpacity, Dimensions, ScrollView, StatusBar, ViewStyle } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Dimensions, StatusBar, ViewStyle } from 'react-native';
 import Modal from 'react-native-modal';
 import { Colors } from 'src/models/Colors/Colors';
 
@@ -10,10 +10,10 @@ interface ModalProps {
     onClose: () => void;
     children: ReactNode;
     style?: ViewStyle | ViewStyle[];
-
+    maxHeight?: number; // Nueva prop para la altura máxima
 }
 
-const CustomModal: React.FC<ModalProps> = ({ isVisible, onClose, children, style }) => {
+const CustomModal: React.FC<ModalProps> = ({ isVisible, onClose, children, style, maxHeight = 1 }) => {
     return (
         <Modal
             isVisible={isVisible}
@@ -27,13 +27,11 @@ const CustomModal: React.FC<ModalProps> = ({ isVisible, onClose, children, style
             animationInTiming={300}
         >
             <StatusBar barStyle="light-content" />
-            <View style={[styles.modalContent, style]}>
+            <View style={[styles.modalContent, style, { maxHeight: height * maxHeight }]}>
                 <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                     <View style={styles.closeButtonContent}></View>
                 </TouchableOpacity>
-                <ScrollView contentContainerStyle={styles.scrollContent}>
-                    {children}
-                </ScrollView>
+                {children}
             </View>
         </Modal>
     );
@@ -46,12 +44,11 @@ const styles = StyleSheet.create({
     },
     modalContent: {
         width: '100%',
-        maxHeight: height * 0.75,
         backgroundColor: Colors.Dark2,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingTop: 20,
-        paddingHorizontal: 25,
+        paddingHorizontal: 20,
         paddingBottom: 30,
         overflow: 'hidden',
     },
