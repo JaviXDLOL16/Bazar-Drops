@@ -23,6 +23,7 @@ import AllRegisteredClothes from 'src/screens/AllRegisteredClothes/AllRegistered
 import SalesPeriod from 'src/screens/SalesPeriod/SalesPeriod';
 import ClothDetails from 'src/screens/ClothDetails/ClothDetails';
 import SellerDetails from 'src/screens/SellerDetails/SellerDetails';
+import { DeliveryFilterStates } from 'src/screens/DeliveryList/components/FilterForDeliveryStatus';
 
 
 type Props = NativeStackScreenProps<stackParamList, 'Home'>
@@ -139,7 +140,7 @@ export type stackParamList = {
   Policies: undefined;
   Principal: undefined;
   Information: undefined;
-  DeliveryList: undefined;
+  DeliveryList: { status?: DeliveryFilterStates };
   DeliveryDetails: undefined;
   NewDelivery: undefined;
   Authentication: undefined;
@@ -150,7 +151,7 @@ export type stackParamList = {
   AllRegisteredClothes: undefined;
   SalesPeriod: undefined;
   NewSalesPeriod: undefined;
-  ClothDetails: undefined;
+  ClothDetails: { clothId: number };
   SellerDetails: undefined;
 };
 

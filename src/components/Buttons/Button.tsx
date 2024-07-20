@@ -12,9 +12,11 @@ interface ButtonProps extends TouchableOpacityProps {
     textStyle?: TextStyle;
     size?: size;
     shadow?: boolean;
+    icon?: React.ReactNode,
+
 }
 
-export default function Button({ title, onPress, style, textStyle, size = 'Large', shadow = false, ...rest }: ButtonProps) {
+export default function Button({ title, onPress, style, textStyle, size = 'Large', shadow = false, icon, ...rest }: ButtonProps) {
     const getButtonSizeStyle = () => {
         switch (size) {
             case 'Small':
@@ -52,6 +54,7 @@ export default function Button({ title, onPress, style, textStyle, size = 'Large
             {...rest}
         >
             <Text fontWeight='bold' style={[styles.buttonText, getTextSizeStyle(), textStyle]}>{title}</Text>
+            {icon}
         </TouchableOpacity>
     );
 };
@@ -62,6 +65,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
+        flexDirection: 'row',
+        gap: 10,
     },
     shadow: {
         shadowColor: Colors.Blue,

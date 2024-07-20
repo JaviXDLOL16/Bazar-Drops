@@ -4,6 +4,7 @@ import { Colors } from 'src/models/Colors/Colors';
 import { CarouselCardsItems } from './CarouseItems ';
 import Animated, { useSharedValue, useAnimatedScrollHandler } from 'react-native-reanimated';
 import Text from '../Texts/Text';
+import useStackNavigation from 'src/hooks/useStackNavigation';
 
 type CarouselCardsProps = {
     data: { nombre: string; talla: string; precio: number; image: string; }[];
@@ -13,6 +14,9 @@ const { width: windowWidth } = Dimensions.get('window');
 const ListItemWidth = windowWidth / 3.5; // Ajuste para mostrar tres tarjetas completas
 
 const CarouselCards: React.FC<CarouselCardsProps> = ({ data }) => {
+
+    const navigation = useStackNavigation();
+
     const scrollX = useSharedValue(0);
 
     const scrollHandler = useAnimatedScrollHandler((event) => {
@@ -46,7 +50,7 @@ const CarouselCards: React.FC<CarouselCardsProps> = ({ data }) => {
                     contentContainerStyle={{ paddingHorizontal: 5 }} // Ajuste de padding horizontal
                 />
             </View>
-            <TouchableOpacity activeOpacity={0.8} style={styles.buttonSell}>
+            <TouchableOpacity activeOpacity={0.8} style={styles.buttonSell} onPress={() => navigation.navigate('SalesPeriod')}>
                 <Text fontWeight='extrabold' style={styles.textSell}>Ir a periodo actual de ventas</Text>
             </TouchableOpacity>
         </>

@@ -1,17 +1,17 @@
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TextInputProps } from 'react-native'
 import React from 'react'
 import { Colors } from 'src/models/Colors/Colors';
 import { Ionicons } from '@expo/vector-icons';
 
-type SearchProps = {
+interface SearchProps extends TextInputProps {
     style?: any
 }
 
-export default function Search({ style }: SearchProps) {
+export default function Search({ style, ...rest }: SearchProps) {
     return (
         <View style={[styles.searchContainer, style]}>
             <Ionicons name="search" size={24} color="white" />
-            <TextInput style={styles.searchInput} placeholderTextColor="#888" />
+            <TextInput style={styles.searchInput} placeholderTextColor="#888" {...rest} />
         </View>
     );
 }

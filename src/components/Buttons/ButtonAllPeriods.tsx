@@ -3,10 +3,14 @@ import { TouchableOpacity, StyleSheet } from 'react-native'
 import { Colors } from "src/models/Colors/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import Text from '../Texts/Text';
+import useStackNavigation from 'src/hooks/useStackNavigation';
 
 export default function ButtonAllPeriods() {
+
+  const navigation = useStackNavigation();
+
   return (
-    <TouchableOpacity style={styles.containerPeriods}>
+    <TouchableOpacity style={styles.containerPeriods} onPress={() => navigation.navigate('SalesPeriodList')}>
       <Text fontWeight='bold' style={styles.textPeriods}>Ver todos los periodos de venta</Text>
       <Ionicons name="grid" size={28} color="white" />
     </TouchableOpacity>

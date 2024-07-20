@@ -38,6 +38,7 @@ export default function RegisterClothes() {
                 enableOnAndroid={true}
                 keyboardOpeningTime={0}
                 enableAutomaticScroll={Platform.OS === "ios"}
+                showsVerticalScrollIndicator={false}
             >
                 <View style={styles.containerAll}>
                     <TouchableOpacity activeOpacity={0.8} style={styles.buttonPerson} onPress={pickImage}>

@@ -13,8 +13,8 @@ export const Colors = {
     Red: '#D63535',
     Red2: '#E90000',
     Green: '#68AC50',
+    default400: '#A1A1AA',
     Green2:'#39522f',
-
     InputOutline: '#3f3f46',
     InputError: '#D63535'
 };

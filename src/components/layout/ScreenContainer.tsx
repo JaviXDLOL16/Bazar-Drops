@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { ReactNode } from 'react';
-import { ScrollView, StyleSheet, View, ViewStyle, Platform } from 'react-native';
+import { ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
 import { Colors } from 'src/models/Colors/Colors';
 
 interface ScreenContainerProps {
@@ -11,19 +11,16 @@ interface ScreenContainerProps {
 
 const ScreenContainer: React.FC<ScreenContainerProps> = ({ children, style, scrollEnable = false }) => {
     return (
-        <View
-            style={{
-                flex: 1,
-                backgroundColor: Colors.Dark,
-            }}
-        >
+        <View style={styles.screen}>
             <StatusBar style='light' />
             {scrollEnable ? (
                 <ScrollView
-                    style={[styles.container, style]}
-                    contentContainerStyle={{ flexGrow: 1 }}
+                    contentContainerStyle={styles.scrollContent}
                 >
-                    {children}
+                    <View style={[styles.container, style]}>
+                        {children}
+                    </View>
+                    <View style={styles.bottomSpacer} />
                 </ScrollView>
             ) : (
                 <View style={[styles.container, style]}>{children}</View>
@@ -33,14 +30,20 @@ const ScreenContainer: React.FC<ScreenContainerProps> = ({ children, style, scro
 };
 
 const styles = StyleSheet.create({
-    container: {
+    screen: {
         flex: 1,
         backgroundColor: Colors.Dark,
-        paddingHorizontal: 20,
-        paddingTop: 20,
-        paddingBottom: 30,
     },
-
+    container: {
+        flex: 1,
+        paddingHorizontal: 20,
+    },
+    scrollContent: {
+        flexGrow: 1,
+    },
+    bottomSpacer: {
+        height: 40,
+    },
 });
 
 export default ScreenContainer;
