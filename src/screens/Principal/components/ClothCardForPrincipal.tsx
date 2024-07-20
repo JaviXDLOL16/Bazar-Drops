@@ -1,7 +1,8 @@
-import { Image, StyleSheet, TouchableOpacity, TouchableOpacityProps, View } from 'react-native'
+import { Image, StyleSheet, TouchableOpacity, TouchableOpacityProps, View, Dimensions } from 'react-native'
 import React from 'react'
 import Text from 'src/components/Texts/Text'
 import { Colors } from 'src/models/Colors/Colors';
+import { Skeleton } from 'moti/skeleton';
 
 interface Props extends TouchableOpacityProps {
     name: string;
@@ -9,27 +10,44 @@ interface Props extends TouchableOpacityProps {
     price: number;
     image?: string;
     style?: any;
+    loading?: boolean;
 }
 
-export default function ClothCardForPrincipal({ name, size, price, image, style, ...rest }: Props) {
+export default function ClothCardForPrincipal({ name, size, price, image, style, loading = true, ...rest }: Props) {
     return (
         <TouchableOpacity style={{
-            width: '48%',
-            marginBottom: 5,
+            width: Dimensions.get('window').width / 2 - 30,
+            margin: 5,
+            gap: 5,
         }} {...rest}>
-            <Image
-                source={image ? { uri: image } : require('src/assets/images/prenda1.png')}
-                style={{
-                    width: '100%',
-                    height: 220, // Ajusta la altura según sea necesario
-                    borderRadius: 30,
-                    marginBottom: 5,
-                }}
-            />
-            <View style={{}}>
-                <Text fontWeight='bold' >{name}</Text>
-                <Text style={{ fontSize: 14, color: Colors.default400 }} fontWeight='bold' >Talla {size}</Text>
-                <Text style={{ fontSize: 18 }} fontWeight='bold' >{price}</Text>
+            <Skeleton colorMode="dark" height={220} width={'100%'} radius={30} >
+                {loading ? null :
+                    <Image
+                        source={image ? { uri: image } : require('src/assets/skeleton/imageClothDetailsSkeleton.png')}
+                        style={{
+                            width: '100%',
+                            height: 220,
+                            borderRadius: 30,
+                        }}
+                    />
+                }
+            </Skeleton>
+            <View style={{ gap: 3 }}>
+                <Skeleton colorMode="dark" height={20} width={'90%'}>
+                    {loading ? null :
+                        <Text fontWeight='bold' >{name}</Text>
+                    }
+                </Skeleton>
+                <Skeleton colorMode="dark" height={18} width={'60%'}>
+                    {loading ? null :
+                        <Text style={{ fontSize: 14, color: Colors.default400 }} fontWeight='bold' >Talla {size}</Text>
+                    }
+                </Skeleton>
+                <Skeleton colorMode="dark" height={22} width={'25%'}>
+                    {loading ? null :
+                        <Text style={{ fontSize: 18 }} fontWeight='bold' >{price}</Text>
+                    }
+                </Skeleton>
             </View>
         </TouchableOpacity>
     )

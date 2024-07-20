@@ -1,13 +1,11 @@
 import { FlatList, Platform, ScrollView, StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ScreenContainer from "src/components/layout/ScreenContainer";
 import Search from "src/components/Search/Search";
 import ButtonNotifications from "src/components/Buttons/ButtonNotifications";
 import ButtonAllPeriods from "src/components/Buttons/ButtonAllPeriods";
 import ButtonInformation from "src/components/Buttons/ButtonInformation";
 import { CarouselCards } from 'src/components/Carousel/CarouselCards '
-import { CarouselVertical } from 'src/components/Carousel/CarouselVertical'
-import ButtonNewGarment from "src/components/Buttons/ButtonNewGarment";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Colors } from "src/models/Colors/Colors";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -16,6 +14,11 @@ import Button from "src/components/Buttons/Button";
 import { Ionicons } from "@expo/vector-icons";
 import RecentlySoldSection from "./components/RecentlySoldSection";
 import ClothCardForPrincipal from "./components/ClothCardForPrincipal";
+import { createClothService } from "src/lib/Inventory/application/ClothService";
+import { Cloth, ClothForBuyer } from "src/lib/Inventory/domain/Cloth";
+import { createAxiosClothRepository } from "src/lib/Inventory/infrastructure/AxiosClothRepository";
+import Text from "src/components/Texts/Text";
+
 
 const data = [
   {
@@ -51,16 +54,19 @@ const data = [
 ];
 
 const dataForBuyerPrincipal = [
-  { id: '1', name: 'Playera blanca Bears', size: 'Extra chica', price: 120 },
-  { id: '2', name: 'Playera tie dye girasoles', size: 'Mediana', price: 120 },
-  { id: '3', name: 'Playera negra Purple Rain', size: 'Mediana', price: 120 },
-  { id: '4', name: 'Playera azul North Face', size: 'Mediana', price: 120 },
-  { id: '5', name: 'Playera blanca Bears', size: 'Extra chica', price: 120 },
-  { id: '6', name: 'Playera tie dye girasoles', size: 'Mediana', price: 120 },
-  { id: '7', name: 'Playera negra Purple Rain', size: 'Mediana', price: 120 },
-  { id: '8', name: 'Playera azul North Face', size: 'Mediana', price: 120 },
+  { id: '1', description: 'Playera blanca Bears', size: 'Extra chica', price: 120 },
+  { id: '2', description: 'Playera tie dye girasoles', size: 'Mediana', price: 120 },
+  { id: '3', description: 'Playera negra Purple Rain', size: 'Mediana', price: 120 },
+  { id: '4', description: 'Playera azul North Face', size: 'Mediana', price: 120 },
+  { id: '5', description: 'Playera blanca Bears', size: 'Extra chica', price: 120 },
+  { id: '6', description: 'Playera tie dye girasoles', size: 'Mediana', price: 120 },
+  { id: '7', description: 'Playera negra Purple Rain', size: 'Mediana', price: 120 },
+  { id: '8', description: 'Playera azul North Face', size: 'Mediana', price: 120 },
   // Agrega más objetos según sea necesario
 ];
+
+const repository = createAxiosClothRepository();
+const service = createClothService(repository);
 
 type Props = NativeStackScreenProps<stackParamList, 'Principal'>;
 
@@ -104,8 +110,31 @@ function SellerPrincipal({ navigation }: Props) {
 }
 
 function BuyerPrincipal({ navigation }: Props) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [clothes, setClothes] = useState<ClothForBuyer[]>([]);
+  const [search, setSearch] = useState('');
+
+  const getCloth = async () => {
+    try {
+      const clothes = await service.getAll();
+      setClothes(clothes);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getCloth();
+  }, []);
+
+  const filteredClothes = clothes.filter(cloth =>
+    cloth.description.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
-    < >
+    <>
       <View style={styles.containerHeader}>
         <ButtonNotifications
           title='Solicitudes de venta'
@@ -122,25 +151,35 @@ function BuyerPrincipal({ navigation }: Props) {
       </View>
 
       <View style={styles.contSearch}>
-        <Search />
+        <Search onChangeText={(text) => setSearch(text)} value={search} />
       </View>
 
       <FlatList
-        columnWrapperStyle={{
-          flex: 1,
-          justifyContent: 'space-around',
-          marginBottom: 10,
-        }}
-        data={dataForBuyerPrincipal}
-        renderItem={({ item }) => <ClothCardForPrincipal name={item.name} size={item.size} price={item.price} onPress={() => { navigation.navigate('ClothDetails') }} />}
-        keyExtractor={item => item.id}
+        data={isLoading ? dataForBuyerPrincipal : filteredClothes.map(cloth => ({
+          id: cloth.id.toString(),
+          description: cloth.description,
+          size: cloth.size,
+          price: cloth.price,
+        }))}
+        renderItem={({ item }) =>
+          <ClothCardForPrincipal
+            image={'https://i.imgur.com/A1LTcXf.jpeg'}
+            name={item.description}
+            size={item.size}
+            price={item.price}
+            onPress={() => { navigation.navigate('ClothDetails') }}
+            loading={isLoading}
+          />
+        }
+        keyExtractor={item => item.id.toString()}
         numColumns={2}
+        ListEmptyComponent={<Text style={styles.noResultsText}>No results found</Text>}
       />
-
-
     </>
-  )
+  );
 }
+
+
 
 
 export default function Principal({ navigation, route }: Props) {
@@ -167,7 +206,7 @@ const styles = StyleSheet.create({
   containerPeriods: {
     marginBottom: 10
   },
-  CaroselVertical: {
+  caroselVertical: {
     marginTop: 10,
     marginBottom: 15
   },
@@ -186,4 +225,10 @@ const styles = StyleSheet.create({
   bottomSpacer: {
     height: 100,
   },
+  noResultsText: {
+    textAlign: 'center',
+    marginVertical: 20,
+    color: Colors.default400,
+    fontSize: 16,
+  }
 });
