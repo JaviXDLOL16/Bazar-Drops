@@ -9,9 +9,11 @@ export const Colors = {
     Blue: '#0075F2',
     Blue2: '#00206E',
     Blue3: '#3F8AE2',
+    Blue4:'#0e3c71',
     Red: '#D63535',
     Red2: '#E90000',
     Green: '#68AC50',
+    Green2:'#39522f',
 
     InputOutline: '#3f3f46',
     InputError: '#D63535'

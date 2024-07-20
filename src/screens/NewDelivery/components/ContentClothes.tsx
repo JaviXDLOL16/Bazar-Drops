@@ -39,7 +39,7 @@ export default function ContentClothes({ deliveries, onSelect }: ContentClothesP
                         </View>
                         <View style={styles.contDataText} >
                             <View style={styles.textContainerDescription}>
-                                <Text numberOfLines={2}>{delivery.description}</Text>
+                                <Text style={{ textAlign: 'center' }} numberOfLines={2}>{delivery.description}</Text>
                             </View >
                             <View style={styles.contPrices} >
                                 <View style={styles.contTextPrice}>
@@ -94,7 +94,8 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     contDataText: {
-        gap: 15
+        gap: 5,
+        flex: 1
     },
     contPrices: {
         gap: 15,
