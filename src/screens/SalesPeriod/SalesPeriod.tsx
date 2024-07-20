@@ -3,7 +3,6 @@ import React from 'react'
 import ScreenContainer from 'src/components/layout/ScreenContainer'
 import Search from 'src/components/Search/Search'
 import { Filter, FilterContainer } from 'src/components/Filter/Filter'
-import FilterForDeliveryStatus from '../DeliveryList/components/FilterForDeliveryStatus'
 import RecentFilterArrow from 'src/components/Filter/RecentFilterArrow'
 import { Colors } from 'src/models/Colors/Colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -11,6 +10,10 @@ import Text from 'src/components/Texts/Text'
 import { prenda1, prenda2 } from 'src/assets';
 import CardSalesPeriod from './components/CardSalesPeriod'
 import Button from 'src/components/Buttons/Button'
+import {
+    Entypo, FontAwesome
+} from '@expo/vector-icons';
+
 
 export type DeliveryStatus = 'Disponibles' | 'Vendidos' | 'Oculto';
 
@@ -190,7 +193,6 @@ const deliveries: Delivery[] = [
 ];
 
 
-
 export default function SalesPeriod() {
     return (
         <ScreenContainer>
@@ -198,9 +200,19 @@ export default function SalesPeriod() {
                 <Search />
                 <FilterContainer style={styles.filterContainer}>
                     <View style={styles.contFilter}>
-                        <Filter style={styles.Filter} color={Colors.Green} iconName='checkmark-circle-sharp' title='Disponible' />
-                        <Filter style={styles.Filter} iconName='eye-off-outline' title='Oculto' color={Colors.Blue3} />
-                        <Filter color={Colors.Red} iconName='cash-sharp' title='Vendidos' />
+                        <Filter
+                            style={styles.Filter}
+                            color={Colors.Green}
+                            iconName='checkmark-circle-sharp'
+                            title='Disponible'
+                        />
+                        <Filter
+                            style={styles.Filter}
+                            iconName='eye-off-outline'
+                            title='Oculto'
+                            color={Colors.Blue3}
+                        />
+                        <Filter color={Colors.Red} iconName='close-circle-sharp' title='Vendidos' />
                     </View>
                     <RecentFilterArrow />
                 </FilterContainer>
@@ -217,35 +229,28 @@ export default function SalesPeriod() {
                 ))}
             </ScrollView>
             <View style={styles.contInformation}>
-                <Button
-                    title='Ver toda la informacion del periodo'
-                    size='Medium'
-                    style={styles.buttonInformation}
-                    onPress={() => { }}
-                />
+                <TouchableOpacity style={styles.buttonMore}>
+                    <Entypo name='plus' size={45} color={Colors.White} />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.buttonList}>
+                    <FontAwesome name='list-alt' size={34} color={Colors.White} />
+                </TouchableOpacity>
             </View>
-            <Button
-                title='Nueva prenda'
-                onPress={() => { }}
-
-            />
-
         </ScreenContainer>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
     filterContainer: {
         marginTop: 10,
         justifyContent: 'space-between',
-
     },
     contHeader: {
         paddingHorizontal: 10,
         paddingVertical: 15,
         backgroundColor: Colors.Dark2,
         borderRadius: 10,
-        marginBottom: 15
+        marginBottom: 15,
     },
     contFilter: {
         flexDirection: 'row',
@@ -254,14 +259,35 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },
     buttonInformation: {
-        backgroundColor: Colors.Dark3
+        backgroundColor: Colors.Dark3,
     },
     contInformation: {
-        marginVertical: 10
+        position: 'absolute',
+        bottom: -10,
+        right: 20,
+        flexDirection: 'row',
+        gap: 10,
+        marginBottom: 20,
     },
     contTitle: {
         flexDirection: 'row',
         gap: 30,
-        marginBottom: 10
-    }
+        marginBottom: 10,
+    },
+    buttonMore: {
+        height: 60,
+        width: 60,
+        backgroundColor: Colors.Blue3,
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonList: {
+        height: 60,
+        width: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.Gray2,
+        borderRadius: 100,
+    },
 });

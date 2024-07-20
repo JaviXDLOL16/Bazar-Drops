@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Image, View, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'src/components/Buttons/Icon';
 import Text from 'src/components/Texts/Text';
 import { Colors } from 'src/models/Colors/Colors';
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
-
+import Icon from 'src/components/Buttons/Icon';
 
 export interface Delivery {
     id: string;
@@ -21,7 +20,6 @@ export interface Delivery {
     buysPrice: number;
     status: string;
     shopPlace: string;
-
 }
 
 interface CardSalesPeriodProps {
@@ -37,19 +35,38 @@ const CardSalesPeriod: React.FC<CardSalesPeriodProps> = ({ delivery }) => {
         const year = date.getFullYear().toString().slice(-2); // Get last 2 digits of year
         return `${day}/${month}/${year}`;
     };
-    return (
 
-        <View
-            key={delivery.id}
-            style={styles.itemContainer}
-        >
+    const getStatusBackgroundColor = (status: string) => {
+        switch (status) {
+            case 'Vendidos':
+                return Colors.Red;
+            case 'Oculto':
+                return Colors.Blue3;
+            default:
+                return Colors.Green;
+        }
+    };
+
+    const getStatusIcon = (status: string) => {
+        switch (status) {
+            case 'Vendidos':
+                return <MaterialIcons name="cancel" size={18} color={Colors.White} />;
+            case 'Oculto':
+                return <MaterialIcons name="visibility-off" size={18} color={Colors.White} />;
+            default:
+                return <MaterialIcons name="check-circle" size={18} color={Colors.White} />;
+        }
+    };
+
+    return (
+        <View key={delivery.id} style={styles.itemContainer}>
             <View style={styles.contData}>
                 <View style={styles.contImage}>
                     <Image source={delivery.image} style={styles.image} />
                 </View>
                 <View style={styles.contDataText}>
                     <View style={styles.textContainerDescription}>
-                        <Text style={{ textAlign: 'center' }} numberOfLines={2}>{delivery.description}</Text>
+                        <Text style={{ textAlign: 'center' }} numberOfLines={showMore ? 2 : 1}>{delivery.description}</Text>
                     </View>
                     <View style={styles.contPrices}>
                         <View style={styles.contTextPrice}>
@@ -69,7 +86,6 @@ const CardSalesPeriod: React.FC<CardSalesPeriodProps> = ({ delivery }) => {
                     onPress={() => setShowMore(true)}
                 >
                     <Text style={styles.ViewAll}>Ver todo</Text>
-                    <Icon status={delivery.status} />
                 </TouchableOpacity>
             )}
             {showMore && (
@@ -97,13 +113,23 @@ const CardSalesPeriod: React.FC<CardSalesPeriodProps> = ({ delivery }) => {
                             </View>
                         </View>
                     </View>
-                    <TouchableOpacity
-                        onPress={() => setShowMore(false)}
-                    >
-                        <Text style={styles.ViewAll}>Ver todo</Text>
+                    <View style={styles.contTypeSize}>
+                        <View>
+                            <Text style={styles.textTitle}>Estado</Text>
+                            <View style={[styles.contStatus, { backgroundColor: getStatusBackgroundColor(delivery.status) }]}>
+                                {getStatusIcon(delivery.status)}
+                                <Text style={styles.textStatus}>{delivery.status}</Text>
+                            </View>
+                        </View>
+                        <View>
+                            <Text style={styles.textTitle}>Fecha de venta</Text>
+                            <Text style={styles.textPlace}>{formatDate(delivery.dateBuy)}</Text>
+                        </View>
+                    </View>
+                    <TouchableOpacity style={styles.buttonSeeLess} onPress={() => setShowMore(false)}>
+                        <Text style={styles.ViewAll}>Ver menos</Text>
                     </TouchableOpacity>
                 </>
-
             )}
         </View>
     );
@@ -127,7 +153,8 @@ const styles = StyleSheet.create({
     itemContainer: {
         backgroundColor: Colors.Dark2,
         marginBottom: 10,
-        padding: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
         borderRadius: 15,
     },
     image: {
@@ -140,8 +167,8 @@ const styles = StyleSheet.create({
     },
     contDataText: {
         alignItems: 'center',
-        gap: 10,
-        flex: 1
+        flex: 1,
+        justifyContent: 'space-around'
     },
     contPrices: {
         gap: 15,
@@ -158,6 +185,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        marginTop: 10
     },
     ViewAll: {
         textAlign: 'center',
@@ -185,7 +213,6 @@ const styles = StyleSheet.create({
     },
     textTitle: {
         color: Colors.Gray2,
-
     },
     contDate: {
         width: '40%',
@@ -210,6 +237,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 8
+    },
+    contType: {
+        flexDirection: 'row'
+    },
+    contStatus: {
+        paddingVertical: 5,
+        paddingHorizontal: 25,
+        borderRadius: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 5
+    },
+    textStatus: {
+        color: Colors.White,
+        marginLeft: 5,
+    },
+    buttonSeeLess: {
+        marginTop: 15
     }
 });
 
