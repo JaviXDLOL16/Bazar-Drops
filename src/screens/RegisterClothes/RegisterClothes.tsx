@@ -85,9 +85,9 @@ export default function RegisterClothes() {
                         />
                     </View>
                 </View>
-                <Input
-                    title='Tipo de prenda'
-                    placeholder='Prenda'
+                <TextInput
+                    title='Nombre de la prenda'
+                    placeholder='Descripcion'
                     requeriment='*Obligatorio'
                     inputMode='text'
                 />
@@ -98,10 +98,10 @@ export default function RegisterClothes() {
                     inputMode='text'
 
                 />
-                <TextInput
-                    title='Descripcion de la prenda'
-                    placeholder='Descripcion'
-                    requeriment=''
+                <Input
+                    title='Tipo de prenda'
+                    placeholder='Prenda'
+                    requeriment='*Obligatorio'
                     inputMode='text'
                 />
                 <View style={styles.containerSize}>

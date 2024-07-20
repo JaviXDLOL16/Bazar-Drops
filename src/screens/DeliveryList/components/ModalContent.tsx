@@ -3,9 +3,11 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Text from 'src/components/Texts/Text'
 import { Colors } from 'src/models/Colors/Colors';
 import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Delivery } from '../DeliveryList';
 import formatDate from 'src/utils/formateDate';
-import Input from 'src/components/form/Input';
+import Button from 'src/components/Buttons/Button';
+
 
 
 
@@ -30,13 +32,68 @@ export default function ModalContent({ item }: { item: Delivery }) {
                     </View>
                 </View>
                 <View style={styles.contDataText}>
-                    <Input
-                        title='Fecha'
-                        placeholder={formatDate(item.date)}
-                    />
+                    <View>
+                        <Text>Fecha</Text>
+                        <View style={styles.contTextData}>
+                            <Text fontWeight='bold' >{formatDate(item.date)}</Text>
+                        </View>
+                    </View>
+                    <View>
+                        <Text>Fecha</Text>
+                        <View style={styles.contTextTime}>
+                            <Text fontWeight='bold'>{item.time}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.contSell}>
+                        <Text >Precio de venta</Text>
+                        <Text fontWeight='semibold' >$ {item.price}</Text>
 
+                    </View>
                 </View>
             </View>
+            <View style={styles.viewDataLocation}>
+                <View>
+                    <View>
+                        <View style={styles.viewLocation}>
+                            <MaterialIcons name="location-pin" size={22} color={Colors.White} />
+                            <Text>Ubicacion</Text>
+                        </View>
+                    </View>
+                    <View style={styles.contTextLocation}>
+                        <Text numberOfLines={3} fontWeight='semibold' style={styles.textData}>{item.location}</Text>
+                    </View>
+                </View>
+                <View style={styles.viewDataSize}>
+                    <View style={styles.contSize}>
+                        <Text>Talla</Text>
+                        <View style={styles.viewSize}>
+                            <MaterialCommunityIcons name="tshirt-crew" size={22} color={Colors.White} />
+                            <Text>{item.size}</Text>
+                        </View>
+                    </View>
+                    <Text style={styles.textBuyer}>Para: {item.buyer}</Text>
+                    <View style={styles.viewSize}>
+                        <MaterialIcons name="content-copy" size={22} color="white" />
+                        <Text>{item.contact}</Text>
+                    </View>
+                </View>
+
+            </View>
+            <View style={styles.contButton}>
+                <Button
+                    style={styles.buttonRed}
+                    size='Medium'
+                    title='Cancelar'
+                    onPress={() => { }}
+                />
+                <Button
+                    style={styles.buttonGreen}
+                    size='Medium'
+                    title='Completar entrega'
+                    onPress={() => { }}
+                />
+            </View>
+
         </>
 
     )
@@ -92,7 +149,86 @@ const styles = StyleSheet.create({
         color: Colors.Gray2
     },
     contDataText: {
-        marginLeft: 10
+        gap: 15,
+        paddingLeft: 30,
+    },
+    contSell: {
+        gap: 5
+    },
+    textData: {
+    },
+    viewLocation: {
+        flexDirection: 'row',
+        marginTop: 10,
+        marginBottom: 5,
+        gap: 2
+    },
+    inputlocation: {
+        marginTop: 10,
+        width: 100,
+    },
+    contTextData: {
+        marginTop: 5,
+        paddingTop: 5,
+        backgroundColor: Colors.Dark1,
+        paddingBottom: 15,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+        width: '72%'
+    },
+    contTextTime: {
+        marginTop: 5,
+        paddingTop: 5,
+        backgroundColor: Colors.Dark1,
+        paddingBottom: 15,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+        width: '45%'
+    },
+    contTextLocation: {
+        width: 170,
+        height: 85,
+        marginTop: 5,
+        paddingTop: 5,
+        backgroundColor: Colors.Dark1,
+        paddingBottom: 15,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+    },
+    viewDataLocation: {
+        flexDirection: 'row'
+    },
+    viewSize: {
+        gap: 5,
+        flexDirection: 'row',
+        marginTop: 5,
+    },
+    viewDataSize: {
+        paddingLeft: 30
+    },
+    contSize: {
+        paddingTop: 10
+    },
+    textBuyer: {
+        marginTop: 10,
+        marginBottom: 5
+    },
+    contButton: {
+        marginTop: 30,
+        marginBottom: 20,
+        flexDirection: 'row',
+        width: '100%'
+    },
+    buttonRed: {
+        flex: 1,
+        backgroundColor: Colors.Red,
+        marginRight: 18,
+
+    },
+    buttonGreen: {
+        flex: 1,
+        backgroundColor: Colors.Green,
+        marginLeft: 18,
     }
 });
 

@@ -34,14 +34,14 @@ const deliveries: Delivery[] = [
         id: '1',
         date: new Date(2024, 8, 7),
         time: '1:30 p.m.',
-        location: 'Calle central',
-        price: 270,
+        location: '9vena suer entre 5 poniente y 13 sur calle los manguitossssssssssssss',
+        price: 270.00,
         buyer: 'Javier Tunn',
         contact: '9612428401',
         image: prenda2,
         status: 'pendiente',
         description: 'Manga larga azul marca Reebok',
-        size: 'Grandota pa',
+        size: 'Mediana',
         type: 'Playera'
     },
     {

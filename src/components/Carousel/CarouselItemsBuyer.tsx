@@ -16,9 +16,10 @@ type CarouselItemsBuyerProps = {
     numero: any;
     comprador: string;
     oferta?: number;
+    lugar: string;
 };
 
-const CarouselItemsBuyer: React.FC<CarouselItemsBuyerProps> = React.memo(({ imageSrc, nombre, precio, fecha, comprador, numero, oferta }) => {
+const CarouselItemsBuyer: React.FC<CarouselItemsBuyerProps> = React.memo(({ imageSrc, nombre, precio, fecha, comprador, numero, oferta, lugar }) => {
     const [expanded, setExpanded] = useState(false);
 
     const toggleExpand = () => {
@@ -39,10 +40,12 @@ const CarouselItemsBuyer: React.FC<CarouselItemsBuyerProps> = React.memo(({ imag
                             </View>
                             <View style={styles.contTex}>
                                 <Text style={styles.textData}>{nombre}</Text>
-                                <Text style={styles.textData}>Precio: ${precio}</Text>
-                                <Text style={styles.textData}>Fecha: {fecha}</Text>
+                                <Text style={styles.textData}>Precio original: ${precio}</Text>
+                                <Text style={styles.textData}>Entrega: {fecha}</Text>
                                 <Text style={styles.textData}>Comprador: {comprador}</Text>
                                 <Text style={styles.textData}>Numero: {numero}</Text>
+                                <Text style={styles.textDataPlace}>Lugar de entrega: {lugar}</Text>
+
                             </View>
                         </View>
                         <Text fontWeight='bold' style={styles.textResponse}>Oferta del comprador: ${oferta}</Text>
@@ -89,6 +92,7 @@ const CarouselItemsBuyer: React.FC<CarouselItemsBuyerProps> = React.memo(({ imag
                                 <Text style={styles.textData}>Fecha: {fecha}</Text>
                                 <Text style={styles.textData}>Comprador: {comprador}</Text>
                                 <Text style={styles.textData}>Numero: {numero}</Text>
+                                <Text style={styles.textDataPlace}>Lugar de entrega: {lugar}</Text>
                             </View>
                         </View>
                     </>
@@ -180,5 +184,9 @@ const styles = StyleSheet.create({
     },
     contInputSend: {
         width: '52%'
+    },
+    textDataPlace: {
+        fontSize: 14,
+        maxWidth: '83%',
     }
 });

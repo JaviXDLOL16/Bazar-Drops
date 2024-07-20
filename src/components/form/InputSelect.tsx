@@ -11,9 +11,10 @@ interface InputProps {
     placeholder?: string;
     title?: string;
     requeriment?: InputRequeriment;
+    onPress: () => void;
 }
 
-const InputSelect: React.FC<InputProps> = ({ placeholder, title, requeriment = '' }) => {
+const InputSelect: React.FC<InputProps> = ({ placeholder, onPress, title, requeriment = '' }) => {
     return (
         <View style={styles.container}>
             {(title || requeriment) && (
@@ -22,7 +23,7 @@ const InputSelect: React.FC<InputProps> = ({ placeholder, title, requeriment = '
                     {requeriment && <Text style={styles.requerimentText} fontWeight='light'>{requeriment}</Text>}
                 </View>
             )}
-            <TouchableOpacity style={[styles.inputContainer, styles.button, false && { borderColor: Colors.InputError, }]}>
+            <TouchableOpacity onPress={onPress} style={[styles.inputContainer, styles.button, false && { borderColor: Colors.InputError, }]}>
                 <Text style={styles.placeholder}>{placeholder}</Text>
                 <Ionicons name="search-sharp" size={25} color="#ccc" />
             </TouchableOpacity>
