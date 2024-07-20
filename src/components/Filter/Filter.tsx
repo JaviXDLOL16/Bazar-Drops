@@ -26,22 +26,30 @@ interface FilterProps extends TouchableOpacityProps {
     iconSize?: number,
     color?: string,
     style?: ViewStyle,
-    textStyle?: TextStyle
+    textStyle?: TextStyle,
+    circle?: boolean,
+    circleBackground?: string
 }
 
-export function Filter({ title, fontSize = 12, iconName, iconSize = 18, color = 'white', iconComponent, style, textStyle = {}, ...rest }: FilterProps) {
+export function Filter({ title, fontSize = 12, iconName, color = 'white', iconComponent, style, textStyle = {}, circle = false, circleBackground = 'transparent', ...rest }: FilterProps) {
     const [active, setActive] = useState(false);
 
     const handlePress = () => {
         setActive(!active);
     };
 
+    const iconSize = circle ? 16 : 22;
+
     const hasIcon = Boolean(iconComponent || iconName);
 
     return (
         <TouchableOpacity style={[styles.filterButton, (active && styles.activeButton), style]} onPress={handlePress} {...rest}>
             {title && <Text fontWeight='extrabold' style={[styles.filterText, { fontSize }, textStyle]}>{title}</Text>}
-            {hasIcon && (iconComponent || <Ionicons name={iconName} size={iconSize} color={color} />)}
+            {hasIcon && (
+                <View style={[circle && styles.iconContainerCircle, { backgroundColor: circle ? circleBackground : 'transparent' }]}>
+                    {iconComponent || <Ionicons name={iconName} size={iconSize} color={active ? 'white' : color} />}
+                </View>
+            )}
         </TouchableOpacity>
     )
 }
@@ -66,5 +74,12 @@ const styles = StyleSheet.create({
     },
     filterText: {
         lineHeight: 14,
+    },
+    iconContainerCircle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 22,
+        height: 22,
+        borderRadius: 15,
     },
 });
