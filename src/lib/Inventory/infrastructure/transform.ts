@@ -4,27 +4,78 @@ const apiToDomainSizeMap: Record<string, Cloth['size']> = {
     S: 'chico',
     M: 'mediano',
     L: 'grande',
-    XL: 'extra-grande'
+    XL: 'extra grande'
 };
 
 const apiToDomainStatusMap: Record<string, Cloth['status_id']> = {
-    available: 'disponible',
-    sold: 'vendido',
-    hidden: 'oculto'
+    1: 'disponible',
+    2: 'vendido',
+    3: 'oculto'
+};
+
+const apiToDomainTypeMap: Record<string, Cloth['type']> = {
+    shirt: 'playera',
+    pants: 'pantalon',
+    sweater: 'sueter',
+    short: 'short',
+    other: 'otro'
 };
 
 export const transformApiToDomain = (apiCloth: any): Cloth => {
     return {
         buy: apiCloth.buy,
+        created_at: apiCloth.created_at,
         description: apiCloth.description,
         id: apiCloth.id,
         image: apiCloth.image,
-        type: apiCloth.type,
+        location: apiCloth.location,
+        period_id: apiCloth.period_id,
         price: apiCloth.price,
         sellPrice: apiCloth.sellPrice,
-        location: apiCloth.location,
         size: apiToDomainSizeMap[apiCloth.size],
-        status_id: apiToDomainStatusMap[apiCloth.status],
-        sellerId: apiCloth.sellerId
+        sold_at: apiCloth.sold_at,
+        status_id: apiToDomainStatusMap[apiCloth.status_id],
+        type: apiToDomainTypeMap[apiCloth.type],
+        uuid: apiCloth.uuid
+    };
+};
+
+const domainToApiSizeMap: Record<Cloth['size'], string> = {
+    chico: 'S',
+    mediano: 'M',
+    grande: 'L',
+    'extra grande': 'XL'
+};
+
+const domainToApiStatusMap: Record<Cloth['status_id'], string> = {
+    disponible: '1',
+    vendido: '2',
+    oculto: '3'
+};
+
+const domainToApiTypeMap: Record<Cloth['type'], string> = {
+    playera: 'shirt',
+    pantalon: 'pants',
+    sueter: 'sweater',
+    short: 'short',
+    otro: 'other'
+};
+
+export const transformDomainToApi = (domainCloth: Cloth): any => {
+    return {
+        buy: domainCloth.buy,
+        created_at: domainCloth.created_at,
+        description: domainCloth.description,
+        id: domainCloth.id,
+        image: domainCloth.image,
+        location: domainCloth.location,
+        period_id: domainCloth.period_id,
+        price: domainCloth.price,
+        sellPrice: domainCloth.sellPrice,
+        size: domainToApiSizeMap[domainCloth.size],
+        sold_at: domainCloth.sold_at,
+        status_id: domainToApiStatusMap[domainCloth.status_id],
+        type: domainToApiTypeMap[domainCloth.type],
+        uuid: domainCloth.uuid
     };
 };
