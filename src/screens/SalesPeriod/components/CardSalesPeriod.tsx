@@ -85,7 +85,11 @@ const CardSalesPeriod: React.FC<CardSalesPeriodProps> = ({ delivery }) => {
                     style={styles.contViewAll}
                     onPress={() => setShowMore(true)}
                 >
+
                     <Text style={styles.ViewAll}>Ver todo</Text>
+                    <Icon
+                        status={delivery.status}
+                    />
                 </TouchableOpacity>
             )}
             {showMore && (
