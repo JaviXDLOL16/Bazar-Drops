@@ -1,41 +1,129 @@
-import React from 'react'
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import React, { useState } from 'react';
+import { View, StyleSheet, Alert } from 'react-native';
 import Button from 'src/components/Buttons/Button';
-import AccountRadioButtons from 'src/components/form/AccountRadioButtons';
 import Input from 'src/components/form/Input';
-import Text from 'src/components/Texts/Text'
+import Text from 'src/components/Texts/Text';
+import AccountRadioButtons from 'src/components/form/AccountRadioButtons';
+import { createUserService } from 'src/lib/User/application/UserService';
+import { RegisterUser } from 'src/lib/User/domain/User';
+import { createAxiosUserRepository } from 'src/lib/User/infrastructure/AxiosClothRepository';
+import { Colors } from 'src/models/Colors/Colors';
+import useStackNavigation from 'src/hooks/useStackNavigation';
 
-export default function RegisterForm() {
+const repository = createAxiosUserRepository();
+const service = createUserService(repository);
+
+function RegisterForm() {
+
+    const navigation = useStackNavigation();
+
+    const [loading, setLoading] = useState(false);
+    const [newUser, setNewUser] = useState<Partial<RegisterUser>>({
+        email: '',
+        password: '',
+        name: '',
+        phoneNumber: '',
+        accountType: undefined,
+    });
+
+    const handleRegister = async () => {
+        const { email, password, name, phoneNumber, accountType } = newUser;
+
+        if (!email || !password || !name || !phoneNumber || !accountType) {
+            Alert.alert('Error', 'Todos los campos son obligatorios');
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const response = await service.register(newUser as RegisterUser);
+            Alert.alert(response.token);
+            navigation.navigate('Principal');
+        } catch (error) {
+            console.error(error);
+            Alert.alert('Error', 'No se pudo registrar. Por favor, inténtelo de nuevo.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <>
+        <View>
 
-            <Input style={{ marginTop: 10 }} title='Nombre' requeriment='*Obligatorio' placeholder='Ingresa tu nombre' />
-            <Input title='Correo' requeriment='*Obligatorio' placeholder='Correo electrónico' keyboardType='email-address' />
-            <Input title='Contraseña' requeriment='*Obligatorio' placeholder='Crea tu contraseña' secureTextEntry />
-            <Input title='Fecha de nacimiento' requeriment='*Obligatorio' placeholder='dd/mm/aaaa' />
+            <Input
+                onChangeText={(value) => setNewUser({ ...newUser, name: value })}
+                value={newUser.name}
+                title='Nombre'
+                requeriment='*Obligatorio'
+                placeholder='Ingresa tu nombre'
+                maxLength={50}
+                autoCapitalize='words'
+            />
+
+            <Input
+                onChangeText={(value) => setNewUser({ ...newUser, phoneNumber: value })}
+                value={newUser.phoneNumber}
+                loading={loading}
+                title='Número de celular'
+                requeriment='*Obligatorio'
+                placeholder='123-456-7890'
+                maxLength={10}
+                keyboardType='numeric'
+            />
+
+            <Input
+                onChangeText={(value) => setNewUser({ ...newUser, email: value })}
+                value={newUser.email}
+                loading={loading}
+                title='Correo'
+                requeriment='*Obligatorio'
+                placeholder='Correo electrónico'
+                keyboardType='email-address'
+                maxLength={50}
+                autoCapitalize='none'
+            />
+
+            <Input
+                onChangeText={(value) => setNewUser({ ...newUser, password: value })}
+                value={newUser.password}
+                loading={loading}
+                title='Contraseña'
+                requeriment='*Obligatorio'
+                placeholder='Crea tu contraseña'
+                secureTextEntry maxLength={30}
+            />
 
             <Text fontWeight='extrabold' style={styles.notRegistedText}>Tipo de cuenta</Text>
             <View style={{ marginBottom: 20 }}>
-                <AccountRadioButtons />
+                <AccountRadioButtons
+                    value={newUser.accountType}
+                    onValueChange={(value) => setNewUser({ ...newUser, accountType: value })}
+                />
             </View>
+
+
+
             <Button
-                title='Aceptar'
+                loading={loading}
+                title='Registrar'
+                onPress={() => {
+                    setLoading(true);
+                    handleRegister();
+                }}
                 shadow={true}
                 size='ExtraLarge'
-                style={{ marginBottom: 30 }}
             />
-        </>
-
-    )
+        </View>
+    );
 }
 
+export default RegisterForm;
 
 const styles = StyleSheet.create({
     notRegistedText: {
         textAlign: 'left',
         fontSize: 18,
         marginBottom: 5,
-        paddingLeft: 40
+        paddingLeft: 10
     },
 });

@@ -126,7 +126,7 @@ function BuyerPrincipal({ navigation }: Props) {
   };
 
   useEffect(() => {
-    getCloth();
+    //getCloth();
   }, []);
 
   const filteredClothes = clothes.filter(cloth =>

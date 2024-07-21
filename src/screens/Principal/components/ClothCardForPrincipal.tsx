@@ -23,7 +23,7 @@ export default function ClothCardForPrincipal({ name, size, price, image, style,
             <Skeleton colorMode="dark" height={220} width={'100%'} radius={30} >
                 {loading ? null :
                     <Image
-                        source={image ? { uri: image } : require('src/assets/skeleton/imageClothDetailsSkeleton.png')}
+                        source={{ uri: image }}
                         style={{
                             width: '100%',
                             height: 220,

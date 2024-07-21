@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, ViewStyle, TextStyle, TouchableOpacityProps } from 'react-native';
+import { TouchableOpacity, StyleSheet, ViewStyle, TextStyle, TouchableOpacityProps, ActivityIndicator } from 'react-native';
 import { Colors } from 'src/models/Colors/Colors';
 import Text from '../Texts/Text';
 
@@ -13,10 +13,10 @@ interface ButtonProps extends TouchableOpacityProps {
     size?: size;
     shadow?: boolean;
     icon?: React.ReactNode,
-
+    loading?: boolean;
 }
 
-export default function Button({ title, onPress, style, textStyle, size = 'Large', shadow = false, icon, ...rest }: ButtonProps) {
+export default function Button({ title, onPress, style, textStyle, size = 'Large', shadow = false, icon, loading, ...rest }: ButtonProps) {
     const getButtonSizeStyle = () => {
         switch (size) {
             case 'Small':
@@ -52,9 +52,14 @@ export default function Button({ title, onPress, style, textStyle, size = 'Large
             onPress={onPress}
             style={[styles.button, getButtonSizeStyle(), shadow && styles.shadow, style]}
             {...rest}
-        >
-            <Text fontWeight='bold' style={[styles.buttonText, getTextSizeStyle(), textStyle]}>{title}</Text>
-            {icon}
+        >{
+                loading ? <ActivityIndicator size={size === 'ExtraLarge' ? 'large' : 'small'} color={Colors.White} /> :
+                    <>
+                        <Text fontWeight='bold' style={[styles.buttonText, getTextSizeStyle(), textStyle]}>{title}</Text>
+                        {icon}
+                    </>
+
+            }
         </TouchableOpacity>
     );
 };
@@ -79,9 +84,10 @@ const styles = StyleSheet.create({
         color: Colors.White,
     },
     TextSmall: {
-        fontSize: 12,
+        fontSize: 14,
     },
     ButtonSmall: {
+        height: 40,
         padding: 8,
         borderRadius: 5,
     },
@@ -97,6 +103,7 @@ const styles = StyleSheet.create({
     },
     ButtonLarge: {
         padding: 16,
+        height: 60,
         borderRadius: 10,
     },
     TextExtraLarge: {
@@ -105,6 +112,7 @@ const styles = StyleSheet.create({
     ButtonExtraLarge: {
         padding: 20,
         borderRadius: 15,
+        height: 83,
     },
 });
 

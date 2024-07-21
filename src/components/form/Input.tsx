@@ -9,10 +9,13 @@ interface InputProps extends TextInputPropsNative {
     placeholder?: string;
     title?: string;
     requeriment?: InputRequeriment;
+    loading?: boolean;
+    error?: boolean;
+    errorMessage?: string;
     style?: ViewStyle;
 }
 
-const Input: React.FC<InputProps> = ({ title, requeriment = '', style, ...rest }) => {
+const Input: React.FC<InputProps> = ({ title, requeriment = '', style, loading, error, errorMessage, ...rest }) => {
     return (
         <View style={[style]}>
             {(title || requeriment) && (
@@ -22,11 +25,12 @@ const Input: React.FC<InputProps> = ({ title, requeriment = '', style, ...rest }
                 </View>
             )}
             <TextInputNative
-                style={[styles.input, styles.inputContainer, false && { borderColor: Colors.InputError }]}
+                style={[styles.input, styles.inputContainer, false && { borderColor: Colors.InputError }, loading && { color: Colors.Gray2 }]}
+                editable={!loading}
                 placeholderTextColor="#ccc"
                 {...rest}
             />
-            <Text style={styles.messageError}>{false && 'Debes llenar este campo'} </Text>
+            <Text style={styles.messageError}>{error && (errorMessage || 'Debes llenar este campo')} </Text>
         </View>
     );
 };
