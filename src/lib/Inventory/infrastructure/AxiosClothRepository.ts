@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Cloth, ClothForBuyer, NewCloth } from "../domain/Cloth";
 import { ClothRepository } from "../domain/ClothRepository";
-import { transformApiToDomain, transformDomainToApi } from "./transform";
+import { transformApiToDomainCloth, transformDomainClothToApi } from "./clothTransform";
 
 const inventoryApiUrl = process.env.EXPO_PUBLIC_API_INVENTORY_URL;
 const storageApiUrl = process.env.EXPO_PUBLIC_STORAGE_URL;
@@ -12,12 +12,12 @@ export const createAxiosClothRepository = (): ClothRepository => {
 
         getAllByPediodAndStatusIdAvailable: async (periodId: number) => {
             const response = await axios.get(`${inventoryApiUrl}/cloth/status?status_id=1&period_id=${3}`);
-            const clothes = response.data.data.map(transformApiToDomain) as Cloth[];
+            const clothes = response.data.data.map(transformApiToDomainCloth) as Cloth[];
             return clothes;
         },
         getAllByPediodAndStatusIdSold: async (periodId: number) => {
             const response = await axios.get(`${inventoryApiUrl}/cloth/status?status_id=2&period_id=${3}`);
-            const clothes = response.data.data.map(transformApiToDomain) as Cloth[];
+            const clothes = response.data.data.map(transformApiToDomainCloth) as Cloth[];
             return clothes;
         },
 
@@ -27,23 +27,23 @@ export const createAxiosClothRepository = (): ClothRepository => {
 
         getAll: async () => {
             const response = await axios.get(`${inventoryApiUrl}/cloth`);
-            const clothes = response.data.data.map(transformApiToDomain) as ClothForBuyer[];
+            const clothes = response.data.data.map(transformApiToDomainCloth) as ClothForBuyer[];
             return clothes;
         },
         getAllByPeriod: async (periodId: number) => {
             const response = await axios.get(`${inventoryApiUrl}/cloth/period/${periodId}`);
-            const clothes = response.data.data.map(transformApiToDomain) as Cloth[];
+            const clothes = response.data.data.map(transformApiToDomainCloth) as Cloth[];
             return clothes;
         },
 
         getById: async (id: number) => {
             const response = await axios.get(`${inventoryApiUrl}/cloth/${id}`);
-            const cloth = transformApiToDomain(response.data.data) as ClothForBuyer;
+            const cloth = transformApiToDomainCloth(response.data.data) as ClothForBuyer;
             return cloth;
         },
         save: async (cloth: NewCloth) => {
             cloth.image = await uploadImageAndReturnURL(cloth.image);
-            await axios.post(`${inventoryApiUrl}/cloth/create`, transformDomainToApi(cloth));
+            await axios.post(`${inventoryApiUrl}/cloth/create`, transformDomainClothToApi(cloth));
 
         },
         delete: async (id: string) => {

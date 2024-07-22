@@ -21,7 +21,7 @@ const apiToDomainTypeMap: Record<string, Cloth['type']> = {
     other: 'otro'
 };
 
-export const transformApiToDomain = (apiCloth: any): Cloth => {
+export const transformApiToDomainCloth = (apiCloth: any): Cloth => {
     return {
         buy: apiCloth.buy,
         created_at: apiCloth.created_at,
@@ -63,7 +63,7 @@ const domainToApiTypeMap: Record<Cloth['type'], string> = {
     otro: 'other'
 };
 
-export const transformDomainToApi = (domainCloth: NewCloth): any => {
+export const transformDomainClothToApi = (domainCloth: NewCloth): any => {
     return {
         buy: domainCloth.buy,
         description: domainCloth.description,

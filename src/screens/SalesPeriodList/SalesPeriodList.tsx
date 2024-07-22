@@ -19,14 +19,13 @@ const service = createPeriodService(repository);
 
 export default function SalesPeriodList({ navigation }: Props) {
 
-    const [periodService, setPeriodService] = useState<Period[]>([])
+    const [periodList, setPeriodList] = useState<Period[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
     const getPeriodList = async () => {
         try {
             const periods = await service.getAll(2)
-            console.log(periods)
-            setPeriodService(periods)
+            setPeriodList(periods)
         } catch (error) {
             alert(error.message);
         } finally {
@@ -51,7 +50,7 @@ export default function SalesPeriodList({ navigation }: Props) {
                 <Filter title='Filtrar' />
             </FilterContainer>
             <ScrollView style={styles.scroll}>
-                {periodService.map((period) => <PeriodCard key={period.id} data={period} />)}
+                {periodList.map((period) => <PeriodCard key={period.id} data={period} />)}
             </ScrollView>
 
         </ScreenContainer>

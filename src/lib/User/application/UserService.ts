@@ -3,7 +3,7 @@ import { UserRepository } from "../domain/UserRepository";
 
 export const createUserService = (repository: UserRepository) => {
     return {
-        login: async (newUser: LoginUser) => await repository.login(newUser),
-        register: async (user: RegisterUser) => await repository.register(user)
+        login: async (user: LoginUser) => await repository.login(user),
+        register: async (newUser: RegisterUser) => await repository.register(newUser)
     };
 }

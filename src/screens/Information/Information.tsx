@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, Platform, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, TouchableOpacity, StyleSheet, Text, Platform, Image, Alert } from 'react-native';
 import ScreenContainer from "src/components/layout/ScreenContainer";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from 'src/models/Colors/Colors';
@@ -7,10 +7,28 @@ import EditableSection from '../../components/Modal/EditableSection';
 import Input from 'src/components/form/Input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as ImagePicker from 'expo-image-picker';
+import * as SecureStore from 'expo-secure-store';
 
 
-export default function Information() {
+export default function Information({ navigation }: any) {
     const [image, setImage] = useState<string | null>(null);
+    const [name, setName] = useState<string>('');
+
+
+    useEffect(() => {
+
+        const getName = async () => {
+            try {
+                let result = await SecureStore.getItemAsync('name');
+                setName(result || '');
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        getName();
+
+    }, [])
 
 
     const pickImage = async () => {
@@ -24,6 +42,27 @@ export default function Information() {
         if (!result.canceled) {
             setImage(result.assets[0].uri);
         }
+    };
+
+    const logout = () => {
+        Alert.alert(
+            'Cerrar sesión',
+            '¿Estás seguro de que quieres cerrar sesión?',
+            [
+                {
+                    text: 'Cancelar',
+                    style: 'cancel'
+                },
+                {
+                    text: 'Aceptar',
+                    onPress: async () => {
+                        await SecureStore.deleteItemAsync('role');
+                        await SecureStore.deleteItemAsync('name');
+                        navigation.replace('Authentication');
+                    }
+                }
+            ]
+        );
     };
 
     return (
@@ -47,7 +86,7 @@ export default function Information() {
                         </View>
                     </TouchableOpacity>
                     <View style={styles.containerAccount}>
-                        <Text style={styles.textName}>Raul Arroyo</Text>
+                        <Text style={styles.textName}>{name}</Text>
                         <Text style={styles.textAccount}>Vendedor</Text>
                     </View>
                 </View>
@@ -62,7 +101,7 @@ export default function Information() {
                         <TouchableOpacity>
                             <Text style={styles.textCreateAccount}>Crear cuenta de comprador</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={logout}>
                             <Text style={styles.textLeave}>Cerrar sesión</Text>
                         </TouchableOpacity>
                     </EditableSection>
@@ -107,6 +146,7 @@ const styles = StyleSheet.create({
     textName: {
         color: Colors.White,
         fontSize: 26,
+        textTransform: 'capitalize',
     },
     textAccount: {
         color: Colors.White,

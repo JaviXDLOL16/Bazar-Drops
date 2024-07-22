@@ -12,7 +12,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import InputSelect from 'src/components/form/InputSelect'
 import CustomModal from 'src/components/Modal/Modal'
 import ContentClothes from './components/ContentClothes'
-
+import { createAxiosDeliveryRepository } from 'src/lib/SellerBuyer/infrastructure/AxiosDeliveryRepository'
+import { createDeliveryService } from 'src/lib/SellerBuyer/application/DeliveryService'
+import { NewPendingDelivery } from 'src/lib/SellerBuyer/domain/Delivery'
 
 export interface Delivery {
     id: string;
@@ -158,10 +160,15 @@ const deliveries: Delivery[] = [
     },
 ];
 
+const repository = createAxiosDeliveryRepository();
+const service = createDeliveryService(repository);
 
 export default function NewDelivery() {
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedDelivery, setSelectedDelivery] = useState<Delivery | null>(null);
+
+    const newClothEmpty: Partial<NewPendingDelivery> = { date: '', buyerId: undefined, cellPhone: '', clothId: undefined, comments: '', location: '', offerId: undefined, sellerId: undefined, statusId: 'pendiente' };
+
 
 
     const toggleModal = () => {
