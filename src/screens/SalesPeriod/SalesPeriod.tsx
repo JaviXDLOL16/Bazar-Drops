@@ -1,5 +1,5 @@
 import { Image, ScrollView, StyleSheet, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import ScreenContainer from 'src/components/layout/ScreenContainer'
 import Search from 'src/components/Search/Search'
 import { Filter, FilterContainer } from 'src/components/Filter/Filter'
@@ -13,6 +13,8 @@ import Button from 'src/components/Buttons/Button'
 import {
     Entypo, FontAwesome
 } from '@expo/vector-icons';
+import CustomModal from 'src/components/Modal/Modal'
+import ContentModalPeriod from './components/ContentModalPeriod'
 
 
 export type DeliveryStatus = 'Disponibles' | 'Vendidos' | 'Oculto';
@@ -194,6 +196,11 @@ const deliveries: Delivery[] = [
 
 
 export default function SalesPeriod() {
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+    };
     return (
         <ScreenContainer>
             <View style={styles.contHeader}>
@@ -232,9 +239,12 @@ export default function SalesPeriod() {
                 <TouchableOpacity style={styles.buttonMore}>
                     <Entypo name='plus' size={45} color={Colors.White} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonList}>
+                <TouchableOpacity onPress={toggleModal} style={styles.buttonList}>
                     <FontAwesome name='list-alt' size={34} color={Colors.White} />
-                </TouchableOpacity>
+                </TouchableOpacity >
+                <CustomModal isVisible={isModalVisible} onClose={toggleModal}>
+                    <ContentModalPeriod />
+                </CustomModal>
             </View>
         </ScreenContainer>
     );
