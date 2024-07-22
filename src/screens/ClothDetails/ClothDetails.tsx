@@ -9,7 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Button from 'src/components/Buttons/Button';
 import { createClothService } from 'src/lib/Inventory/application/ClothService';
 import { createAxiosClothRepository } from 'src/lib/Inventory/infrastructure/AxiosClothRepository';
-import { Cloth } from 'src/lib/Inventory/domain/Cloth';
+import { Cloth, ClothForBuyer } from 'src/lib/Inventory/domain/Cloth';
 import { Skeleton } from 'moti/skeleton';
 
 const repository = createAxiosClothRepository();
@@ -21,7 +21,7 @@ export default function ClothDetails({ navigation, route }: Props) {
 
     const { clothId } = route.params ?? {};
 
-    const [cloth, setCloth] = useState<Cloth>();
+    const [cloth, setCloth] = useState<ClothForBuyer>();
     const [loading, setLoading] = useState(true);
 
     const getCloth = async () => {
@@ -31,7 +31,7 @@ export default function ClothDetails({ navigation, route }: Props) {
     };
 
     useEffect(() => {
-        //getCloth();
+        getCloth();
     }, [])
 
     return (
@@ -39,10 +39,10 @@ export default function ClothDetails({ navigation, route }: Props) {
             <Skeleton colorMode="dark" height={400} width={'100%'} radius={30} >
                 {loading ? null :
                     <Image
-                        source={{ uri: 'https://i.imgur.com/A1LTcXf.jpeg' }}
+                        source={{ uri: cloth?.image }}
                         style={{
                             width: '100%',
-                            height: 400, // Ajusta la altura según sea necesario
+                            height: 400,
                             borderRadius: 30,
                         }}
                     />
@@ -50,14 +50,14 @@ export default function ClothDetails({ navigation, route }: Props) {
             </Skeleton>
             <Skeleton colorMode="dark" height={44} width={'25%'} radius={15} >
                 {loading ? null :
-                    <Text fontWeight='bold' style={{ fontSize: 34 }}>{cloth?.price ?? '120'} </Text>
+                    <Text fontWeight='bold' style={{ fontSize: 34 }}>${cloth?.price ?? '120'} </Text>
                 }
             </Skeleton>
-            <Skeleton colorMode="dark" height={80} width={'95%'} radius={15} >
+            <Skeleton colorMode="dark" height={90} width={'95%'} radius={15} >
                 {loading ? null :
-                    <View>
-                        <Text style={{ fontSize: 24 }}>Descripción</Text>
-                        <Text fontWeight='light' style={{ fontSize: 18, color: Colors.default400 }}>{cloth?.description ?? 'Playera color naranja con diseño estili tie dye, estampado de girasole es muy buen estado'} </Text>
+                    <View style={{ gap: 3 }}>
+                        <Text fontWeight='bold' style={{ fontSize: 20, color: Colors.default400 }}>Descripción</Text>
+                        <Text fontWeight='semibold' style={{ fontSize: 22 }}>{cloth?.description ?? 'Playera color naranja con diseño estili tie dye, estampado de girasole es muy buen estado'} </Text>
                     </View>
                 }
             </Skeleton>
@@ -79,7 +79,7 @@ export default function ClothDetails({ navigation, route }: Props) {
                             <View style={{ backgroundColor: Colors.Dark1, padding: 3, borderRadius: 100, justifyContent: 'center', alignItems: 'center' }}>
                                 <Ionicons name="person" size={20} color="white" />
                             </View>
-                            <Text fontWeight='bold' style={{ fontSize: 18 }}>{cloth?.sellerId ?? 'Leonardo Espinosa'}</Text>
+                            <Text fontWeight='bold' style={{ fontSize: 18 }}>{'Leonardo Espinosa NO EN API'}</Text>
                         </TouchableOpacity>
                     </View>
                 }
@@ -89,7 +89,7 @@ export default function ClothDetails({ navigation, route }: Props) {
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text fontWeight='regular' style={{ fontSize: 18 }}>Lugar de entrega </Text>
                         <TouchableOpacity disabled style={{ backgroundColor: Colors.Dark1, paddingVertical: 3, paddingHorizontal: 5, borderRadius: 8, }}>
-                            <Text fontWeight='bold' style={{ fontSize: 18 }}>{cloth?.location ?? 'Parque central'}</Text>
+                            <Text fontWeight='bold' style={{ fontSize: 18 }}>{'Parque central NO EN API'}</Text>
                         </TouchableOpacity>
                     </View>
                 }

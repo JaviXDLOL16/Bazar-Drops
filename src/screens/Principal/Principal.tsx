@@ -54,14 +54,14 @@ const data = [
 ];
 
 const dataForBuyerPrincipal = [
-  { id: '1', description: 'Playera blanca Bears', size: 'Extra chica', price: 120 },
-  { id: '2', description: 'Playera tie dye girasoles', size: 'Mediana', price: 120 },
-  { id: '3', description: 'Playera negra Purple Rain', size: 'Mediana', price: 120 },
-  { id: '4', description: 'Playera azul North Face', size: 'Mediana', price: 120 },
-  { id: '5', description: 'Playera blanca Bears', size: 'Extra chica', price: 120 },
-  { id: '6', description: 'Playera tie dye girasoles', size: 'Mediana', price: 120 },
-  { id: '7', description: 'Playera negra Purple Rain', size: 'Mediana', price: 120 },
-  { id: '8', description: 'Playera azul North Face', size: 'Mediana', price: 120 },
+  { id: '1', description: 'Playera blanca Bears', size: 'Extra chica', price: 120, image: require('src/assets/images/prenda1.jpeg') },
+  { id: '2', description: 'Playera tie dye girasoles', size: 'Mediana', price: 120, image: require('src/assets/images/Prueba2.jpeg') },
+  { id: '3', description: 'Playera negra Purple Rain', size: 'Mediana', price: 120, image: require('src/assets/images/prenda3.jpeg') },
+  { id: '4', description: 'Playera azul North Face', size: 'Mediana', price: 120, image: require('src/assets/images/prenda3.jpeg') },
+  { id: '5', description: 'Playera blanca Bears', size: 'Extra chica', price: 120, image: require('src/assets/images/prenda1.png') },
+  { id: '6', description: 'Playera tie dye girasoles', size: 'Mediana', price: 120, image: require('src/assets/images/prenda1.png') },
+  { id: '7', description: 'Playera negra Purple Rain', size: 'Mediana', price: 120, image: require('src/assets/images/prenda1.png') },
+  { id: '8', description: 'Playera azul North Face', size: 'Mediana', price: 120, image: require('src/assets/images/prenda1.png') },
   // Agrega más objetos según sea necesario
 ];
 
@@ -169,7 +169,7 @@ function BuyerPrincipal({ navigation }: Props) {
               name={item.description}
               size={item.size}
               price={item.price}
-              onPress={() => { navigation.navigate('ClothDetails') }}
+              onPress={() => { navigation.navigate('ClothDetails', { clothId: parseInt(item.id) }) }}
               loading={isLoading}
             />
           </>
