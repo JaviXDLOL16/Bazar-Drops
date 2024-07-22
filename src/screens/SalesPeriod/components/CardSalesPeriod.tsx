@@ -21,7 +21,6 @@ const CardSalesPeriod: React.FC<CardSalesPeriodProps> = ({ cloth }) => {
         return `${day}/${month}/${year}`;
     };
 
-    console.log(cloth.created_at)
     return (
 
         <View

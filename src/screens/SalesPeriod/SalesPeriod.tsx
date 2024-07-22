@@ -19,7 +19,7 @@ import { stackParamList } from 'App'
 const repository = createAxiosClothRepository();
 const service = createClothService(repository);
 
-const mockClothes: Cloth[] = [
+/*const mockClothes: Cloth[] = [
     {
         buy: 50,
         created_at: "Sun, 21 Jul 2024 00:00:00 GMT",
@@ -116,7 +116,7 @@ const mockClothes: Cloth[] = [
         type: "sueter",
         uuid: "6eb49275-4154-481f-848b-90d69c8c8c8b"
     }
-]
+]*/
 type Props = NativeStackScreenProps<stackParamList, 'SalesPeriod'>;
 export default function SalesPeriod({ navigation, route }: Props) {
 
@@ -146,6 +146,7 @@ export default function SalesPeriod({ navigation, route }: Props) {
     const getClothes = async () => {
         try {
             const clothes = await service.getAllByPeriod(3);
+            console.log(clothes);
             setClothes(clothes.reverse());
         } catch (error) {
             alert(error.message);

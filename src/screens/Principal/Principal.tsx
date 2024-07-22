@@ -71,6 +71,34 @@ const service = createClothService(repository);
 type Props = NativeStackScreenProps<stackParamList, 'Principal'>;
 
 function SellerPrincipal({ navigation }: Props) {
+
+  const [clothes, setClothes] = useState<Cloth[]>([]);
+  const [clothesAvailable, setClothesAvailable] = useState<Cloth[]>([]);
+  const [clothesSold, setClothesSold] = useState<Cloth[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState('');
+
+  const getClothes = async () => {
+    try {
+      const clothes = await service.getAllByPeriod(3);
+      setClothes(clothes.reverse());
+      const available = clothes.filter(cloth => cloth.status_id === 'disponible');
+      setClothesAvailable(available);
+      const sold = clothes.filter(cloth => cloth.status_id === 'vendido');
+      setClothesSold(sold);
+      console.log(sold);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+
+  useEffect(() => {
+    getClothes();
+  }, [])
+
   return (
     <>
       <ScrollView showsVerticalScrollIndicator={false} >
@@ -95,9 +123,9 @@ function SellerPrincipal({ navigation }: Props) {
         <View style={styles.containerPeriods}>
           <ButtonAllPeriods />
         </View>
-        <CarouselCards data={data} />
+        <CarouselCards loading={isLoading} data={clothesAvailable} />
 
-        <RecentlySoldSection style={{ marginTop: 30 }} />
+        <RecentlySoldSection data={clothesSold} style={{ marginTop: 30 }} />
 
         <View style={styles.bottomSpacer} />
 
@@ -117,6 +145,7 @@ function BuyerPrincipal({ navigation }: Props) {
   const getCloth = async () => {
     try {
       const clothes = await service.getAll();
+      console.log(clothes);
       setClothes(clothes.reverse());
     } catch (error) {
       alert(error.message);
