@@ -1,17 +1,22 @@
 
-import React, { useState } from 'react'
-import { Image, Modal, StyleSheet, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Alert, Image, Modal, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Text from 'src/components/Texts/Text'
 import { Colors } from 'src/models/Colors/Colors';
-import formatDate, { getDateWithoutDayOfWeek, getDayOfWeekFormatted } from 'src/utils/formateDate';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import formatDate from 'src/utils/formateDate';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
+import * as Clipboard from 'expo-clipboard';
+import * as Linking from 'expo-linking';
 import { Ionicons } from "@expo/vector-icons";
-import { Delivery, DeliveryStatus } from '../DeliveryList';
 import CustomModal from 'src/components/Modal/Modal';
 import ModalContent from './ModalContent';
+import { Delivery, DeliveryStatus } from 'src/lib/SellerBuyer/domain/Delivery';
+import { createAxiosClothRepository } from 'src/lib/Inventory/infrastructure/AxiosClothRepository';
+import { createClothService } from 'src/lib/Inventory/application/ClothService';
+import { ClothForBuyer } from 'src/lib/Inventory/domain/Cloth';
+import { UserRole } from 'src/lib/User/domain/User';
+
 const statusIcon: { [key in DeliveryStatus]: keyof typeof FontAwesome.glyphMap } = {
     pendiente: 'clock-o',
     vendido: 'check-circle',
@@ -24,45 +29,98 @@ const statusColors: { [key in DeliveryStatus]: string } = {
     cancelado: Colors.Red,
 };
 
-export default function DeliveryCard({ item }: { item: Delivery }) {
+function getRandomTime() {
+    const hours = Math.floor(Math.random() * 24).toString().padStart(2, '0');
+    const minutes = Math.floor(Math.random() * 60).toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+}
+
+const repository = createAxiosClothRepository();
+const service = createClothService(repository);
+
+export default function DeliveryCard({ item, index, rol, name, onPressCancel, onPressComplete }: { item: Delivery, index: number, rol: UserRole, name: string, onPressCancel: () => void, onPressComplete: () => void }) {
     const [isModalVisible, setModalVisible] = useState(false);
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     };
+
+    const copyToClipboard = (text: string) => {
+        Clipboard.setStringAsync(text);
+        Alert.alert('Copiado', 'Número copiado al portapapeles');
+    };
+
+    const makePhoneCall = (phoneNumber: string) => {
+        const url = `tel:${phoneNumber}`;
+        Linking.canOpenURL(url)
+            .then(supported => {
+                if (supported) {
+                    return Linking.openURL(url);
+                } else {
+                    Alert.alert('Error', 'El dispositivo no puede hacer llamadas telefónicas');
+                }
+            })
+            .catch(err => console.error('Error al intentar abrir la URL', err));
+    };
+
+
+
+    const [cloth, setCloth] = useState<ClothForBuyer>();
+
+    const getCloth = async () => {
+        console.log(item.clothId);
+        const cloth = await service.getById(item.clothId);
+        console.log(cloth);
+        setCloth(cloth);
+    };
+
+    useEffect(() => {
+        getCloth();
+    }, [])
+
     return (
+
         <View style={styles.contCard}>
             <View style={styles.contImage}>
-                <Image source={item.image} style={styles.image} />
+                <Image source={{ uri: cloth?.image }} style={styles.image} />
             </View >
             <View style={styles.contData}>
-                <Text numberOfLines={1} style={styles.textDate} fontWeight='bold'>{formatDate(item.date)}</Text>
+                <Text numberOfLines={1} style={styles.textDate} fontWeight='bold'>{formatDate(new Date(item.date))}</Text>
                 <View style={styles.contBuyer}>
                     <Ionicons style={styles.iconAccount} name="person-circle" size={18} color="white" />
-                    <Text fontWeight='semibold'>{item.buyer}</Text>
+                    <Text fontWeight='semibold'>{name}</Text>
                 </View>
                 <View style={styles.contNumber}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => copyToClipboard(item.cellPhone)}>
                         <MaterialIcons name="content-copy" size={16} color="white" />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => makePhoneCall(item.cellPhone)}>
                         <MaterialIcons name="local-phone" size={16} color={Colors.White} />
                     </TouchableOpacity>
-                    <Text fontWeight='bold'>{item.contact}</Text>
+                    <Text fontWeight='bold'>{item.cellPhone}</Text>
                 </View>
                 <TouchableOpacity style={styles.buttonSeeMore} onPress={toggleModal}>
-                    <Text style={styles.textSeeMore} fontWeight='light'>Ver mas detalles</Text>
+                    <Text style={styles.textSeeMore} fontWeight='light'>Ver más</Text>
                 </TouchableOpacity>
                 <CustomModal isVisible={isModalVisible} onClose={toggleModal}>
                     <ModalContent
+                        onPressCancel={() => {
+                            setModalVisible(false)
+                            onPressCancel()
+                        }}
+
+                        onPressComplete={() => {
+                            setModalVisible(false)
+                            onPressComplete()
+                        }}
                         item={item}
                     />
                 </CustomModal>
             </View>
-            <View style={[styles.contHour, { backgroundColor: statusColors[item.status] }]}>
-                <Text style={styles.textTime} fontWeight='extrabold'>{item.time}</Text>
-                <FontAwesome name={statusIcon[item.status]} size={32} color="white" />
-                <Text fontWeight='extrabold' style={styles.price}>${item.price}</Text>
+            <View style={[styles.contHour, { backgroundColor: statusColors[item.statusId] }]}>
+                <Text numberOfLines={1} style={styles.textTime} fontWeight='extrabold'>{getRandomTime()}</Text>
+                <FontAwesome name={statusIcon[item.statusId]} size={32} color="white" />
+                <Text numberOfLines={1} fontWeight='extrabold' style={styles.price}>${cloth?.sellPrice}</Text>
             </View>
         </View>
     )

@@ -5,19 +5,22 @@ import Text from 'src/components/Texts/Text';
 import { AntDesign } from '@expo/vector-icons';
 import { Period } from 'src/lib/Inventory/domain/Period';
 import formatDate from 'src/utils/formateDate';
+import useStackNavigation from 'src/hooks/useStackNavigation';
 
 interface PeriodCardProps {
     data: Period;
 }
 
+
 export default function PeriodCard({ data }: PeriodCardProps) {
+    const navigation = useStackNavigation();
     return (
         <View style={styles.container}>
             <View style={styles.head}>
                 <Text style={styles.headTitle} fontWeight="semibold" numberOfLines={1}>
                     Descripción del periodo de ventas
                 </Text>
-                <TouchableOpacity style={styles.headButton}>
+                <TouchableOpacity onPress={() => { navigation.navigate('SalesPeriod') }} style={styles.headButton}>
                     <Text style={[styles.headButtonTitle, { textTransform: 'capitalize' }, data.status_id === 'finalizado' ? { color: Colors.Gray2 } : {}]} fontWeight="semibold">
                         {data.status_id}
                     </Text>

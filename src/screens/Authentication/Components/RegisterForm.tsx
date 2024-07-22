@@ -7,8 +7,9 @@ import AccountRadioButtons from 'src/components/form/AccountRadioButtons';
 import { createUserService } from 'src/lib/User/application/UserService';
 import { RegisterUser } from 'src/lib/User/domain/User';
 import { createAxiosUserRepository } from 'src/lib/User/infrastructure/AxiosUserRepository';
-import { Colors } from 'src/models/Colors/Colors';
 import useStackNavigation from 'src/hooks/useStackNavigation';
+import * as SecureStore from 'expo-secure-store';
+
 
 const repository = createAxiosUserRepository();
 const service = createUserService(repository);
@@ -35,10 +36,26 @@ function RegisterForm() {
             return;
         }
 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            Alert.alert('Error', 'El correo electrónico no es válido');
+            setLoading(false);
+            return;
+        }
+
+        if (password.length < 8) {
+            Alert.alert('Error', 'La contraseña debe tener al menos 8 caracteres');
+            setLoading(false);
+            return;
+        }
+
         try {
             const response = await service.register(newUser as RegisterUser);
-            Alert.alert(response.token);
-            navigation.navigate('Principal');
+            await SecureStore.setItemAsync('role', response.id.toString());
+            await SecureStore.setItemAsync('name', response.userName);
+
+            navigation.replace('Principal');
         } catch (error) {
             console.error(error);
             Alert.alert('Error', 'No se pudo registrar. Por favor, inténtelo de nuevo.');

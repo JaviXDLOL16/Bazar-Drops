@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, ScrollView, TouchableOpacity, Image } from 'react-native';
 import Text from 'src/components/Texts/Text';
-import { Delivery } from '../NewDelivery';
 import SelectButton from 'src/components/Buttons/SelectButton';
 import { Colors } from 'src/models/Colors/Colors';
+import { Delivery } from 'src/lib/SellerBuyer/domain/Delivery';
 
 interface ContentClothesProps {
     deliveries: Delivery[];
@@ -35,20 +35,20 @@ export default function ContentClothes({ deliveries, onSelect }: ContentClothesP
                         onPress={() => onSelect(delivery)}
                     >
                         <View style={styles.contImage}>
-                            <Image source={delivery.image} style={styles.image} />
+                            <Image style={styles.image} />
                         </View>
                         <View style={styles.contDataText} >
                             <View style={styles.textContainerDescription}>
-                                <Text style={{ textAlign: 'center' }} numberOfLines={2}>{delivery.description}</Text>
+                                <Text style={{ textAlign: 'center' }} numberOfLines={2}>{'AAA'}</Text>
                             </View >
                             <View style={styles.contPrices} >
                                 <View style={styles.contTextPrice}>
                                     <Text style={styles.textPrice}>Precio compra</Text>
-                                    <Text fontWeight='extrabold'>$ {delivery.buysPrice}</Text>
+                                    <Text fontWeight='extrabold'>$ {999}</Text>
                                 </View>
                                 <View style={styles.contTextPrice}>
                                     <Text style={styles.textPrice}>Precio venta</Text>
-                                    <Text fontWeight='extrabold'>$ {delivery.buysPrice}</Text>
+                                    <Text fontWeight='extrabold'>$ {999}</Text>
                                 </View>
                             </View>
                         </View>

@@ -4,7 +4,7 @@ import Text from 'src/components/Texts/Text';
 import { Colors } from 'src/models/Colors/Colors';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { Cloth } from 'src/lib/Inventory/domain/Cloth';
-import { sizeSimpleText } from 'src/lib/Inventory/infrastructure/transform';
+import { sizeSimpleText } from 'src/lib/Inventory/infrastructure/clothTransform';
 
 interface CardSalesPeriodProps {
     cloth: Cloth;

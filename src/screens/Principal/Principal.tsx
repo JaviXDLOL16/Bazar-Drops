@@ -18,6 +18,8 @@ import { createClothService } from "src/lib/Inventory/application/ClothService";
 import { Cloth, ClothForBuyer } from "src/lib/Inventory/domain/Cloth";
 import { createAxiosClothRepository } from "src/lib/Inventory/infrastructure/AxiosClothRepository";
 import Text from "src/components/Texts/Text";
+import * as SecureStore from 'expo-secure-store';
+
 
 
 const data = [
@@ -86,7 +88,6 @@ function SellerPrincipal({ navigation }: Props) {
       setClothesAvailable(available);
       const sold = clothes.filter(cloth => cloth.status_id === 'vendido');
       setClothesSold(sold);
-      console.log(sold);
     } catch (error) {
       alert(error.message);
     } finally {
@@ -103,18 +104,18 @@ function SellerPrincipal({ navigation }: Props) {
     <>
       <ScrollView showsVerticalScrollIndicator={false} >
         <View style={styles.containerHeader}>
-          <ButtonNotifications
-            title='Solicitudes de venta'
-            number={5}
-            onPress={() => { navigation.navigate('BuyerRequest') }}
-          />
-          <ButtonNotifications
-            title='Entregas'
-            number={5}
-            style={{ backgroundColor: Colors.Blue, marginRight: 30 }}
-            onPress={() => { navigation.navigate('DeliveryList') }}
-          />
-          <ButtonInformation />
+          <Text fontWeight="semibold" style={{ fontSize: 18 }}>Hola de nuevo</Text>
+          <View style={{ flexDirection: 'row', gap: 20 }}>
+            <ButtonNotifications
+              title='Entregas'
+              number={5}
+              style={{ backgroundColor: Colors.Blue }}
+              onPress={() => { navigation.navigate('DeliveryList') }}
+            />
+
+            <ButtonInformation />
+          </View>
+
         </View>
 
         <View style={styles.contSearch}>
@@ -145,7 +146,6 @@ function BuyerPrincipal({ navigation }: Props) {
   const getCloth = async () => {
     try {
       const clothes = await service.getAll();
-      console.log(clothes);
       setClothes(clothes.reverse());
     } catch (error) {
       alert(error.message);
@@ -165,18 +165,18 @@ function BuyerPrincipal({ navigation }: Props) {
   return (
     <>
       <View style={styles.containerHeader}>
-        <ButtonNotifications
-          title='Solicitudes de venta'
-          number={5}
-          onPress={() => { navigation.navigate('BuyerRequest') }}
-        />
-        <ButtonNotifications
-          title='Entregas'
-          number={5}
-          style={{ backgroundColor: Colors.Blue, marginRight: 30 }}
-          onPress={() => { navigation.navigate('DeliveryList') }}
-        />
-        <ButtonInformation />
+        <Text fontWeight="semibold" style={{ fontSize: 18 }}>Hola de nuevo</Text>
+        <View style={{ flexDirection: 'row', gap: 20 }}>
+          <ButtonNotifications
+            title='Entregas'
+            number={5}
+            style={{ backgroundColor: Colors.Blue }}
+            onPress={() => { navigation.navigate('DeliveryList') }}
+          />
+
+          <ButtonInformation />
+        </View>
+
       </View>
 
       <View style={styles.contSearch}>
@@ -218,12 +218,36 @@ function BuyerPrincipal({ navigation }: Props) {
 
 export default function Principal({ navigation, route }: Props) {
   const insets = useSafeAreaInsets();
+
+  const [role, setRole] = useState<string | null>(null);
+
+  useEffect(() => {
+
+    const getSecretToken = async () => {
+      try {
+        let result = await SecureStore.getItemAsync('role');
+        console.log(result);
+        setRole(result);
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    getSecretToken();
+
+  }, [])
+
+
   return (
     <ScreenContainer style={{
       paddingTop: Platform.OS === 'ios' ? insets.top : insets.top + 10,
     }}>
+      {
+        role === '1'
+          ? <SellerPrincipal navigation={navigation} route={route} />
+          : <BuyerPrincipal navigation={navigation} route={route} />
+      }
 
-      <BuyerPrincipal navigation={navigation} route={route} />
 
     </ScreenContainer>
   );
@@ -231,11 +255,13 @@ export default function Principal({ navigation, route }: Props) {
 
 const styles = StyleSheet.create({
   containerHeader: {
+    gap: 20,
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingVertical: 10,
+    paddingLeft: 20
   },
   containerPeriods: {
     marginBottom: 10

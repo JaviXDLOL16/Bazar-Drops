@@ -57,7 +57,6 @@ export default function RegisterClothes({ navigation, route }: Props) {
         });
 
         if (!result.canceled) {
-            console.log(result.assets[0].uri);
             setNewCloth({ ...newCloth, image: result.assets[0].uri });
         }
     };
