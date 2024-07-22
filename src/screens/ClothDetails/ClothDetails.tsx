@@ -11,6 +11,8 @@ import { createClothService } from 'src/lib/Inventory/application/ClothService';
 import { createAxiosClothRepository } from 'src/lib/Inventory/infrastructure/AxiosClothRepository';
 import { Cloth, ClothForBuyer } from 'src/lib/Inventory/domain/Cloth';
 import { Skeleton } from 'moti/skeleton';
+import CustomModal from 'src/components/Modal/Modal';
+import DetailsDeliverys from './components/DetailsDeliverys';
 
 const repository = createAxiosClothRepository();
 const service = createClothService(repository);
@@ -33,6 +35,11 @@ export default function ClothDetails({ navigation, route }: Props) {
     useEffect(() => {
         getCloth();
     }, [])
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+    };
 
     return (
         <ScreenContainer scrollEnable={true} style={{ paddingTop: 20, gap: 10 }}>
@@ -94,7 +101,10 @@ export default function ClothDetails({ navigation, route }: Props) {
                     </View>
                 }
             </Skeleton>
-            <Button style={{ marginTop: 20 }} title='Lo quiero' onPress={() => { }} />
+            <Button style={{ marginTop: 20 }} title='Lo quieroo' onPress={toggleModal} />
+            <CustomModal isVisible={isModalVisible} onClose={toggleModal}>
+                <DetailsDeliverys />
+            </CustomModal>
         </ScreenContainer>
     )
 }
