@@ -250,6 +250,5 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.Gray2,
         borderRadius: 100,
     },
-    marginBottom: 5
 }
 );
