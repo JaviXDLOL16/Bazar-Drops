@@ -4,10 +4,13 @@ import ClothCardForPendingDelivery from 'src/components/Card/ClothCardForPending
 import Text from 'src/components/Texts/Text'
 import { Colors } from 'src/models/Colors/Colors'
 import useStackNavigation from 'src/hooks/useStackNavigation'
+import { Cloth } from 'src/lib/Inventory/domain/Cloth'
 
-interface Props extends ViewProps { }
+interface Props extends ViewProps {
+    data: Cloth[];
+}
 
-export default function RecentlySoldSection({ style, ...rest }: Props) {
+export default function RecentlySoldSection({ style, data, ...rest }: Props) {
 
     const navigation = useStackNavigation();
 
@@ -30,9 +33,17 @@ export default function RecentlySoldSection({ style, ...rest }: Props) {
                     Ver todo
                 </Text>
             </View>
-            <ClothCardForPendingDelivery />
-            <ClothCardForPendingDelivery />
-            <ClothCardForPendingDelivery />
+            <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'center', alignItems: 'center', minHeight: 160 }}>
+                {data.map((cloth, index) => (
+                    <ClothCardForPendingDelivery key={index} cloth={cloth} />
+                ))}
+                {data.length === 0 &&
+                    <View style={{ gap: 10, paddingHorizontal: 35 }}>
+                        <Text fontWeight='bold' style={{ color: Colors.default400, fontSize: 24, textAlign: 'center' }}>¡Aún no has vendido ninguna prenda!</Text>
+                        <Text style={{ color: Colors.Gray2, fontSize: 20, textAlign: 'center' }}>Registra más artículos para atraer a más clientes. </Text>
+                    </View>
+                }
+            </View>
         </View>
     )
 }

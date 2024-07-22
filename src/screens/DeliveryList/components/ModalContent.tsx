@@ -4,24 +4,24 @@ import Text from 'src/components/Texts/Text'
 import { Colors } from 'src/models/Colors/Colors';
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Delivery } from '../DeliveryList';
 import formatDate from 'src/utils/formateDate';
 import Button from 'src/components/Buttons/Button';
+import { Delivery } from 'src/lib/SellerBuyer/domain/Delivery';
 
 
 
 
-export default function ModalContent({ item }: { item: Delivery }) {
+export default function ModalContent({ item, onPressCancel, onPressComplete }: { item: Delivery, onPressCancel: () => void, onPressComplete: () => void }) {
     return (
         <>
             <View style={styles.contTitle}>
-                <Text fontWeight='bold' style={styles.textDetail}>Detalles de la entrega</Text>
-                <TouchableOpacity style={styles.buttonEdit}>
+                <Text fontWeight='bold' style={styles.textDetail}>Acciones</Text>
+                {/*<TouchableOpacity style={styles.buttonEdit}>
                     <MaterialIcons name="edit" size={22} color={Colors.Blue3} />
                     <Text fontWeight='medium' style={styles.textEdit}>Editar</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>*/}
             </View>
-            <Text fontWeight='bold' style={styles.textDescription}>{item.description}</Text>
+            {/* <Text fontWeight='bold' style={styles.textDescription}>{item.description}</Text>
             <View style={styles.contData}>
                 <View style={styles.contDataImage}>
                     <View style={styles.contImage}>
@@ -51,6 +51,7 @@ export default function ModalContent({ item }: { item: Delivery }) {
                     </View>
                 </View>
             </View>
+
             <View style={styles.viewDataLocation}>
                 <View>
                     <View>
@@ -79,18 +80,19 @@ export default function ModalContent({ item }: { item: Delivery }) {
                 </View>
 
             </View>
+            */}
             <View style={styles.contButton}>
                 <Button
                     style={styles.buttonRed}
                     size='Medium'
                     title='Cancelar'
-                    onPress={() => { }}
+                    onPress={onPressCancel}
                 />
                 <Button
                     style={styles.buttonGreen}
                     size='Medium'
                     title='Completar entrega'
-                    onPress={() => { }}
+                    onPress={onPressComplete}
                 />
             </View>
 

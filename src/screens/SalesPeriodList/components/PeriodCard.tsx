@@ -3,17 +3,26 @@ import React from 'react';
 import { Colors } from 'src/models/Colors/Colors';
 import Text from 'src/components/Texts/Text';
 import { AntDesign } from '@expo/vector-icons';
+import { Period } from 'src/lib/Inventory/domain/Period';
+import formatDate from 'src/utils/formateDate';
+import useStackNavigation from 'src/hooks/useStackNavigation';
 
-export default function PeriodCard() {
+interface PeriodCardProps {
+    data: Period;
+}
+
+
+export default function PeriodCard({ data }: PeriodCardProps) {
+    const navigation = useStackNavigation();
     return (
         <View style={styles.container}>
             <View style={styles.head}>
                 <Text style={styles.headTitle} fontWeight="semibold" numberOfLines={1}>
                     Descripción del periodo de ventas
                 </Text>
-                <TouchableOpacity style={styles.headButton}>
-                    <Text style={styles.headButtonTitle} fontWeight="semibold">
-                        En curso
+                <TouchableOpacity onPress={() => { navigation.navigate('SalesPeriod') }} style={styles.headButton}>
+                    <Text style={[styles.headButtonTitle, { textTransform: 'capitalize' }, data.status_id === 'finalizado' ? { color: Colors.Gray2 } : {}]} fontWeight="semibold">
+                        {data.status_id}
                     </Text>
                     <AntDesign style={styles.headButtonIcon} name="right" size={20} color="white" />
                 </TouchableOpacity>
@@ -22,11 +31,11 @@ export default function PeriodCard() {
                 <View style={styles.dates}>
                     <Text>
                         Inicio:{' '}
-                        <Text fontWeight="bold">Sábado, 21 de Agosto del 2024</Text>
+                        <Text fontWeight="bold">{formatDate(new Date(data.start))}</Text>
                     </Text>
                     <Text>
                         Finaliza:{' '}
-                        <Text fontWeight="bold">Viernes, 6 de Septiembre del 2024</Text>
+                        <Text fontWeight="bold">{formatDate(new Date(data.end))}</Text>
                     </Text>
                 </View>
                 <View style={styles.imagesAndDetails}>
@@ -40,7 +49,7 @@ export default function PeriodCard() {
                         <View style={styles.detailsColumn1}>
                             <Text fontWeight='regular' style={styles.detailsText}>
                                 Registrados{' '}
-                                <Text style={styles.detailsText} fontWeight="extrabold">24</Text>
+                                <Text style={styles.detailsText} fontWeight="extrabold">{data.clothes.length}</Text>
                             </Text>
                             <Text fontWeight='regular' style={styles.detailsText}>
                                 Total{' '}

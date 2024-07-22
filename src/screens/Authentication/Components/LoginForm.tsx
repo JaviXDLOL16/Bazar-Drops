@@ -8,6 +8,7 @@ import { createUserService } from 'src/lib/User/application/UserService';
 import { LoginUser } from 'src/lib/User/domain/User';
 import { createAxiosUserRepository } from 'src/lib/User/infrastructure/AxiosUserRepository';
 import { Colors } from 'src/models/Colors/Colors';
+import * as SecureStore from 'expo-secure-store';
 
 const repository = createAxiosUserRepository();
 const service = createUserService(repository);
@@ -30,10 +31,19 @@ function LoginForm() {
             return;
         }
 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            Alert.alert('Error', 'El correo electrónico no es válido');
+            setLoading(false);
+            return;
+        }
+
         try {
             const response = await service.login(user);
-            Alert.alert(response.token);
-            navigation.navigate('Principal');
+            await SecureStore.setItemAsync('role', response.id.toString());
+            await SecureStore.setItemAsync('name', response.userName);
+            navigation.replace('Principal');
         } catch (error) {
             console.error(error);
             Alert.alert('Error', 'No se pudo iniciar sesión. Por favor, inténtelo de nuevo.');

@@ -18,6 +18,8 @@ import { createClothService } from "src/lib/Inventory/application/ClothService";
 import { Cloth, ClothForBuyer } from "src/lib/Inventory/domain/Cloth";
 import { createAxiosClothRepository } from "src/lib/Inventory/infrastructure/AxiosClothRepository";
 import Text from "src/components/Texts/Text";
+import * as SecureStore from 'expo-secure-store';
+
 
 
 const data = [
@@ -71,22 +73,49 @@ const service = createClothService(repository);
 type Props = NativeStackScreenProps<stackParamList, 'Principal'>;
 
 function SellerPrincipal({ navigation }: Props) {
+
+  const [clothes, setClothes] = useState<Cloth[]>([]);
+  const [clothesAvailable, setClothesAvailable] = useState<Cloth[]>([]);
+  const [clothesSold, setClothesSold] = useState<Cloth[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState('');
+
+  const getClothes = async () => {
+    try {
+      const clothes = await service.getAllByPeriod(3);
+      setClothes(clothes.reverse());
+      const available = clothes.filter(cloth => cloth.status_id === 'disponible');
+      setClothesAvailable(available);
+      const sold = clothes.filter(cloth => cloth.status_id === 'vendido');
+      setClothesSold(sold);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+
+  useEffect(() => {
+    getClothes();
+  }, [])
+
   return (
     <>
       <ScrollView showsVerticalScrollIndicator={false} >
         <View style={styles.containerHeader}>
-          <ButtonNotifications
-            title='Solicitudes de venta'
-            number={5}
-            onPress={() => { navigation.navigate('BuyerRequest') }}
-          />
-          <ButtonNotifications
-            title='Entregas'
-            number={5}
-            style={{ backgroundColor: Colors.Blue, marginRight: 30 }}
-            onPress={() => { navigation.navigate('DeliveryList') }}
-          />
-          <ButtonInformation />
+          <Text fontWeight="semibold" style={{ fontSize: 18 }}>Hola de nuevo</Text>
+          <View style={{ flexDirection: 'row', gap: 20 }}>
+            <ButtonNotifications
+              title='Entregas'
+              number={5}
+              style={{ backgroundColor: Colors.Blue }}
+              onPress={() => { navigation.navigate('DeliveryList') }}
+            />
+
+            <ButtonInformation />
+          </View>
+
         </View>
 
         <View style={styles.contSearch}>
@@ -95,9 +124,9 @@ function SellerPrincipal({ navigation }: Props) {
         <View style={styles.containerPeriods}>
           <ButtonAllPeriods />
         </View>
-        <CarouselCards data={data} />
+        <CarouselCards loading={isLoading} data={clothesAvailable} />
 
-        <RecentlySoldSection style={{ marginTop: 30 }} />
+        <RecentlySoldSection data={clothesSold} style={{ marginTop: 30 }} />
 
         <View style={styles.bottomSpacer} />
 
@@ -136,18 +165,18 @@ function BuyerPrincipal({ navigation }: Props) {
   return (
     <>
       <View style={styles.containerHeader}>
-        <ButtonNotifications
-          title='Solicitudes de venta'
-          number={5}
-          onPress={() => { navigation.navigate('BuyerRequest') }}
-        />
-        <ButtonNotifications
-          title='Entregas'
-          number={5}
-          style={{ backgroundColor: Colors.Blue, marginRight: 30 }}
-          onPress={() => { navigation.navigate('DeliveryList') }}
-        />
-        <ButtonInformation />
+        <Text fontWeight="semibold" style={{ fontSize: 18 }}>Hola de nuevo</Text>
+        <View style={{ flexDirection: 'row', gap: 20 }}>
+          <ButtonNotifications
+            title='Entregas'
+            number={5}
+            style={{ backgroundColor: Colors.Blue }}
+            onPress={() => { navigation.navigate('DeliveryList') }}
+          />
+
+          <ButtonInformation />
+        </View>
+
       </View>
 
       <View style={styles.contSearch}>
@@ -189,12 +218,36 @@ function BuyerPrincipal({ navigation }: Props) {
 
 export default function Principal({ navigation, route }: Props) {
   const insets = useSafeAreaInsets();
+
+  const [role, setRole] = useState<string | null>(null);
+
+  useEffect(() => {
+
+    const getSecretToken = async () => {
+      try {
+        let result = await SecureStore.getItemAsync('role');
+        console.log(result);
+        setRole(result);
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    getSecretToken();
+
+  }, [])
+
+
   return (
     <ScreenContainer style={{
       paddingTop: Platform.OS === 'ios' ? insets.top : insets.top + 10,
     }}>
+      {
+        role === '1'
+          ? <SellerPrincipal navigation={navigation} route={route} />
+          : <BuyerPrincipal navigation={navigation} route={route} />
+      }
 
-      <BuyerPrincipal navigation={navigation} route={route} />
 
     </ScreenContainer>
   );
@@ -202,11 +255,13 @@ export default function Principal({ navigation, route }: Props) {
 
 const styles = StyleSheet.create({
   containerHeader: {
+    gap: 20,
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingVertical: 10,
+    paddingLeft: 20
   },
   containerPeriods: {
     marginBottom: 10

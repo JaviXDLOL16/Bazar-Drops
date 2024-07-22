@@ -15,6 +15,8 @@ interface DatePickerInputProps {
     value?: Date;
     onChange?: (date: Date) => void;
     mode?: 'date' | 'time';
+    disabled?: boolean;
+    loading?: boolean;
 }
 
 const InputDate: React.FC<DatePickerInputProps> = ({
@@ -24,6 +26,8 @@ const InputDate: React.FC<DatePickerInputProps> = ({
     value,
     onChange,
     mode = 'date',
+    disabled,
+    loading,
 }) => {
     const [show, setShow] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(value);
@@ -43,6 +47,7 @@ const InputDate: React.FC<DatePickerInputProps> = ({
     };
 
     const formattedDate = selectedDate ? format(selectedDate, mode === 'date' ? 'yyyy-MM-dd' : 'HH:mm') : placeholder;
+    const currentDate = new Date();
 
     return (
         <View style={styles.container}>
@@ -52,8 +57,8 @@ const InputDate: React.FC<DatePickerInputProps> = ({
                     {requeriment && <Text style={styles.requerimentText} fontWeight='light'>{requeriment}</Text>}
                 </View>
             )}
-            <TouchableOpacity onPress={showPicker} style={[styles.inputContainer]}>
-                <Text style={styles.input}>{formattedDate}</Text>
+            <TouchableOpacity disabled={disabled || loading} onPress={showPicker} style={[styles.inputContainer]}>
+                <Text fontWeight='bold' style={[styles.input, (disabled || loading) ? { color: Colors.Gray2 } : {}]}>{formattedDate}</Text>
             </TouchableOpacity>
             {Platform.OS === 'ios' && (
                 <DateTimePickerModal
@@ -64,6 +69,7 @@ const InputDate: React.FC<DatePickerInputProps> = ({
                     onCancel={handleCancel}
                     display="spinner"
                     textColor="black"
+                    minimumDate={currentDate} // Fecha mínima para iOS
                 />
             )}
             {Platform.OS !== 'ios' && show && (
@@ -72,6 +78,7 @@ const InputDate: React.FC<DatePickerInputProps> = ({
                     mode={mode}
                     display="default"
                     onChange={(event, date) => handleConfirm(date || new Date())}
+                    minimumDate={currentDate} // Fecha mínima para Android
                 />
             )}
         </View>
@@ -100,7 +107,7 @@ const styles = StyleSheet.create({
     },
     requerimentText: {
         fontSize: 13,
-        fontWeight: '200'
+        fontWeight: '200',
     },
     headContainer: {
         flexDirection: 'row',

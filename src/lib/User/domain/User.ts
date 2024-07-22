@@ -1,5 +1,7 @@
 type AccountType = "vendedor" | "comprador";
 
+export type UserRole = 'vendedor' | 'comprador';
+
 export interface User {
     id: number;
     name: string;

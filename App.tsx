@@ -169,7 +169,7 @@ function App() {
       <SafeAreaProvider >
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName='Home'
+            initialRouteName='Authentication'
             screenOptions={
               {
                 headerStyle: { backgroundColor: Colors.Dark },
