@@ -8,7 +8,7 @@ export type InputRequeriment = '*Obligatorio' | 'Recomendado' | 'Opcional' | '';
 interface InputProps extends TextInputPropsNative {
     placeholder?: string;
     title?: string;
-    requeriment?: InputRequeriment;
+    requeriment?: InputRequeriment | string;
     loading?: boolean;
     error?: boolean;
     errorMessage?: string;
