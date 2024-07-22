@@ -23,7 +23,7 @@ export default function ClothCardForPrincipal({ name, size, price, image, style,
             <Skeleton colorMode="dark" height={220} width={'100%'} radius={30} >
                 {loading ? null :
                     <Image
-                        source={image ? { uri: image } : require('src/assets/skeleton/imageClothDetailsSkeleton.png')}
+                        source={{ uri: image }}
                         style={{
                             width: '100%',
                             height: 220,
@@ -35,7 +35,7 @@ export default function ClothCardForPrincipal({ name, size, price, image, style,
             <View style={{ gap: 3 }}>
                 <Skeleton colorMode="dark" height={20} width={'90%'}>
                     {loading ? null :
-                        <Text fontWeight='bold' >{name}</Text>
+                        <Text numberOfLines={3} style={{ height: 61 }} fontWeight='bold' >{name}</Text>
                     }
                 </Skeleton>
                 <Skeleton colorMode="dark" height={18} width={'60%'}>
@@ -45,7 +45,7 @@ export default function ClothCardForPrincipal({ name, size, price, image, style,
                 </Skeleton>
                 <Skeleton colorMode="dark" height={22} width={'25%'}>
                     {loading ? null :
-                        <Text style={{ fontSize: 18 }} fontWeight='bold' >{price}</Text>
+                        <Text style={{ fontSize: 18 }} fontWeight='bold' >${price}</Text>
                     }
                 </Skeleton>
             </View>

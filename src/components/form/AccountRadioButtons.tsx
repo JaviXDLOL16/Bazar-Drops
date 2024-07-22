@@ -1,26 +1,43 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { Colors } from 'src/models/Colors/Colors';
 
-export default function AccountRadioButtons() {
+type RegisterUser = 'vendedor' | 'comprador';
 
-    const radioButtons: RadioButtonProps[] = useMemo(() => ([
+interface AccountRadioButtonsProps {
+    value: RegisterUser | undefined;
+    onValueChange: (value: RegisterUser | undefined) => void;
+}
+
+const isRegisterUser = (value: any): value is RegisterUser => {
+    return value === 'vendedor' || value === 'comprador';
+};
+
+const AccountRadioButtons: React.FC<AccountRadioButtonsProps> = ({ value, onValueChange }) => {
+    const radioButtons: RadioButtonProps[] = useMemo(() => [
         {
-            id: '1',
+            id: 'vendedor',
             label: 'Vendedor',
             value: 'vendedor',
             color: Colors.Blue,
         },
         {
-            id: '2',
+            id: 'comprador',
             label: 'Comprador',
             value: 'comprador',
-            color: Colors.Blue
-        }
-    ]), []);
+            color: Colors.Blue,
+        },
+    ], []);
 
-    const [selectedId, setSelectedId] = useState<string | undefined>();
+    const handlePress = (selectedId: string) => {
+        const selectedButton = radioButtons.find(button => button.id === selectedId);
+        const newValue = selectedButton ? selectedButton.value : undefined;
+        if (isRegisterUser(newValue)) {
+            onValueChange(newValue);
+        } else {
+            onValueChange(undefined);
+        }
+    };
 
     return (
         <RadioGroup
@@ -28,10 +45,10 @@ export default function AccountRadioButtons() {
             containerStyle={{ justifyContent: 'space-around', alignItems: 'flex-start' }}
             labelStyle={{ fontSize: 20, color: '#fff' }}
             radioButtons={radioButtons}
-            onPress={setSelectedId}
-            selectedId={selectedId}
+            onPress={handlePress}
+            selectedId={radioButtons.find(button => button.value === value)?.id}
         />
-    )
-}
+    );
+};
 
-const styles = StyleSheet.create({})
+export default AccountRadioButtons;

@@ -117,7 +117,7 @@ function BuyerPrincipal({ navigation }: Props) {
   const getCloth = async () => {
     try {
       const clothes = await service.getAll();
-      setClothes(clothes);
+      setClothes(clothes.reverse());
     } catch (error) {
       alert(error.message);
     } finally {
@@ -157,23 +157,28 @@ function BuyerPrincipal({ navigation }: Props) {
       <FlatList
         data={isLoading ? dataForBuyerPrincipal : filteredClothes.map(cloth => ({
           id: cloth.id.toString(),
+          image: cloth.image,
           description: cloth.description,
           size: cloth.size,
           price: cloth.price,
         }))}
         renderItem={({ item }) =>
-          <ClothCardForPrincipal
-            image={'https://i.imgur.com/A1LTcXf.jpeg'}
-            name={item.description}
-            size={item.size}
-            price={item.price}
-            onPress={() => { navigation.navigate('ClothDetails') }}
-            loading={isLoading}
-          />
+          <>
+            <ClothCardForPrincipal
+              image={item.image}
+              name={item.description}
+              size={item.size}
+              price={item.price}
+              onPress={() => { navigation.navigate('ClothDetails') }}
+              loading={isLoading}
+            />
+          </>
         }
+        showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id.toString()}
         numColumns={2}
         ListEmptyComponent={<Text style={styles.noResultsText}>No results found</Text>}
+        ListFooterComponent={<View style={{ height: 50 }} />}
       />
     </>
   );

@@ -1,23 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, TextInput as TextInputNative, StyleSheet, TextInputProps as TextInputPropsNative, ViewStyle, Platform } from 'react-native';
 import { Colors } from 'src/models/Colors/Colors';
 import Text from '../Texts/Text';
+import { Dropdown } from 'react-native-element-dropdown';
+
 
 export type InputRequeriment = '*Obligatorio' | 'Recomendado' | 'Opcional' | '';
 
-interface InputProps extends TextInputPropsNative {
+const itemsDefault = [
+    {
+        value: 1,
+        label: 'Default 1',
+    },
+    {
+        value: 2,
+        label: 'Default 2',
+    },
+];
+
+interface SelectProps {
     placeholder?: string;
-    title?: string;
+    title: string;
     requeriment?: InputRequeriment;
     loading?: boolean;
     error?: boolean;
     errorMessage?: string;
     style?: ViewStyle;
-    multiline?: boolean;
-    numberOfLines?: number;
+    items?: any[];
+    showSearch?: boolean;
+    onChange?: (value: any) => void;
+    value?: any;
 }
 
-const Input: React.FC<InputProps> = ({ title, requeriment = '', style, loading, error, errorMessage, multiline, numberOfLines, ...rest }) => {
+export default function Select({ title, requeriment = '', style, loading, error, errorMessage, items = itemsDefault, showSearch = false, onChange, value, placeholder }: SelectProps) {
+
+    const [item, setItem] = useState(null);
+
+    const handleValueChange = (item: any) => {
+        setItem(item.value);
+        if (onChange) {
+            onChange(item.value);
+        }
+    };
+
     return (
         <View style={[style]}>
             {(title || requeriment) && (
@@ -26,19 +51,26 @@ const Input: React.FC<InputProps> = ({ title, requeriment = '', style, loading, 
                     {requeriment && <Text style={styles.requerimentText} fontWeight='light'>{requeriment}</Text>}
                 </View>
             )}
-            <TextInputNative
+            <Dropdown
                 style={[
-                    styles.input,
                     styles.inputContainer,
-                    multiline && { height: numberOfLines ? numberOfLines * 30 : 60 },
-                    error && { borderColor: Colors.InputError },
-                    loading && { color: Colors.Gray2 }
                 ]}
-                editable={!loading}
-                placeholderTextColor="#ccc"
-                multiline={multiline}
-                numberOfLines={numberOfLines}
-                {...rest}
+                data={items}
+                search={showSearch}
+                maxHeight={200}
+                labelField="label"
+                valueField="value"
+                value={item}
+                placeholder={placeholder}
+                placeholderStyle={{ color: '#aeaeae' }}
+                searchPlaceholder="Search..."
+                onChange={handleValueChange}
+                containerStyle={{ backgroundColor: Colors.Dark1, borderColor: Colors.Dark1, borderRadius: 8 }}
+                itemTextStyle={{ color: '#fff' }}
+                selectedTextStyle={[styles.selectedTextStyle, loading && { color: Colors.Gray2 }]}
+                activeColor={Colors.Blue2}
+                keyboardAvoiding
+                disable={loading}
             />
             {error && <Text style={styles.messageError}>{errorMessage || 'Debes llenar este campo'}</Text>}
         </View>
@@ -46,6 +78,7 @@ const Input: React.FC<InputProps> = ({ title, requeriment = '', style, loading, 
 };
 
 const styles = StyleSheet.create({
+    selectedTextStyle: { color: '#fff', fontSize: 18 },
     inputContainer: {
         width: '100%',
         backgroundColor: Colors.Dark1,
@@ -54,8 +87,6 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 10,
         paddingVertical: 10,
-    },
-    input: {
         fontSize: 18,
         color: '#fff',
         textAlignVertical: 'top',
@@ -81,4 +112,3 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Input;

@@ -26,8 +26,8 @@ export default function Login({ navigation }: Props) {
                 </Text>
 
                 <View style={styles.formContainer}>
-                    <Input title='Correo' requeriment='*Obligatorio' placeholder='Correo electrónico' keyboardType='email-address' />
-                    <Input title='Contraseña' requeriment='*Obligatorio' placeholder='Ingresa tu contraseña' secureTextEntry />
+                    <Input title='Correo' requeriment='*Obligatorio' placeholder='Correo electrónico' keyboardType='email-address' maxLength={50} autoCapitalize='none' />
+                    <Input title='Contraseña' requeriment='*Obligatorio' placeholder='Ingresa tu contraseña' secureTextEntry maxLength={30} />
                 </View>
 
 
