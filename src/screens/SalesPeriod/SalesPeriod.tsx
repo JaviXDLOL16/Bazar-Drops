@@ -1,20 +1,14 @@
-import { Image, ScrollView, StyleSheet, View, TouchableOpacity } from 'react-native'
+import { ScrollView, StyleSheet, View, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import ScreenContainer from 'src/components/layout/ScreenContainer'
 import Search from 'src/components/Search/Search'
-import { Filter, FilterContainer } from 'src/components/Filter/Filter'
-import RecentFilterArrow from 'src/components/Filter/RecentFilterArrow'
+import { FilterContainer } from 'src/components/Filter/Filter'
 import { Colors } from 'src/models/Colors/Colors'
 import Text from 'src/components/Texts/Text'
-import { prenda1, prenda2 } from 'src/assets';
 import CardSalesPeriod from './components/CardSalesPeriod'
-import Button from 'src/components/Buttons/Button'
-import {
-    Entypo, FontAwesome
-} from '@expo/vector-icons';
+import { Entypo, FontAwesome } from '@expo/vector-icons';
 import CustomModal from 'src/components/Modal/Modal'
 import ContentModalPeriod from './components/ContentModalPeriod'
-
 import FilterForClothStatus, { ClothFilterStates } from './components/FilterForClothStatus'
 import { createAxiosClothRepository } from 'src/lib/Inventory/infrastructure/AxiosClothRepository'
 import { createClothService } from 'src/lib/Inventory/application/ClothService'
@@ -160,110 +154,102 @@ export default function SalesPeriod({ navigation, route }: Props) {
         }
     }
 
+    const [isModalVisible, setModalVisible] = useState(false);
 
-    export default function SalesPeriod() {
-        const [isModalVisible, setModalVisible] = useState(false);
-
-        const toggleModal = () => {
-            setModalVisible(!isModalVisible);
-        };
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+    };
 
 
-        useEffect(() => {
-            getClothes();
-        }, [])
+    useEffect(() => {
+        getClothes();
+    }, [])
 
 
-        return (
-            <ScreenContainer style={{ marginBottom: 30 }}>
-                <View style={styles.contHeader}>
-                    <Search style={{ backgroundColor: Colors.Dark3 }} onChangeText={(text) => setSearch(text)} value={search} />
-                    <FilterContainer style={styles.filterContainer}>
-                        <FilterForClothStatus onChange={setFilterForStatus} value={filterForStatus} />
-                    </FilterContainer>
+    return (
+        <ScreenContainer style={{ marginBottom: 30 }}>
+            <View style={styles.contHeader}>
+                <Search style={{ backgroundColor: Colors.Dark3 }} onChangeText={(text) => setSearch(text)} value={search} />
+                <FilterContainer style={styles.filterContainer}>
+                    <FilterForClothStatus onChange={setFilterForStatus} value={filterForStatus} />
+                </FilterContainer>
+            </View>
+            <View>
+                <View style={styles.contTitle}>
+                    <Text fontWeight='bold' style={{ fontSize: 18 }}>Prendas: {clothes.length}</Text>
+                    <Text fontWeight='bold' style={{ fontSize: 18 }}>Total: ${clothes.reduce((acomulador, actual) => acomulador + actual.buy, 0)}</Text>
                 </View>
-                <View>
-                    <View style={styles.contTitle}>
-                        <Text fontWeight='bold' style={{ fontSize: 18 }}>Prendas: {clothes.length}</Text>
-                        <Text fontWeight='bold' style={{ fontSize: 18 }}>Total: ${clothes.reduce((acomulador, actual) => acomulador + actual.buy, 0)}</Text>
-                    </View>
-                </View>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    {filteredClothes.map((cloth) => (
-                        <CardSalesPeriod key={cloth.id} cloth={cloth} />
-                    ))}
-                </ScrollView>
-                <View style={styles.contInformation}>
-                    <TouchableOpacity style={styles.buttonMore}>
-                        <Entypo name='plus' size={45} color={Colors.White} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={toggleModal} style={styles.buttonList}>
-                        <FontAwesome name='list-alt' size={34} color={Colors.White} />
-                    </TouchableOpacity >
-                    <CustomModal isVisible={isModalVisible} onClose={toggleModal}>
-                        <ContentModalPeriod />
-                    </CustomModal>
-                </View>
-                <Button
-                    title='Nueva prenda'
-                    onPress={() => { navigation.navigate('RegisterClothes') }}
+            </View>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                {filteredClothes.map((cloth) => (
+                    <CardSalesPeriod key={cloth.id} cloth={cloth} />
+                ))}
+            </ScrollView>
+            <View style={styles.contInformation}>
+                <TouchableOpacity style={styles.buttonMore} onPress={() => { navigation.navigate('RegisterClothes') }}>
+                    <Entypo name='plus' size={45} color={Colors.White} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={toggleModal} style={styles.buttonList}>
+                    <FontAwesome name='list-alt' size={34} color={Colors.White} />
+                </TouchableOpacity >
+                <CustomModal isVisible={isModalVisible} onClose={toggleModal}>
+                    <ContentModalPeriod />
+                </CustomModal>
+            </View>
 
-                />
-
-            </ScreenContainer>
-        );
-    }
-
-    const styles = StyleSheet.create({
-        filterContainer: {
-            marginTop: 10,
-            justifyContent: 'space-between',
-        },
-        contHeader: {
-            paddingHorizontal: 10,
-            paddingVertical: 15,
-            backgroundColor: Colors.Dark2,
-            borderRadius: 10,
-            marginBottom: 15,
-        },
-        contFilter: {
-            flexDirection: 'row',
-        },
-        Filter: {
-            marginRight: 5,
-        },
-        buttonInformation: {
-            backgroundColor: Colors.Dark3,
-        },
-        contInformation: {
-            position: 'absolute',
-            bottom: -10,
-            right: 20,
-            flexDirection: 'row',
-            gap: 10,
-            marginBottom: 20,
-        },
-        contTitle: {
-            flexDirection: 'row',
-            gap: 30,
-            marginBottom: 10,
-        },
-        buttonMore: {
-            height: 60,
-            width: 60,
-            backgroundColor: Colors.Blue3,
-            borderRadius: 100,
-            alignItems: 'center',
-            justifyContent: 'center',
-        },
-        buttonList: {
-            height: 60,
-            width: 60,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: Colors.Gray2,
-            borderRadius: 100,
-        },
-        marginBottom: 5
-    }
-});
+        </ScreenContainer>
+    );
+}
+const styles = StyleSheet.create({
+    filterContainer: {
+        marginTop: 10,
+        justifyContent: 'space-between',
+    },
+    contHeader: {
+        paddingHorizontal: 10,
+        paddingVertical: 15,
+        backgroundColor: Colors.Dark2,
+        borderRadius: 10,
+        marginBottom: 15,
+    },
+    contFilter: {
+        flexDirection: 'row',
+    },
+    Filter: {
+        marginRight: 5,
+    },
+    buttonInformation: {
+        backgroundColor: Colors.Dark3,
+    },
+    contInformation: {
+        position: 'absolute',
+        bottom: -10,
+        right: 20,
+        flexDirection: 'row',
+        gap: 10,
+        marginBottom: 20,
+    },
+    contTitle: {
+        flexDirection: 'row',
+        gap: 30,
+        marginBottom: 10,
+    },
+    buttonMore: {
+        height: 60,
+        width: 60,
+        backgroundColor: Colors.Blue3,
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonList: {
+        height: 60,
+        width: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.Gray2,
+        borderRadius: 100,
+    },
+    marginBottom: 5
+}
+);
