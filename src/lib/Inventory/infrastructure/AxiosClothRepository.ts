@@ -26,7 +26,6 @@ export const createAxiosClothRepository = (): ClothRepository => {
 
 
         getAll: async () => {
-            console.log(inventoryApiUrl);
             const response = await axios.get(`${inventoryApiUrl}/cloth`);
             const clothes = response.data.data.map(transformApiToDomain) as ClothForBuyer[];
             return clothes;
@@ -38,15 +37,13 @@ export const createAxiosClothRepository = (): ClothRepository => {
         },
 
         getById: async (id: number) => {
-            const response = await fetch(`${inventoryApiUrl}/cloth/1`)
-            const cloth = (await response.json()) as Cloth;
+            const response = await axios.get(`${inventoryApiUrl}/cloth/${id}`);
+            const cloth = transformApiToDomain(response.data.data) as ClothForBuyer;
             return cloth;
         },
         save: async (cloth: NewCloth) => {
             cloth.image = await uploadImageAndReturnURL(cloth.image);
-            console.log(transformDomainToApi(cloth));
-            const response = await axios.post(`${inventoryApiUrl}/cloth/create`, transformDomainToApi(cloth));
-            console.log(response.data.data);
+            await axios.post(`${inventoryApiUrl}/cloth/create`, transformDomainToApi(cloth));
 
         },
         delete: async (id: string) => {
