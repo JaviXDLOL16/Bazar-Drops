@@ -10,10 +10,11 @@ interface ModalProps {
     onClose: () => void;
     children: ReactNode;
     style?: ViewStyle | ViewStyle[];
-    maxHeight?: number; // Nueva prop para la altura máxima
+    maxHeight?: number; // Prop para la altura máxima
+    minHeight?: number; // Prop para la altura mínima
 }
 
-const CustomModal: React.FC<ModalProps> = ({ isVisible, onClose, children, style, maxHeight = 1 }) => {
+const CustomModal: React.FC<ModalProps> = ({ isVisible, onClose, children, style, maxHeight = 1, minHeight }) => {
     return (
         <Modal
             isVisible={isVisible}
@@ -27,7 +28,16 @@ const CustomModal: React.FC<ModalProps> = ({ isVisible, onClose, children, style
             animationInTiming={300}
         >
             <StatusBar barStyle="light-content" />
-            <View style={[styles.modalContent, style, { maxHeight: height * maxHeight }]}>
+            <View
+                style={[
+                    styles.modalContent,
+                    style,
+                    {
+                        maxHeight: height * maxHeight,
+                        minHeight: minHeight !== undefined ? height * minHeight : undefined
+                    }
+                ]}
+            >
                 <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                     <View style={styles.closeButtonContent}></View>
                 </TouchableOpacity>
