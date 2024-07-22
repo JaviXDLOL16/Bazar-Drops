@@ -20,7 +20,7 @@ export interface Cloth {
     uuid: string;
 }
 
-export type NewCloth = Omit<Cloth, 'id' | 'created_at' | 'sold_at' | 'uuid' | 'sellPrice'>;
+export type NewCloth = Omit<Cloth, 'id' | 'created_at' | 'sold_at' | 'uuid'>;
 
 export type ClothForBuyer = Omit<Cloth, 'buy' | 'location' | 'period_id'>;
 

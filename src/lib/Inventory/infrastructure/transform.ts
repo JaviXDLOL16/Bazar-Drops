@@ -1,4 +1,4 @@
-import { Cloth } from "../domain/Cloth";
+import { Cloth, NewCloth } from "../domain/Cloth";
 
 const apiToDomainSizeMap: Record<string, Cloth['size']> = {
     S: 'chico',
@@ -47,6 +47,8 @@ const domainToApiSizeMap: Record<Cloth['size'], string> = {
     'extra grande': 'XL'
 };
 
+export { domainToApiSizeMap as sizeSimpleText };
+
 const domainToApiStatusMap: Record<Cloth['status_id'], string> = {
     disponible: '1',
     vendido: '2',
@@ -61,21 +63,17 @@ const domainToApiTypeMap: Record<Cloth['type'], string> = {
     otro: 'other'
 };
 
-export const transformDomainToApi = (domainCloth: Cloth): any => {
+export const transformDomainToApi = (domainCloth: NewCloth): any => {
     return {
         buy: domainCloth.buy,
-        created_at: domainCloth.created_at,
         description: domainCloth.description,
-        id: domainCloth.id,
         image: domainCloth.image,
         location: domainCloth.location,
         period_id: domainCloth.period_id,
         price: domainCloth.price,
         sellPrice: domainCloth.sellPrice,
         size: domainToApiSizeMap[domainCloth.size],
-        sold_at: domainCloth.sold_at,
         status_id: domainToApiStatusMap[domainCloth.status_id],
         type: domainToApiTypeMap[domainCloth.type],
-        uuid: domainCloth.uuid
     };
 };

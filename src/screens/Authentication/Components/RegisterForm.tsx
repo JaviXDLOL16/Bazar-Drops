@@ -6,7 +6,7 @@ import Text from 'src/components/Texts/Text';
 import AccountRadioButtons from 'src/components/form/AccountRadioButtons';
 import { createUserService } from 'src/lib/User/application/UserService';
 import { RegisterUser } from 'src/lib/User/domain/User';
-import { createAxiosUserRepository } from 'src/lib/User/infrastructure/AxiosClothRepository';
+import { createAxiosUserRepository } from 'src/lib/User/infrastructure/AxiosUserRepository';
 import { Colors } from 'src/models/Colors/Colors';
 import useStackNavigation from 'src/hooks/useStackNavigation';
 

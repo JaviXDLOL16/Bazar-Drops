@@ -194,7 +194,7 @@ export default function Principal({ navigation, route }: Props) {
       paddingTop: Platform.OS === 'ios' ? insets.top : insets.top + 10,
     }}>
 
-      <SellerPrincipal navigation={navigation} route={route} />
+      <BuyerPrincipal navigation={navigation} route={route} />
 
     </ScreenContainer>
   );

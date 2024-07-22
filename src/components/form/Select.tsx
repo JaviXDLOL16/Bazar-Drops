@@ -67,9 +67,10 @@ export default function Select({ title, requeriment = '', style, loading, error,
                 onChange={handleValueChange}
                 containerStyle={{ backgroundColor: Colors.Dark1, borderColor: Colors.Dark1, borderRadius: 8 }}
                 itemTextStyle={{ color: '#fff' }}
-                selectedTextStyle={{ color: '#fff' }}
+                selectedTextStyle={[styles.selectedTextStyle, loading && { color: Colors.Gray2 }]}
                 activeColor={Colors.Blue2}
                 keyboardAvoiding
+                disable={loading}
             />
             {error && <Text style={styles.messageError}>{errorMessage || 'Debes llenar este campo'}</Text>}
         </View>
@@ -77,6 +78,7 @@ export default function Select({ title, requeriment = '', style, loading, error,
 };
 
 const styles = StyleSheet.create({
+    selectedTextStyle: { color: '#fff', fontSize: 18 },
     inputContainer: {
         width: '100%',
         backgroundColor: Colors.Dark1,

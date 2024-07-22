@@ -6,7 +6,7 @@ import Text from 'src/components/Texts/Text';
 import useStackNavigation from 'src/hooks/useStackNavigation';
 import { createUserService } from 'src/lib/User/application/UserService';
 import { LoginUser } from 'src/lib/User/domain/User';
-import { createAxiosUserRepository } from 'src/lib/User/infrastructure/AxiosClothRepository';
+import { createAxiosUserRepository } from 'src/lib/User/infrastructure/AxiosUserRepository';
 import { Colors } from 'src/models/Colors/Colors';
 
 const repository = createAxiosUserRepository();

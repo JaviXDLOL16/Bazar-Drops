@@ -3,62 +3,52 @@ import { Image, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'src/components/Buttons/Icon';
 import Text from 'src/components/Texts/Text';
 import { Colors } from 'src/models/Colors/Colors';
-import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
-
-
-export interface Delivery {
-    id: string;
-    dateBuy: Date;
-    time: string;
-    location: string;
-    price: number;
-    buyer: string;
-    contact: string;
-    image: any;
-    description: string;
-    size: string;
-    type: string;
-    buysPrice: number;
-    status: string;
-    shopPlace: string;
-
-}
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { Cloth } from 'src/lib/Inventory/domain/Cloth';
+import { sizeSimpleText } from 'src/lib/Inventory/infrastructure/transform';
 
 interface CardSalesPeriodProps {
-    delivery: Delivery;
+    cloth: Cloth;
 }
 
-const CardSalesPeriod: React.FC<CardSalesPeriodProps> = ({ delivery }) => {
+const CardSalesPeriod: React.FC<CardSalesPeriodProps> = ({ cloth }) => {
     const [showMore, setShowMore] = useState(false);
 
-    const formatDate = (date: Date) => {
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
-        const year = date.getFullYear().toString().slice(-2); // Get last 2 digits of year
+    const formatDate = (dateString: Date) => {
+        const date = new Date(dateString);
+        const day = date.getUTCDate().toString().padStart(2, '0');
+        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Los meses están indexados desde 0
+        const year = date.getUTCFullYear().toString().slice(-2); // Obtener los últimos 2 dígitos del año
         return `${day}/${month}/${year}`;
     };
+
+    console.log(cloth.created_at)
     return (
 
         <View
-            key={delivery.id}
+            key={cloth.id}
             style={styles.itemContainer}
         >
             <View style={styles.contData}>
                 <View style={styles.contImage}>
-                    <Image source={delivery.image} style={styles.image} />
+                    <Image source={{ uri: cloth.image }} style={styles.image} />
                 </View>
                 <View style={styles.contDataText}>
-                    <View style={styles.textContainerDescription}>
-                        <Text style={{ textAlign: 'center' }} numberOfLines={2}>{delivery.description}</Text>
+                    <View style={styles.textBg}>
+                        <Text numberOfLines={1} style={styles.text}>{cloth.description}</Text>
                     </View>
                     <View style={styles.contPrices}>
-                        <View style={styles.contTextPrice}>
-                            <Text style={styles.textPrice}>Precio compra</Text>
-                            <Text fontWeight='extrabold'>$ {delivery.buysPrice}</Text>
+                        <View>
+                            <Text style={styles.label}>Precio compra</Text>
+                            <View style={[styles.textBg, { width: 85 }]}>
+                                <Text fontWeight='extrabold' numberOfLines={1} style={styles.text}>$ {cloth.buy}</Text>
+                            </View>
                         </View>
-                        <View style={styles.contTextPrice}>
-                            <Text style={styles.textPrice}>Precio venta</Text>
-                            <Text fontWeight='extrabold'>$ {delivery.price}</Text>
+                        <View>
+                            <Text style={styles.label}>Precio venta</Text>
+                            <View style={[styles.textBg, { width: 85 }]}>
+                                <Text fontWeight='extrabold' numberOfLines={1} style={styles.text}>$ {cloth.price}</Text>
+                            </View>
                         </View>
                     </View>
                 </View>
@@ -69,38 +59,71 @@ const CardSalesPeriod: React.FC<CardSalesPeriodProps> = ({ delivery }) => {
                     onPress={() => setShowMore(true)}
                 >
                     <Text style={styles.ViewAll}>Ver todo</Text>
-                    <Icon status={delivery.status} />
+                    <View style={{ position: 'absolute', bottom: 0, right: 0, flexDirection: 'row', gap: 5 }}>
+                        <View style={[{ paddingHorizontal: 3, paddingVertical: 2, borderRadius: 5 }, cloth.status_id === 'disponible' ? { backgroundColor: Colors.Green2 } : { backgroundColor: Colors.Red3, }]}>
+                            {
+                                cloth.status_id === 'disponible' ? (
+                                    <Ionicons name="checkmark-circle-sharp" size={20} color={Colors.Green} />
+                                ) : (
+                                    <Ionicons name="cash-sharp" size={20} color={Colors.Red} />
+                                )
+                            }
+                        </View>
+                        <View style={{ paddingHorizontal: 6, width: 26, backgroundColor: Colors.Blue4, borderRadius: 5 }}>
+                            <Text style={{ textAlign: 'center', lineHeight: 22 }} fontWeight='bold'>{sizeSimpleText[cloth.size]}</Text>
+                        </View>
+                    </View>
                 </TouchableOpacity>
             )}
             {showMore && (
                 <>
                     <View style={styles.contPlaceDate}>
                         <View style={styles.contPlace}>
-                            <Text style={styles.textTitle}>Lugar de compra</Text>
-                            <Text style={styles.textPlace}>{delivery.shopPlace}</Text>
+                            <Text style={styles.label}>Lugar de compra</Text>
+                            <View style={styles.textBg}>
+                                <Text numberOfLines={1} style={styles.text}>{cloth.location}</Text>
+                            </View>
                         </View>
                         <View style={styles.contDate}>
-                            <Text style={styles.textTitle}>Fecha de compra</Text>
-                            <Text style={styles.textPlace}>{formatDate(delivery.dateBuy)}</Text>
+                            <Text style={styles.label}>Fecha de compra</Text>
+                            <View style={[styles.textBg, { width: 98 }]}>
+                                <Text numberOfLines={1} style={styles.text}>{formatDate(new Date(cloth.created_at))}</Text>
+                            </View>
                         </View>
                     </View>
                     <View style={styles.contTypeSize}>
                         <View>
-                            <Text style={styles.textTitle}>Tipo</Text>
-                            <Text style={styles.textType}>{delivery.type}</Text>
+                            <Text style={styles.label}>Tipo</Text>
+                            <View style={[styles.textBg, { backgroundColor: Colors.Dark3, width: 140, justifyContent: 'center' }]}>
+                                <Text numberOfLines={1} style={[styles.text, { textTransform: 'capitalize' }]}>{cloth.type}</Text>
+                            </View>
                         </View>
                         <View >
-                            <Text style={styles.textTitle}>Talla</Text>
-                            <View style={styles.textSize}>
+                            <Text style={styles.label}>Talla</Text>
+                            <View style={[styles.textBg, { backgroundColor: Colors.Blue4, width: 140, }]}>
                                 <FontAwesome5 name="tshirt" size={12} color="white" />
-                                <Text>{delivery.size}</Text>
+                                <Text numberOfLines={1} style={[styles.text, { textAlign: 'center', textTransform: 'capitalize' }]}>{cloth.size}</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.contTypeSize}>
+                        <View>
+                            <Text style={styles.label}>Status</Text>
+                            <View style={[styles.textBg, { width: 140, justifyContent: 'center' }, cloth.status_id === 'disponible' ? { backgroundColor: Colors.Green2 } : { backgroundColor: Colors.Red3 }]}>
+                                <Text numberOfLines={1} style={[styles.text, { textTransform: 'capitalize' }]}>{cloth.status_id}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.contDate}>
+                            <Text style={styles.label}>Fecha de venta</Text>
+                            <View style={[styles.textBg, { width: 98 }]}>
+                                <Text numberOfLines={1} style={styles.text}>{cloth.sold_at ? formatDate(new Date(cloth.sold_at)) : '----'}</Text>
                             </View>
                         </View>
                     </View>
                     <TouchableOpacity
                         onPress={() => setShowMore(false)}
                     >
-                        <Text style={styles.ViewAll}>Ver todo</Text>
+                        <Text style={styles.ViewAll}>Ver menos</Text>
                     </TouchableOpacity>
                 </>
 
@@ -112,13 +135,13 @@ const CardSalesPeriod: React.FC<CardSalesPeriodProps> = ({ delivery }) => {
 const styles = StyleSheet.create({
     container: {},
     contImage: {
-        width: 80,
-        height: 86,
-        marginRight: 15,
+        width: 90,
     },
     contData: {
+        gap: 12,
         marginTop: 5,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'flex-start'
     },
     contTitle: {
         width: '100%',
@@ -132,14 +155,23 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: '100%',
+        height: 96,
         borderRadius: 10
     },
-    textContainerDescription: {
+    text: {
+        fontSize: 18,
+        lineHeight: 20,
+    },
+    textBg: {
+        flexDirection: 'row',
         alignItems: 'center',
+        gap: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        backgroundColor: Colors.Dark1,
+        borderRadius: 10,
     },
     contDataText: {
-        alignItems: 'center',
         gap: 10,
         flex: 1
     },
@@ -147,14 +179,13 @@ const styles = StyleSheet.create({
         gap: 15,
         flexDirection: 'row'
     },
-    textPrice: {
+    label: {
         color: Colors.Gray2,
         marginBottom: 5
     },
-    contTextPrice: {
-        alignItems: 'center'
-    },
+
     contViewAll: {
+        paddingTop: 5,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -163,20 +194,21 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         flex: 1,
         marginLeft: '7%',
+        paddingTop: 10,
         fontSize: 14,
         color: Colors.Gray2
     },
     additionalInfo: {
     },
     contPlaceDate: {
-        alignItems: 'center',
+        justifyContent: 'space-between',
         flexDirection: 'row',
         flex: 1,
-        marginTop: 5
+        marginTop: 5,
+        gap: 10
     },
     contPlace: {
-        width: '60%',
-        paddingRight: 20
+        flex: 1
     },
     textPlace: {
         backgroundColor: Colors.Dark1,
@@ -188,7 +220,6 @@ const styles = StyleSheet.create({
 
     },
     contDate: {
-        width: '40%',
     },
     contTypeSize: {
         flexDirection: 'row',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, TouchableOpacity, StyleSheet, Platform, Image } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Platform, Image, Alert } from 'react-native';
 import ScreenContainer from 'src/components/layout/ScreenContainer'
 import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
@@ -15,13 +15,21 @@ import { ClothSize, NewCloth, TypeOfCloth } from 'src/lib/Inventory/domain/Cloth
 import Select from 'src/components/form/Select';
 import { createAxiosClothRepository } from 'src/lib/Inventory/infrastructure/AxiosClothRepository';
 import { createClothService } from 'src/lib/Inventory/application/ClothService';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { stackParamList } from 'App';
 
 const repository = createAxiosClothRepository();
 const service = createClothService(repository);
 
-export default function RegisterClothes() {
+type Props = NativeStackScreenProps<stackParamList, 'RegisterClothes'>
+
+
+export default function RegisterClothes({ navigation, route }: Props) {
+
+    const newClothEmpty: Partial<NewCloth> = { buy: 0, description: '', image: '', location: '', period_id: 3, price: 0, sellPrice: 0, size: undefined, status_id: 'disponible', type: undefined }
+
     const [loading, setLoading] = useState(false);
-    const [newCloth, setNewCloth] = useState<Partial<NewCloth>>({ buy: 0, description: '', image: '', location: '', period_id: 3, price: 0, size: undefined, status_id: 'disponible', type: undefined });
+    const [newCloth, setNewCloth] = useState<Partial<NewCloth>>(newClothEmpty);
 
     const typeOfClothValues: TypeOfCloth[] = ['playera', 'pantalon', 'sueter', 'short', 'otro'];
     const sizeValues: ClothSize[] = ['chico', 'mediano', 'grande', 'extra grande'];
@@ -56,16 +64,15 @@ export default function RegisterClothes() {
 
     const saveCloth = async () => {
         setLoading(true);
-        try {
-            await service.save(newCloth as NewCloth);
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
-    }
 
-    async function uploadImage() {
+        const { buy, price, description, location, type, size } = newCloth
+
+        if (!buy || !price || !description || !type || !size) {
+            Alert.alert('Error', 'Debes llegar todos los campos de tipo *Obligatorio');
+            setLoading(false);
+            return;
+        }
+
         try {
             const manipulatedImage = await ImageManipulator.manipulateAsync(
                 newCloth.image ?? '',
@@ -73,26 +80,17 @@ export default function RegisterClothes() {
                 { base64: true }
             );
             const base64Image = manipulatedImage.base64;
+            await service.save({ ...newCloth, image: base64Image, sellPrice: newCloth.price } as NewCloth);
 
-            // Creamos el FormData y añadimos la imagen y la clave
-            const formData = new FormData();
-            formData.append('image', base64Image || '');
-            formData.append('key', 'e7866c01df5c8cbde422795a0a743514');
+            Alert.alert('Correcto', 'Prenda guardada en el periodo de ventas', [
+                { text: 'OK', onPress: () => navigation.navigate('SalesPeriod') }
+            ]);
 
-            // Realizamos la solicitud a la API de imgbb
-            const response = await fetch('https://api.imgbb.com/1/upload', {
-                method: 'POST',
-                body: formData
-            });
-            const data = await response.json();
-
-            if (response.ok) {
-                console.log(data);
-            } else {
-                console.error('Error:', data);
-            }
+            setNewCloth(newClothEmpty);
         } catch (error) {
-            console.error('Error:', error);
+            console.error(error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -176,6 +174,7 @@ export default function RegisterClothes() {
                     <Input
                         onChangeText={(value) => setNewCloth({ ...newCloth, location: value })}
                         value={newCloth.location}
+                        loading={loading}
                         title='Ubicacion de compra'
                         placeholder='Ubicacion'
                         requeriment='Recomendado'
@@ -188,7 +187,7 @@ export default function RegisterClothes() {
                         title='Tipo de prenda'
                         placeholder='Selecciona el tipo de prenda'
                         requeriment='*Obligatorio'
-                        loading={true}
+                        loading={loading}
                         items={typeOfClothItems}
                     />
                     <View style={styles.containerSize}>
@@ -198,20 +197,20 @@ export default function RegisterClothes() {
                             title='Talla'
                             placeholder='Talla'
                             requeriment='*Obligatorio'
-                            loading={true}
+                            loading={loading}
                             items={sizeItems}
                         />
                     </View>
-                    <View style={styles.containerSwicht}>
+                    {/*<View style={styles.containerSwicht}>
                         <Text fontWeight='extrabold' style={styles.textVisible}>Visible</Text>
                         <Text style={styles.textReadySell}>(Listo para vender)</Text>
                         <Switch />
-                    </View>
+                    </View>*/}
 
                     <Button
                         loading={loading}
-                        onPress={uploadImage}
-                        style={{ backgroundColor: Colors.Blue, marginBottom: 80 }}
+                        onPress={saveCloth}
+                        style={{ backgroundColor: Colors.Blue, marginBottom: 80, marginTop: 20 }}
                         title='Registrar prenda'
                         size='Large'
                         shadow={true}
