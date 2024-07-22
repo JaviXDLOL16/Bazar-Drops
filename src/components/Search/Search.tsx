@@ -1,10 +1,10 @@
-import { View, Text, StyleSheet, TextInput, TextInputProps } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TextInputProps, ViewStyle } from 'react-native'
 import React from 'react'
 import { Colors } from 'src/models/Colors/Colors';
 import { Ionicons } from '@expo/vector-icons';
 
 interface SearchProps extends TextInputProps {
-    style?: any
+    style?: ViewStyle;
 }
 
 export default function Search({ style, ...rest }: SearchProps) {

@@ -149,7 +149,7 @@ export type stackParamList = {
   BuyerRequest: undefined;
   SalesPeriodList: undefined;
   AllRegisteredClothes: undefined;
-  SalesPeriod: undefined;
+  SalesPeriod: { clothId: number };
   NewSalesPeriod: undefined;
   ClothDetails: { clothId: number };
   SellerDetails: undefined;
