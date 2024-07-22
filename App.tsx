@@ -24,6 +24,7 @@ import SalesPeriod from 'src/screens/SalesPeriod/SalesPeriod';
 import ClothDetails from 'src/screens/ClothDetails/ClothDetails';
 import SellerDetails from 'src/screens/SellerDetails/SellerDetails';
 import { DeliveryFilterStates } from 'src/screens/DeliveryList/components/FilterForDeliveryStatus';
+import Graphics from 'src/screens/Graphics/Graphics';
 
 
 type Props = NativeStackScreenProps<stackParamList, 'Home'>
@@ -99,6 +100,10 @@ function Home({ navigation }: Props) {
           title='Crear periodo de ventas'
           onPress={() => navigation.navigate('NewSalesPeriod')}
         />
+        <Button
+          title="Graficas"
+          onPress={() => navigation.navigate('Graphics')}
+        />
         <Text>Comprador</Text>
         <Button
           title="Principal"
@@ -153,6 +158,7 @@ export type stackParamList = {
   NewSalesPeriod: undefined;
   ClothDetails: { clothId: number };
   SellerDetails: undefined;
+  Graphics: undefined;
 };
 
 const Stack = createNativeStackNavigator<stackParamList>();
@@ -283,6 +289,13 @@ function App() {
               options={{
                 title: 'Detalles del vendedor'
               }} />
+            <Stack.Screen
+              name="Graphics"
+              component={Graphics}
+              options={{
+                title: 'Graficas'
+              }} />
+
 
           </Stack.Navigator>
         </NavigationContainer>
