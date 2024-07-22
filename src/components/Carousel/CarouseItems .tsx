@@ -39,7 +39,7 @@ const CarouselCardsItems: React.FC<CarouselCardsItemsProps> = ({ imageSrc, index
     return (
         <Animated.View style={[styles.cardContainer, animatedStyle, { width: listItemWidth }]}>
             <TouchableOpacity activeOpacity={0.8}>
-                <Image source={imageSrc} style={styles.image} />
+                <Image source={{ uri: imageSrc }} style={styles.image} />
                 <View style={styles.contData}>
                     <Text fontWeight='light' style={styles.textName} numberOfLines={2} ellipsizeMode="tail">
                         {nombre}

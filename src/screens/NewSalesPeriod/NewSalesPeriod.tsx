@@ -1,5 +1,5 @@
-import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useMemo, useRef } from 'react'
+import { Alert, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
+import React, { useMemo, useRef, useState } from 'react'
 import ScreenContainer from 'src/components/layout/ScreenContainer'
 import Text from 'src/components/Texts/Text'
 import Input from 'src/components/form/Input'
@@ -10,12 +10,22 @@ import BottomSheet, { BottomSheetTextInput, BottomSheetView } from '@gorhom/bott
 import { Colors } from 'src/models/Colors/Colors'
 import InputDate from 'src/components/form/InputDate'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { NewPeriod } from 'src/lib/Inventory/domain/Period'
+import { createAxiosPeriodRepository } from 'src/lib/Inventory/infrastructure/AxiosPeriodRepository'
+import { createPeriodService } from 'src/lib/Inventory/application/PeriodService'
 
 
 type Props = NativeStackScreenProps<stackParamList, 'NewSalesPeriod'>
 
+const repository = createAxiosPeriodRepository();
+const service = createPeriodService(repository);
 
 export default function NewSalesPeriod({ navigation }: Props) {
+
+    const newPeriodEmpty: Partial<NewPeriod> = { start: new Date(), end: undefined, location: '', name: '', status_id: 'actual', user_id: 2 }
+
+    const [newPeriod, setNewPeriod] = useState<Partial<NewPeriod>>(newPeriodEmpty)
+    const [isLoading, setIsLoading] = useState(false)
 
     const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -23,20 +33,45 @@ export default function NewSalesPeriod({ navigation }: Props) {
 
     const openBottomSheet = () => bottomSheetRef.current?.expand()
 
+    const savePeriod = async () => {
+        setIsLoading(true)
+
+        const { start, end, location, name } = newPeriod
+
+        if (!start || !end || !location) {
+            Alert.alert('Error', 'Debes llegar todos los campos *Obligatorio')
+            setIsLoading(false)
+            return
+        }
+
+
+        try {
+            await service.save(newPeriod as NewPeriod)
+            Alert.alert('Correcto', 'Periodo de ventas creado', [
+                { text: 'OK', onPress: () => navigation.navigate('SalesPeriodList') }
+            ]);
+        } catch (error) {
+            alert(error.message)
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
     return (
-        <ScreenContainer>
+        <ScreenContainer style={{ paddingTop: 50 }}>
             <KeyboardAwareScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
                 extraScrollHeight={Platform.OS === "ios" ? 20 : 100}
                 enableOnAndroid={true}
                 enableAutomaticScroll={Platform.OS === "ios"}
             >
-                <Text fontWeight='bold' style={styles.title}>Crear nuevo periodo de ventas</Text>
 
                 <View style={styles.containerInpuDate}>
                     <View style={styles.containerDate}>
                         <InputDate
+                            value={newPeriod.start}
+                            onChange={(value) => setNewPeriod({ ...newPeriod, start: value })}
+                            disabled
                             placeholder='Fecha de inicio'
                             title='Inicio'
                             requeriment='*Obligatorio'
@@ -45,6 +80,9 @@ export default function NewSalesPeriod({ navigation }: Props) {
                     </View>
                     <View style={styles.containerHour}>
                         <InputDate
+                            value={newPeriod.end}
+                            onChange={(value) => setNewPeriod({ ...newPeriod, end: value })}
+                            loading={isLoading}
                             placeholder='Fecha de fin'
                             title='Fin'
                             requeriment='*Obligatorio'
@@ -53,16 +91,34 @@ export default function NewSalesPeriod({ navigation }: Props) {
                     </View>
                 </View>
 
-                <Input style={styles.inputName} placeholder='Identifica el periodo más facilmente' requeriment='Recomendado' title='Nombre' />
-                <Input style={styles.inputName} placeholder='Elige una ubicacion predeterminada' requeriment='*Obligatorio' title='Ubicacion de entregas' />
+                <Input
+                    value={newPeriod.name}
+                    onChangeText={(value) => setNewPeriod({ ...newPeriod, name: value })}
+                    loading={isLoading}
+                    style={styles.inputName}
+                    placeholder='Identifica el periodo más facilmente'
+                    requeriment='Recomendado'
+                    title='Nombre'
+                />
 
-                <View style={styles.deliveryDaysContainer}>
+                <Input
+                    value={newPeriod.location}
+                    onChangeText={(value) => setNewPeriod({ ...newPeriod, location: value })}
+                    loading={isLoading}
+                    style={styles.inputName}
+                    placeholder='Elige una ubicacion predeterminada'
+                    requeriment='*Obligatorio'
+                    title='Ubicacion de entregas'
+                />
+
+                {/*<View style={styles.deliveryDaysContainer}>
                     <TouchableOpacity onPress={openBottomSheet}>
                         <Text style={styles.deliveryDays}>+ Agregar días de entrega</Text>
                     </TouchableOpacity>
-                </View>
+                </View>*/}
 
-                <Button title='Crear periodo' onPress={() => { }} />
+                <Button title='Crear periodo' onPress={savePeriod} />
+
                 <BottomSheet index={-1} snapPoints={snapPoints} enablePanDownToClose ref={bottomSheetRef} handleIndicatorStyle={{ backgroundColor: Colors.Gray }} backgroundStyle={{ backgroundColor: Colors.Dark2 }}>
                     <BottomSheetView style={{ paddingHorizontal: 20, gap: 20 }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
