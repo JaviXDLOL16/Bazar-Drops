@@ -6,7 +6,7 @@ import { FilterContainer } from 'src/components/Filter/Filter'
 import { Colors } from 'src/models/Colors/Colors'
 import Text from 'src/components/Texts/Text'
 import CardSalesPeriod from './components/CardSalesPeriod'
-import { Entypo, FontAwesome } from '@expo/vector-icons';
+import { Entypo, FontAwesome, Octicons } from '@expo/vector-icons';
 import CustomModal from 'src/components/Modal/Modal'
 import ContentModalPeriod from './components/ContentModalPeriod'
 import FilterForClothStatus, { ClothFilterStates } from './components/FilterForClothStatus'
@@ -15,6 +15,7 @@ import { createClothService } from 'src/lib/Inventory/application/ClothService'
 import { Cloth } from 'src/lib/Inventory/domain/Cloth'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { stackParamList } from 'App'
+import Graphics from '../Graphics/Graphics'
 
 const repository = createAxiosClothRepository();
 const service = createClothService(repository);
@@ -155,9 +156,15 @@ export default function SalesPeriod({ navigation, route }: Props) {
     }
 
     const [isModalVisible, setModalVisible] = useState(false);
+    const [isModalVisiblet, setModalVisiblet] = useState(false);
+
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
+    };
+
+    const toggleModalt = () => {
+        setModalVisiblet(!isModalVisiblet);
     };
 
 
@@ -192,8 +199,15 @@ export default function SalesPeriod({ navigation, route }: Props) {
                 <TouchableOpacity onPress={toggleModal} style={styles.buttonList}>
                     <FontAwesome name='list-alt' size={34} color={Colors.White} />
                 </TouchableOpacity >
+                <TouchableOpacity onPress={toggleModalt} style={styles.buttonGraphic}>
+                    <Octicons name='graph' size={34} color={Colors.White} />
+                </TouchableOpacity >
                 <CustomModal isVisible={isModalVisible} onClose={toggleModal}>
                     <ContentModalPeriod />
+                </CustomModal>
+
+                <CustomModal isVisible={isModalVisiblet} onClose={toggleModalt}>
+                    <Graphics />
                 </CustomModal>
             </View>
 
@@ -250,5 +264,13 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.Gray2,
         borderRadius: 100,
     },
+    buttonGraphic: {
+        height: 60,
+        width: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.Green,
+        borderRadius: 100,
+    }
 }
 );

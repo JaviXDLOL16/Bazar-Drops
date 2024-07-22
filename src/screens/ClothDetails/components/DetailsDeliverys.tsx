@@ -5,7 +5,7 @@ import Input from 'src/components/form/Input';
 import Text from 'src/components/Texts/Text';
 import { Colors } from 'src/models/Colors/Colors';
 
-const daysAndHours = [
+const daysAndHours: string[] = [
     'Lunes 2:30',
     'Martes 3:00',
     'Miércoles 4:15',
@@ -14,7 +14,7 @@ const daysAndHours = [
 ];
 
 export default function DetailsDeliverys() {
-    const [selectedIndex, setSelectedIndex] = useState(null);
+    const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
     return (
         <>
@@ -24,7 +24,7 @@ export default function DetailsDeliverys() {
             <Text style={styles.textSelect}>Selecciona la fecha de entrega</Text>
             <ScrollView horizontal>
                 <View style={styles.contHours}>
-                    {daysAndHours.map((item, index: number) => (
+                    {daysAndHours.map((item, index) => (
                         <TouchableOpacity
                             key={index}
                             style={[
@@ -38,17 +38,11 @@ export default function DetailsDeliverys() {
                     ))}
                 </View>
             </ScrollView>
-            <Input
-                title='Precio'
-                requeriment='Puedes establecer tu propia cantidad'
-                placeholder='Precio'
-                style={styles.inputStyle}
-            />
             <Button
                 onPress={() => { }}
                 title='Solicitar compra'
-                size='ExtraLarge'
-                style={{ marginTop: 60 }}
+                size='Large'
+                style={{ marginTop: 40 }}
             />
         </>
     );
