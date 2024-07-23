@@ -8,27 +8,18 @@ import Input from 'src/ui/components/form/Input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as ImagePicker from 'expo-image-picker';
 import * as SecureStore from 'expo-secure-store';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { stackParamList } from 'App';
+import { useAuth } from 'src/ui/contexts/AuthContext';
+
+type Props = NativeStackScreenProps<stackParamList, 'Information'>
 
 
-export default function Information({ navigation }: any) {
+export default function Information({ navigation }: Props) {
+
+    const { onLogout } = useAuth();
+
     const [image, setImage] = useState<string | null>(null);
-    const [name, setName] = useState<string>('');
-
-
-    useEffect(() => {
-
-        const getName = async () => {
-            try {
-                let result = await SecureStore.getItemAsync('name');
-                setName(result || '');
-            } catch (error: any) {
-                alert(error.message);
-            }
-        }
-
-        getName();
-
-    }, [])
 
 
     const pickImage = async () => {
@@ -42,27 +33,6 @@ export default function Information({ navigation }: any) {
         if (!result.canceled) {
             setImage(result.assets[0].uri);
         }
-    };
-
-    const logout = () => {
-        Alert.alert(
-            'Cerrar sesión',
-            '¿Estás seguro de que quieres cerrar sesión?',
-            [
-                {
-                    text: 'Cancelar',
-                    style: 'cancel'
-                },
-                {
-                    text: 'Aceptar',
-                    onPress: async () => {
-                        await SecureStore.deleteItemAsync('role');
-                        await SecureStore.deleteItemAsync('name');
-                        navigation.replace('Authentication');
-                    }
-                }
-            ]
-        );
     };
 
     return (
@@ -86,7 +56,7 @@ export default function Information({ navigation }: any) {
                         </View>
                     </TouchableOpacity>
                     <View style={styles.containerAccount}>
-                        <Text style={styles.textName}>{name}</Text>
+                        <Text style={styles.textName}>Leonardo Espinosa</Text>
                         <Text style={styles.textAccount}>Vendedor</Text>
                     </View>
                 </View>
@@ -101,7 +71,7 @@ export default function Information({ navigation }: any) {
                         <TouchableOpacity>
                             <Text style={styles.textCreateAccount}>Crear cuenta de comprador</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={logout}>
+                        <TouchableOpacity onPress={onLogout}>
                             <Text style={styles.textLeave}>Cerrar sesión</Text>
                         </TouchableOpacity>
                     </EditableSection>

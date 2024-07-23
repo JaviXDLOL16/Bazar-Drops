@@ -22,38 +22,6 @@ import * as SecureStore from 'expo-secure-store';
 
 
 
-const data = [
-  {
-    nombre: 'Playera verde H&M',
-    talla: 'M',
-    precio: 122,
-    image: require('src/ui/assets/images/prenda1.jpeg'),
-  },
-  {
-    nombre: 'Playera roja under armor',
-    talla: 'L',
-    precio: 188,
-    image: require('src/ui/assets/images/Prueba2.jpeg'),
-  },
-  {
-    nombre: 'Playera gris trust',
-    talla: 'XS',
-    precio: 148,
-    image: require('src/ui/assets/images/prenda3.jpeg'),
-  },
-  {
-    nombre: 'Card 4',
-    talla: 'L',
-    precio: 178,
-    image: require('src/ui/assets/images/prenda3.jpeg'),
-  },
-  {
-    nombre: 'Card 5',
-    talla: 'XXL',
-    precio: 122,
-    image: require('src/ui/assets/images/prenda1.png'),
-  },
-];
 
 const dataForBuyerPrincipal = [
   { id: '1', description: 'Playera blanca Bears', size: 'Extra chica', price: 120, image: require('src/ui/assets/images/prenda1.jpeg') },

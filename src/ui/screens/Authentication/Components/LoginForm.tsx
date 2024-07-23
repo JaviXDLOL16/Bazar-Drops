@@ -3,21 +3,17 @@ import { View, StyleSheet, Alert } from 'react-native';
 import Button from 'src/ui/components/Buttons/Button';
 import Input from 'src/ui/components/form/Input';
 import Text from 'src/ui/components/Texts/Text';
-import useStackNavigation from 'src/ui/hooks/useStackNavigation';
-import { createUserService } from 'src/lib/User/application/UserService';
 import { LoginUser } from 'src/lib/User/domain/User';
-import { createAxiosUserRepository } from 'src/lib/User/infrastructure/AxiosUserRepository';
 import { Colors } from 'src/ui/models/Colors/Colors';
-import * as SecureStore from 'expo-secure-store';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { stackParamList } from 'App';
+import { useAuth } from 'src/ui/contexts/AuthContext';
 
-const repository = createAxiosUserRepository();
-const service = createUserService(repository);
 
 
 function LoginForm({ tabToRegister }: { tabToRegister: () => void }) {
 
-    const navigation = useStackNavigation();
-
+    const { onLogin } = useAuth();
 
     const [loading, setLoading] = useState(false);
     const [user, setUser] = useState<LoginUser>({ email: '', password: '' });
@@ -39,17 +35,21 @@ function LoginForm({ tabToRegister }: { tabToRegister: () => void }) {
             return;
         }
 
-        try {
-            const response = await service.login(user);
-            await SecureStore.setItemAsync('role', response.id.toString());
-            await SecureStore.setItemAsync('name', response.userName);
-            navigation.navigate('Principal'); //CHECA ESTO DE REPLACE
-        } catch (error) {
-            console.error(error);
-            Alert.alert('Error', 'No se pudo iniciar sesión. Por favor, inténtelo de nuevo.');
-        } finally {
+        if (password.length < 8) {
+            Alert.alert('Error', 'La contraseña debe tener al menos 8 caracteres');
             setLoading(false);
+            return;
         }
+
+
+        const result = await onLogin!(user);
+        if (result && result.error) {
+            setLoading(false);
+            alert(result.msg)
+        }
+
+
+
     };
 
     return (
