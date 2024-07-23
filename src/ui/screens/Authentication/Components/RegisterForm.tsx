@@ -4,19 +4,12 @@ import Button from 'src/ui/components/Buttons/Button';
 import Input from 'src/ui/components/form/Input';
 import Text from 'src/ui/components/Texts/Text';
 import AccountRadioButtons from 'src/ui/components/form/AccountRadioButtons';
-import { createUserService } from 'src/lib/User/application/UserService';
 import { RegisterUser } from 'src/lib/User/domain/User';
-import { createAxiosUserRepository } from 'src/lib/User/infrastructure/AxiosUserRepository';
 import useStackNavigation from 'src/ui/hooks/useStackNavigation';
-import * as SecureStore from 'expo-secure-store';
+import { useAuth } from 'src/ui/contexts/AuthContext';
 
-
-const repository = createAxiosUserRepository();
-const service = createUserService(repository);
-
-function RegisterForm() {
-
-    const navigation = useStackNavigation();
+function RegisterForm({ tabToLogin }: { tabToLogin: () => void }) {
+    const { onRegister, onLogin } = useAuth();
 
     const [loading, setLoading] = useState(false);
     const [newUser, setNewUser] = useState<Partial<RegisterUser>>({
@@ -50,17 +43,14 @@ function RegisterForm() {
             return;
         }
 
-        try {
-            const response = await service.register(newUser as RegisterUser);
-            await SecureStore.setItemAsync('role', response.id.toString());
-            await SecureStore.setItemAsync('name', response.userName);
-
-            navigation.navigate('Principal'); //CHECA ESTO DE REPLACE
-        } catch (error) {
-            console.error(error);
-            Alert.alert('Error', 'No se pudo registrar. Por favor, inténtelo de nuevo.');
-        } finally {
+        const result = await onRegister!(newUser as RegisterUser);
+        if (result && result.error) {
             setLoading(false);
+            alert(result.msg)
+        } else {
+            alert('Usuario registrado correctamente');
+            setLoading(false);
+            await onLogin!(newUser as RegisterUser);
         }
     };
 

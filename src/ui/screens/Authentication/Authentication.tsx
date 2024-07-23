@@ -5,11 +5,15 @@ import Tabs from './Components/Tabs';
 import LoginForm from './Components/LoginForm';
 import RegisterForm from './Components/RegisterForm';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { stackParamList } from 'App';
 
 export type tabs = 'login' | 'registrer';
 
+type Props = NativeStackScreenProps<stackParamList, 'Authentication'>
 
-export default function Authentication() {
+
+export default function Authentication({ navigation }: Props) {
     const [activeTab, setActiveTab] = useState<tabs>('login');
 
     return (
@@ -29,7 +33,7 @@ export default function Authentication() {
                     activeTab === 'login' ?
                         <LoginForm tabToRegister={() => setActiveTab('registrer')} />
                         :
-                        <RegisterForm />
+                        <RegisterForm tabToLogin={() => setActiveTab('login')} />
                 }
             </KeyboardAwareScrollView>
         </ScreenContainer>
