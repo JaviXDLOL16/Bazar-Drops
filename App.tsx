@@ -2,29 +2,25 @@ import * as React from 'react';
 import { View, Text, Button, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { NativeStackScreenProps, createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from 'src/screens/Login/Login';
-import Register from 'src/screens/Register/Register';
-import { Colors } from 'src/models/Colors/Colors';
-import Principal from 'src/screens/Principal/Principal';
-import Policies from 'src/screens/Policies/Policies';
+import Principal from 'src/ui/screens/Principal/Principal';
+import Policies from 'src/ui/screens/Policies/Policies';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Information from 'src/screens/Information/Information';
-import BuyerRequest from 'src/screens/BuyerRequest/BuyerRequest';
-import DeliveryList from 'src/screens/DeliveryList/DeliveryList';
-import NewSalesPeriod from 'src/screens/NewSalesPeriod/NewSalesPeriod';
+import Information from 'src/ui/screens/Information/Information';
+import BuyerRequest from 'src/ui/screens/BuyerRequest/BuyerRequest';
+import DeliveryList from 'src/ui/screens/DeliveryList/DeliveryList';
+import NewSalesPeriod from 'src/ui/screens/NewSalesPeriod/NewSalesPeriod';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import RegisterClothes from 'src/screens/RegisterClothes/RegisterClothes';
-import NewDelivery from 'src/screens/NewDelivery/NewDelivery';
-import Authentication from 'src/screens/Authentication/Authentication';
-import SalesPeriodList from 'src/screens/SalesPeriodList/SalesPeriodList';
-import DeliveryDetails from 'src/screens/DeliveryDetails/DeliveryDetails';
-import SelectCloth from 'src/screens/SelectCloth/SelectCloth';
-import AllRegisteredClothes from 'src/screens/AllRegisteredClothes/AllRegisteredClothes';
-import SalesPeriod from 'src/screens/SalesPeriod/SalesPeriod';
-import ClothDetails from 'src/screens/ClothDetails/ClothDetails';
-import SellerDetails from 'src/screens/SellerDetails/SellerDetails';
-import { DeliveryFilterStates } from 'src/screens/DeliveryList/components/FilterForDeliveryStatus';
-import Graphics from 'src/screens/Graphics/Graphics';
+import RegisterClothes from 'src/ui/screens/RegisterClothes/RegisterClothes';
+import NewDelivery from 'src/ui/screens/NewDelivery/NewDelivery';
+import Authentication from 'src/ui/screens/Authentication/Authentication';
+import SalesPeriodList from 'src/ui/screens/SalesPeriodList/SalesPeriodList';
+import DeliveryDetails from 'src/ui/screens/DeliveryDetails/DeliveryDetails';
+import SelectCloth from 'src/ui/screens/SelectCloth/SelectCloth';
+import SalesPeriod from 'src/ui/screens/SalesPeriod/SalesPeriod';
+import ClothDetails from 'src/ui/screens/ClothDetails/ClothDetails';
+import SellerDetails from 'src/ui/screens/SellerDetails/SellerDetails';
+import { DeliveryFilterStates } from 'src/ui/screens/DeliveryList/components/FilterForDeliveryStatus';
+import { Colors } from 'src/ui/models/Colors/Colors';
 
 
 type Props = NativeStackScreenProps<stackParamList, 'Home'>
@@ -35,14 +31,6 @@ function Home({ navigation }: Props) {
     <ScrollView>
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 50 }}>
         <Text>Global</Text>
-        <Button
-          title="Login"
-          onPress={() => navigation.navigate('Login')}
-        />
-        <Button
-          title="Register"
-          onPress={() => navigation.navigate('Register')}
-        />
         <Button
           title="Authentication"
           onPress={() => navigation.navigate('Authentication')}
@@ -89,20 +77,12 @@ function Home({ navigation }: Props) {
           onPress={() => navigation.navigate('SalesPeriodList')}
         />
         <Button
-          title="Todas las prendas registradas"
-          onPress={() => navigation.navigate('AllRegisteredClothes')}
-        />
-        <Button
           title="Periodo de ventas"
           onPress={() => navigation.navigate('SalesPeriod')}
         />
         <Button
           title='Crear periodo de ventas'
           onPress={() => navigation.navigate('NewSalesPeriod')}
-        />
-        <Button
-          title="Graficas"
-          onPress={() => navigation.navigate('Graphics')}
         />
         <Text>Comprador</Text>
         <Button
@@ -140,12 +120,10 @@ function Home({ navigation }: Props) {
 
 export type stackParamList = {
   Home: undefined;
-  Login: undefined;
-  Register: undefined;
   Policies: undefined;
   Principal: undefined;
   Information: undefined;
-  DeliveryList: { status?: DeliveryFilterStates };
+  DeliveryList: { status?: DeliveryFilterStates } | undefined;
   DeliveryDetails: undefined;
   NewDelivery: undefined;
   Authentication: undefined;
@@ -153,12 +131,10 @@ export type stackParamList = {
   RegisterClothes: undefined;
   BuyerRequest: undefined;
   SalesPeriodList: undefined;
-  AllRegisteredClothes: undefined;
-  SalesPeriod: { clothId: number };
+  SalesPeriod: { clothId: number } | undefined;
   NewSalesPeriod: undefined;
-  ClothDetails: { clothId: number };
+  ClothDetails: { clothId: number } | undefined;
   SellerDetails: undefined;
-  Graphics: undefined;
 };
 
 const Stack = createNativeStackNavigator<stackParamList>();
@@ -169,30 +145,18 @@ function App() {
       <SafeAreaProvider >
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName='Authentication'
+            initialRouteName='Home'
             screenOptions={
               {
                 headerStyle: { backgroundColor: Colors.Dark },
                 headerTitleStyle: { color: Colors.White, fontSize: 24, fontWeight: '900' },
                 headerBackTitleVisible: false,
-                headerBackImageSource: require('src/assets/images/back.png'),
+                headerBackImageSource: require('src/ui/assets/images/back.png'),
                 headerTintColor: Colors.White,
               }
             }
           >
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen
-              name="Login"
-              component={Login} options={{
-                title: 'Bazar and Drops',
-
-              }} />
-            <Stack.Screen
-              name="Register"
-              component={Register}
-              options={{
-                title: 'Bazar and Drops',
-              }} />
             <Stack.Screen
               name='Authentication'
               component={Authentication}
@@ -260,12 +224,6 @@ function App() {
                 title: 'Periodos de ventas'
               }} />
             <Stack.Screen
-              name='AllRegisteredClothes'
-              component={AllRegisteredClothes}
-              options={{
-                title: 'Todos los registros'
-              }} />
-            <Stack.Screen
               name='SalesPeriod'
               component={SalesPeriod}
               options={{
@@ -288,12 +246,6 @@ function App() {
               component={SellerDetails}
               options={{
                 title: 'Detalles del vendedor'
-              }} />
-            <Stack.Screen
-              name="Graphics"
-              component={Graphics}
-              options={{
-                title: 'Graficas'
               }} />
 
 

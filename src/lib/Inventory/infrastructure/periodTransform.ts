@@ -1,4 +1,4 @@
-import { formatDateSimple } from "src/utils/formateDate";
+import { formatDateSimple } from "src/ui/utils/formateDate";
 import { NewPeriod, Period } from "../domain/Period";
 
 const apiToDomainStatusid: Record<string, Period['status_id']> = {
