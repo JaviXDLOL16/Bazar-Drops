@@ -14,7 +14,6 @@ export const createAxiosUserRepository = (): UserRepository => {
         },
         register: async (newUser: RegisterUser) => {
             const idUser = newUser.accountType === 'vendedor' ? 1 : 2;
-            console.log(idUser);
             //const response = await axios.post(`${API_URL}/register`, user);
             await new Promise(resolve => setTimeout(resolve, 2000));
             return { token: '111', id: idUser, userName: newUser.name };

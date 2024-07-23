@@ -2,7 +2,7 @@ import { Delivery, NewPendingDelivery } from "../domain/Delivery";
 
 const apiToDomainStatusId: Record<string, Delivery['statusId']> = {
     1: 'pendiente',
-    2: 'entregado',
+    2: 'vendido',
     3: 'cancelado',
 };
 
@@ -24,7 +24,7 @@ export const transformApiToDomainDelivery = (apiDelivery: any): Delivery => {
 
 const domainToApiStatusId: Record<Delivery['statusId'], string> = {
     pendiente: '1',
-    entregado: '2',
+    vendido: '2',
     cancelado: '3',
 };
 
