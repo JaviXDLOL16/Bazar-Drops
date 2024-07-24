@@ -16,7 +16,7 @@ const data2 = [
         comprador: 'Diego Alberto',
         precio: 122,
         numero: '961 - 132 - 7185',
-        image: require('src/ui/assets/images/prenda1.jpeg'),
+        image: require('src/ui/assets/images/Prueba2.jpeg'),
         lugar: 'Calle central y 6 norte poniente'
     },
     {
@@ -114,7 +114,7 @@ const data2 = [
         comprador: 'Diego Alberto',
         precio: 122,
         numero: '961 - 132 - 7185',
-        image: require('src/ui/assets/images/prenda1.jpeg'),
+        image: require('src/ui/assets/images/prenda1.png'),
         oferta: 200,
         lugar: 'Calle central y 6 norte poniente',
     },
