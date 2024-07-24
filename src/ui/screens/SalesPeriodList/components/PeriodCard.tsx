@@ -39,10 +39,10 @@ export default function PeriodCard({ data }: PeriodCardProps) {
                 </View>
                 <View style={styles.imagesAndDetails}>
                     <View style={styles.clothImages}>
-                        <Image style={[styles.image, styles.image1]} source={require('src/ui/assets/images/prenda1.jpeg')} />
+                        <Image style={[styles.image, styles.image1]} source={require('src/ui/assets/images/prenda2.jpeg')} />
                         <Image style={[styles.image]} source={require('src/ui/assets/images/prenda2.jpeg')} />
                         <Image style={[styles.image]} source={require('src/ui/assets/images/prenda3.jpeg')} />
-                        <Image style={[styles.image]} source={require('src/ui/assets/images/prenda1.jpeg')} />
+                        <Image style={[styles.image]} source={require('src/ui/assets/images/prenda2.jpeg')} />
                     </View>
                     <View style={styles.details}>
                         <View style={styles.detailsColumn1}>

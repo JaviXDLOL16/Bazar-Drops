@@ -43,6 +43,8 @@ export type stackParamList = {
   NewSalesPeriod: undefined;
   ClothDetails: { clothId: number } | undefined;
   SellerDetails: undefined;
+  Pruebas: undefined;
+
 };
 
 
@@ -192,7 +194,7 @@ function Home({ navigation }: Props) {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 50 }}>
         <Text>Global</Text>
         <Button
-          title="Authentication"
+          title="Pruebas"
           onPress={() => navigation.navigate('Authentication')}
         />
         <Button
@@ -272,6 +274,10 @@ function Home({ navigation }: Props) {
         <Button
           title="Detalles del vendedor"
           onPress={() => navigation.navigate('SellerDetails')}
+        />
+        <Button
+          title="Pruebas"
+          onPress={() => navigation.navigate('Pruebas')}
         />
       </View>
     </ScrollView>
