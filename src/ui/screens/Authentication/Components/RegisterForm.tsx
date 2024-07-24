@@ -9,6 +9,9 @@ import useStackNavigation from 'src/ui/hooks/useStackNavigation';
 import { useAuth } from 'src/ui/contexts/AuthContext';
 
 function RegisterForm({ tabToLogin }: { tabToLogin: () => void }) {
+
+    const navigation = useStackNavigation();
+
     const { onRegister, onLogin } = useAuth();
 
     const [loading, setLoading] = useState(false);
@@ -43,15 +46,17 @@ function RegisterForm({ tabToLogin }: { tabToLogin: () => void }) {
             return;
         }
 
-        const result = await onRegister!(newUser as RegisterUser);
-        if (result && result.error) {
-            setLoading(false);
-            alert(result.msg)
-        } else {
-            alert('Usuario registrado correctamente');
-            setLoading(false);
-            await onLogin!(newUser as RegisterUser);
-        }
+        /* const result = await onRegister!(newUser as RegisterUser);
+         if (result && result.error) {
+             setLoading(false);
+             alert(result.msg)
+         } else {
+             alert('Usuario registrado correctamente');
+             setLoading(false);
+             await onLogin!(newUser as RegisterUser);
+         }*/
+
+        navigation.navigate('Principal')
     };
 
     return (

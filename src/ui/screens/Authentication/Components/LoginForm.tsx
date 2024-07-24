@@ -8,10 +8,13 @@ import { Colors } from 'src/ui/models/Colors/Colors';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { stackParamList } from 'App';
 import { useAuth } from 'src/ui/contexts/AuthContext';
+import useStackNavigation from 'src/ui/hooks/useStackNavigation';
 
 
 
 function LoginForm({ tabToRegister }: { tabToRegister: () => void }) {
+
+    const navigation = useStackNavigation();
 
     const { onLogin } = useAuth();
 
@@ -41,14 +44,14 @@ function LoginForm({ tabToRegister }: { tabToRegister: () => void }) {
             return;
         }
 
+        /*
+                const result = await onLogin!(user);
+                if (result && result.error) {
+                    setLoading(false);
+                    alert(result.msg)
+                }*/
 
-        const result = await onLogin!(user);
-        if (result && result.error) {
-            setLoading(false);
-            alert(result.msg)
-        }
-
-
+        navigation.navigate('Principal')
 
     };
 
