@@ -11,6 +11,7 @@ import * as SecureStore from 'expo-secure-store';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { stackParamList } from 'App';
 import { useAuth } from 'src/ui/contexts/AuthContext';
+import useStackNavigation from 'src/ui/hooks/useStackNavigation';
 
 type Props = NativeStackScreenProps<stackParamList, 'Information'>
 
@@ -71,7 +72,7 @@ export default function Information({ navigation }: Props) {
                         <TouchableOpacity>
                             <Text style={styles.textCreateAccount}>Crear cuenta de comprador</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={onLogout}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Authentication')}>
                             <Text style={styles.textLeave}>Cerrar sesión</Text>
                         </TouchableOpacity>
                     </EditableSection>
