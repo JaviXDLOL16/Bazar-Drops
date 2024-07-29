@@ -12,13 +12,14 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { stackParamList } from 'App';
 import { useAuth } from 'src/ui/contexts/AuthContext';
 import useStackNavigation from 'src/ui/hooks/useStackNavigation';
+import { useFocusEffect } from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<stackParamList, 'Information'>
 
 
 export default function Information({ navigation }: Props) {
 
-    const { onLogout } = useAuth();
+    const { onLogout, getUserInformation } = useAuth();
 
     const [image, setImage] = useState<string | null>(null);
 
@@ -35,6 +36,16 @@ export default function Information({ navigation }: Props) {
             setImage(result.assets[0].uri);
         }
     };
+
+    useFocusEffect(
+        React.useCallback(() => {
+            const loadUser = async () => {
+                const result = await getUserInformation!();
+                console.log(result);
+            }
+            loadUser();
+        }, [])
+    );
 
     return (
         <ScreenContainer style={{ paddingHorizontal: 0, height: '100%' }}>

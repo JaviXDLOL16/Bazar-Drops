@@ -135,13 +135,7 @@ export default function BuyerRequest() {
     return (
         <ScreenContainer>
             <Search style={styles.search} />
-            <FilterContainer style={{ justifyContent: 'space-between' }}>
-                <Filter title="Todos" iconName={"checkmark-circle"} style={{ paddingHorizontal: 30 }} />
-                <View style={styles.contButtons}>
-                    <Filter title="Hoy" style={{ paddingHorizontal: 20, marginRight: 10 }} />
-                    <Filter title="Esta semana" style={{ paddingHorizontal: 20 }} />
-                </View>
-            </FilterContainer>
+
             <CarouselBuyer data={data2} />
         </ScreenContainer>
     );

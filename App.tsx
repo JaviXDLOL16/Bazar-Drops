@@ -20,8 +20,7 @@ import ClothDetails from 'src/ui/screens/ClothDetails/ClothDetails';
 import SellerDetails from 'src/ui/screens/SellerDetails/SellerDetails';
 import { DeliveryFilterStates } from 'src/ui/screens/DeliveryList/components/FilterForDeliveryStatus';
 import { Colors } from 'src/ui/models/Colors/Colors';
-import * as SecureStore from 'expo-secure-store';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { AuthProvider, useAuth } from 'src/ui/contexts/AuthContext';
 
 
@@ -59,6 +58,8 @@ export default function App() {
 
 export const Layout = () => {
 
+  const { authState } = useAuth();
+
   return (
     <GestureHandlerRootView>
       <SafeAreaProvider >
@@ -74,99 +75,107 @@ export const Layout = () => {
               }
             }
           >
-            <Stack.Screen
-              name='Authentication'
-              component={Authentication}
-              options={{
-                title: 'Bazar and Drops'
-              }} />
-            <Stack.Screen
-              name="Principal"
-              component={Principal}
-              options={{
-                headerShown: false
-              }} />
-            <Stack.Screen
-              name="Information"
-              component={Information}
-              options={{
-                title: 'Informacion'
-              }} />
-            <Stack.Screen
-              name="DeliveryList"
-              component={DeliveryList}
-              options={{
-                title: 'Lista de entregas'
-              }} />
-            <Stack.Screen
-              name="DeliveryDetails"
-              component={DeliveryDetails}
-              options={{
-                title: 'Detalles de entregas'
-              }} />
-            <Stack.Screen
-              name="NewDelivery"
-              component={NewDelivery}
-              options={{
-                title: 'Nueva entrega'
-              }} />
-            <Stack.Screen
-              name="SelectCloth"
-              component={SelectCloth}
-              options={{
-                title: 'Seleccionar prenda'
-              }} />
-            <Stack.Screen
-              name='RegisterClothes'
-              component={RegisterClothes}
-              options={{
-                title: 'Registrar prenda'
-              }} />
-            <Stack.Screen
-              name='BuyerRequest'
-              component={BuyerRequest}
-              options={{
-                title: 'Solicitudes de compra'
-              }} />
-            <Stack.Screen
-              name='SalesPeriodList'
-              component={SalesPeriodList}
-              options={{
-                title: 'Periodos de ventas'
-              }} />
-            <Stack.Screen
-              name='SalesPeriod'
-              component={SalesPeriod}
-              options={{
-                title: 'Periodo de ventas'
-              }} />
-            <Stack.Screen
-              name="NewSalesPeriod"
-              component={NewSalesPeriod}
-              options={{
-                title: 'Nuevo periodo de ventas'
-              }} />
-            <Stack.Screen
-              name="ClothDetails"
-              component={ClothDetails}
-              options={{
-                title: 'Detalles de la prenda'
-              }} />
-            <Stack.Screen
-              name="SellerDetails"
-              component={SellerDetails}
-              options={{
-                title: 'Detalles del vendedor'
-              }} />
+            {true ? (
+              <>
+                <Stack.Screen
+                  name="Principal"
+                  component={Principal}
+                  options={{
+                    headerShown: false
+                  }} />
+                <Stack.Screen
+                  name="Information"
+                  component={Information}
+                  options={{
+                    title: 'Informacion'
+                  }} />
+                <Stack.Screen
+                  name="DeliveryList"
+                  component={DeliveryList}
+                  options={{
+                    title: 'Lista de entregas'
+                  }} />
+                <Stack.Screen
+                  name="DeliveryDetails"
+                  component={DeliveryDetails}
+                  options={{
+                    title: 'Detalles de entregas'
+                  }} />
+                <Stack.Screen
+                  name="NewDelivery"
+                  component={NewDelivery}
+                  options={{
+                    title: 'Nueva entrega'
+                  }} />
+                <Stack.Screen
+                  name="SelectCloth"
+                  component={SelectCloth}
+                  options={{
+                    title: 'Seleccionar prenda'
+                  }} />
+                <Stack.Screen
+                  name='RegisterClothes'
+                  component={RegisterClothes}
+                  options={{
+                    title: 'Registrar prenda'
+                  }} />
+                <Stack.Screen
+                  name='BuyerRequest'
+                  component={BuyerRequest}
+                  options={{
+                    title: 'Solicitudes de compra'
+                  }} />
+                <Stack.Screen
+                  name='SalesPeriodList'
+                  component={SalesPeriodList}
+                  options={{
+                    title: 'Periodos de ventas'
+                  }} />
+                <Stack.Screen
+                  name='SalesPeriod'
+                  component={SalesPeriod}
+                  options={{
+                    title: 'Periodo de ventas'
+                  }} />
+                <Stack.Screen
+                  name="NewSalesPeriod"
+                  component={NewSalesPeriod}
+                  options={{
+                    title: 'Nuevo periodo de ventas'
+                  }} />
+                <Stack.Screen
+                  name="ClothDetails"
+                  component={ClothDetails}
+                  options={{
+                    title: 'Detalles de la prenda'
+                  }} />
+                <Stack.Screen
+                  name="SellerDetails"
+                  component={SellerDetails}
+                  options={{
+                    title: 'Detalles del vendedor'
+                  }} />
+              </>
+            ) : (
+              <>
+                <Stack.Screen
+                  name='Authentication'
+                  component={Authentication}
+                  options={{
+                    title: 'Bazar and Drops'
+                  }} />
+                <Stack.Screen name="Home" component={Home} />
 
-            <Stack.Screen name="Home" component={Home} />
+                <Stack.Screen
+                  name="Policies"
+                  component={Policies}
+                  options={{
+                    title: 'Politicas'
+                  }} />
+              </>
 
-            <Stack.Screen
-              name="Policies"
-              component={Policies}
-              options={{
-                title: 'Politicas'
-              }} />
+            )}
+
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>
@@ -267,5 +276,4 @@ function Home({ navigation }: Props) {
     </ScrollView>
   );
 }
-
 
