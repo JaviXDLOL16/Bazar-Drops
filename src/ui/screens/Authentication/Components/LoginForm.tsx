@@ -44,14 +44,11 @@ function LoginForm({ tabToRegister }: { tabToRegister: () => void }) {
             return;
         }
 
-        /*
-                const result = await onLogin!(user);
-                if (result && result.error) {
-                    setLoading(false);
-                    alert(result.msg)
-                }*/
-
-        navigation.navigate('Principal')
+        const result = await onLogin!(user);
+        if (result && result.error) {
+            setLoading(false);
+            alert(result.msg)
+        }
 
     };
 

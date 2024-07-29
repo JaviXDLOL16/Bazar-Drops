@@ -1,5 +1,5 @@
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ScreenContainer from 'src/ui/components/layout/ScreenContainer'
 import { stackParamList } from 'App';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -9,15 +9,23 @@ import { Ionicons } from "@expo/vector-icons";
 import Button from 'src/ui/components/Buttons/Button';
 import { createClothService } from 'src/lib/Inventory/application/ClothService';
 import { createAxiosClothRepository } from 'src/lib/Inventory/infrastructure/AxiosClothRepository';
-import { Cloth, ClothForBuyer } from 'src/lib/Inventory/domain/Cloth';
+import { ClothForBuyer } from 'src/lib/Inventory/domain/Cloth';
 import { Skeleton } from 'moti/skeleton';
 import CustomModal from 'src/ui/components/Modal/Modal';
 import DetailsDeliverys from './components/DetailsDeliverys';
+import { NewOffer } from 'src/lib/SellerBuyer/domain/Offer';
+import { createAxiosOfferRepository } from 'src/lib/SellerBuyer/infrastructure/AxiosOfferRepository';
+import { createOfferService } from 'src/lib/SellerBuyer/application/OfferService';
+import { useFocusEffect } from '@react-navigation/native';
 
 const repository = createAxiosClothRepository();
 const service = createClothService(repository);
 
+const offerRepository = createAxiosOfferRepository();
+const offerService = createOfferService(offerRepository);
+
 type Props = NativeStackScreenProps<stackParamList, 'ClothDetails'>;
+
 
 export default function ClothDetails({ navigation, route }: Props) {
 
@@ -25,16 +33,39 @@ export default function ClothDetails({ navigation, route }: Props) {
 
     const [cloth, setCloth] = useState<ClothForBuyer>();
     const [loading, setLoading] = useState(true);
+    const [newOffer, setNewOffer] = useState<Partial<NewOffer>>({ buyerId: 1, sellerId: 1, clothId: undefined, offer: undefined, statusId: 1 });
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSold, setIsSold] = useState(false);
 
     const getCloth = async () => {
         const cloth = await service.getById(clothId);
+        if (cloth?.status_id === 'vendido') {
+            setIsSold(true);
+        }
         setCloth(cloth);
         setLoading(false);
     };
 
-    useEffect(() => {
-        getCloth();
-    }, [])
+    const createNewOffer = async () => {
+        try {
+            setIsLoading(true);
+            newOffer.clothId = clothId;
+            newOffer.offer = cloth?.price;
+            await offerService.save(newOffer as NewOffer);
+            alert('Oferta realizada con éxito');
+            toggleModal();
+            navigation.navigate('BuyerRequest');
+        }
+        catch (e) {
+            alert('Error al realizar la oferta');
+        }
+    }
+
+    useFocusEffect(
+        React.useCallback(() => {
+            getCloth();
+        }, [])
+    );
     const [isModalVisible, setModalVisible] = useState(false);
 
     const toggleModal = () => {
@@ -86,7 +117,7 @@ export default function ClothDetails({ navigation, route }: Props) {
                             <View style={{ backgroundColor: Colors.Dark1, padding: 3, borderRadius: 100, justifyContent: 'center', alignItems: 'center' }}>
                                 <Ionicons name="person" size={20} color="white" />
                             </View>
-                            <Text fontWeight='bold' style={{ fontSize: 18 }}>{'Leonardo Espinosa NO EN API'}</Text>
+                            <Text fontWeight='bold' style={{ fontSize: 18 }}>{'----'}</Text>
                         </TouchableOpacity>
                     </View>
                 }
@@ -96,14 +127,14 @@ export default function ClothDetails({ navigation, route }: Props) {
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text fontWeight='regular' style={{ fontSize: 18 }}>Lugar de entrega </Text>
                         <TouchableOpacity disabled style={{ backgroundColor: Colors.Dark1, paddingVertical: 3, paddingHorizontal: 5, borderRadius: 8, }}>
-                            <Text fontWeight='bold' style={{ fontSize: 18 }}>{'Parque central NO EN API'}</Text>
+                            <Text fontWeight='bold' style={{ fontSize: 18 }}>{'----'}</Text>
                         </TouchableOpacity>
                     </View>
                 }
             </Skeleton>
-            <Button style={{ marginTop: 20 }} title='Lo quieroo' onPress={toggleModal} />
+            <Button loading={loading} style={{ marginTop: 20, ...(isSold && { backgroundColor: Colors.Gray }) }} title={!isSold ? 'Lo quieroo' : 'No disponible'} onPress={toggleModal} />
             <CustomModal isVisible={isModalVisible} onClose={toggleModal}>
-                <DetailsDeliverys />
+                <DetailsDeliverys loading={isLoading} onPressRequest={() => { !isSold && createNewOffer() }} />
             </CustomModal>
         </ScreenContainer>
     )

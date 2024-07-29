@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Button from 'src/ui/components/Buttons/Button';
-import Input from 'src/ui/components/form/Input';
 import Text from 'src/ui/components/Texts/Text';
 import { Colors } from 'src/ui/models/Colors/Colors';
 
@@ -13,7 +12,7 @@ const daysAndHours: string[] = [
     'Viernes 5:30'
 ];
 
-export default function DetailsDeliverys() {
+export default function DetailsDeliverys({ onPressRequest, loading }: { onPressRequest: () => void, loading: boolean }) {
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
     return (
@@ -39,7 +38,8 @@ export default function DetailsDeliverys() {
                 </View>
             </ScrollView>
             <Button
-                onPress={() => { }}
+                onPress={onPressRequest}
+                loading={loading}
                 title='Solicitar compra'
                 size='Large'
                 style={{ marginTop: 40 }}

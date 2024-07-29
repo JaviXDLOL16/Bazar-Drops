@@ -10,13 +10,13 @@ const repository = createAxiosUserRepository();
 const service = createUserService(repository);
 
 interface AuthProps {
-    authState?: { token: string | null; authenticated: boolean | null };
+    authState?: { userId: string | null; authenticated: boolean | null };
     onRegister?: (newuser: RegisterUser) => Promise<any>;
     onLogin?: (user: LoginUser) => Promise<any>;
     onLogout?: () => Promise<any>;
+    getUserInformation?: () => Promise<any>;
 }
 
-export const API_URL = process.env.EXPO_PUBLIC_API_USER_URL;
 const AuthContext = createContext<AuthProps>({});
 
 export const useAuth = () => {
@@ -25,26 +25,39 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }: any) => {
     const [authState, setAuthState] = useState<{
-        token: string | null;
+        userId: string | null;
         authenticated: boolean | null;
     }>({
-        token: null,
+        userId: null,
         authenticated: null,
     });
 
     useEffect(() => {
         const loadToken = async () => {
-            const token = await SecureStore.getItemAsync('userToken');
+            const userId = await SecureStore.getItemAsync('userId');
 
-            if (token) {
+            if (userId) {
                 setAuthState({
-                    token: token,
+                    userId: userId,
                     authenticated: true
                 });
             }
         }
         loadToken();
     }, [])
+
+    const getUserInformation = async () => {
+        try {
+            const userId = await SecureStore.getItemAsync('userId');
+            if (userId !== null) {
+                return await service.getUserById(parseInt(userId));
+            } else {
+                return { error: true, msg: "User ID is null" };
+            }
+        } catch (e) {
+            return { error: true, msg: (e as any).response.data.msg };
+        }
+    }
 
     const register = async (newUser: RegisterUser) => {
         try {
@@ -59,11 +72,11 @@ export const AuthProvider = ({ children }: any) => {
             const result = await service.login(user);
 
             setAuthState({
-                token: result.token,
+                userId: result.user,
                 authenticated: true
             })
 
-            await SecureStore.setItemAsync('userToken', result.token);
+            await SecureStore.setItemAsync('userId', result.user);
 
             return user;
 
@@ -73,10 +86,10 @@ export const AuthProvider = ({ children }: any) => {
     };
 
     const logout = async () => {
-        await SecureStore.deleteItemAsync('userToken');
+        await SecureStore.deleteItemAsync('userId');
 
         setAuthState({
-            token: null,
+            userId: null,
             authenticated: false
         });
     }
@@ -86,6 +99,7 @@ export const AuthProvider = ({ children }: any) => {
         onRegister: register,
         onLogin: login,
         onLogout: logout,
+        getUserInformation,
         authState
     }
 
