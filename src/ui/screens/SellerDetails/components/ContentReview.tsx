@@ -6,43 +6,39 @@ import TextInput from 'src/ui/components/form/TextInput';
 import Text from 'src/ui/components/Texts/Text';
 import { Colors } from 'src/ui/models/Colors/Colors';
 import { Ionicons } from '@expo/vector-icons';
-import ScreenContainer from 'src/ui/components/layout/ScreenContainer';
 
 export default function ContentReview() {
     return (
-        <ScreenContainer>
-            <View style={styles.contReview}>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        title='Añade tu reseña'
-                        placeholder='Descripcion'
+        <View style={styles.contReview}>
+            <View style={styles.inputContainer}>
+                <TextInput
+                    title='Añade tu reseña'
+                    placeholder='Descripcion'
+                />
+                <View style={styles.contButtonSend}>
+                    <Text fontWeight='bold'>Comentarios</Text>
+                    <Button
+                        title='Enviar'
+                        size='Small'
+                        style={styles.buttonSend}
+                        onPress={() => { }}
                     />
-                    <View style={styles.contButtonSend}>
-                        <Text fontWeight='bold'>Comentarios</Text>
-                        <Button
-                            title='Enviar'
-                            size='Small'
-                            style={styles.buttonSend}
-                            onPress={() => { }}
-                        />
-                    </View>
                 </View>
-                <ScrollView style={styles.contItems}>
-                    <View style={styles.commentContainer}>
-                        <TouchableOpacity style={styles.commentHeader}>
-                            <View style={styles.iconContainer}>
-                                <Ionicons name="person" size={18} color="white" />
-                            </View>
-                            <Text style={styles.commentAuthor}>{'Diego Albert'}</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.commentText} numberOfLines={3}>
-                            He comprado en varias ocasiones con él, la calidad de la ropa es muy buena, lo recomiendo
-                        </Text>
-                    </View>
-                </ScrollView>
             </View>
-        </ScreenContainer>
-
+            <ScrollView style={styles.contItems}>
+                <View style={styles.commentContainer}>
+                    <TouchableOpacity style={styles.commentHeader}>
+                        <View style={styles.iconContainer}>
+                            <Ionicons name="person" size={18} color="white" />
+                        </View>
+                        <Text style={styles.commentAuthor}>{'Diego Albert'}</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.commentText} numberOfLines={3}>
+                        He comprado en varias ocasiones con él, la calidad de la ropa es muy buena, lo recomiendo
+                    </Text>
+                </View>
+            </ScrollView>
+        </View>
     );
 }
 

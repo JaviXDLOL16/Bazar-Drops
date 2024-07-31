@@ -5,6 +5,8 @@ import ScreenContainer from 'src/ui/components/layout/ScreenContainer'
 import { Colors } from 'src/ui/models/Colors/Colors'
 import { Ionicons } from "@expo/vector-icons";
 import CardClothes from './components/CardClothes'
+import ContentReview from './components/ContentReview'
+import CustomModal from 'src/ui/components/Modal/Modal'
 
 export default function SellerDetails() {
     const [isModalVisible, setModalVisible] = useState(false);
@@ -27,7 +29,6 @@ export default function SellerDetails() {
 
             <View style={styles.reviewsContainer}>
                 <Text fontWeight='bold' style={styles.reviewTitle}>Reseñas del vendedor</Text>
-
                 <TouchableOpacity onPress={toggleModal} style={{ backgroundColor: Colors.Dark1, padding: 10, borderRadius: 20 }}>
                     <TouchableOpacity style={{ flexDirection: 'row', paddingVertical: 3, paddingHorizontal: 5, borderRadius: 8, gap: 5, alignItems: 'center' }}>
                         <View style={{ backgroundColor: Colors.Gray2, padding: 3, borderRadius: 100, justifyContent: 'center', alignItems: 'center' }}>
@@ -39,6 +40,9 @@ export default function SellerDetails() {
                         He comprado en varias ocasiones con él, la calidad  de la ropa es muy buena, lo recomiendo
                     </Text>
                 </TouchableOpacity>
+                <CustomModal minHeight={0.75} isVisible={isModalVisible} onClose={toggleModal}>
+                    <ContentReview></ContentReview>
+                </CustomModal>
             </View>
 
             <View style={styles.reviewsContainer}>
