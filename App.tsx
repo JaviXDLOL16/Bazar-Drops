@@ -79,6 +79,7 @@ export const Layout = () => {
           >
             {true ? (
               <>
+                <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen
                   name="Principal"
                   component={Principal}
@@ -166,7 +167,6 @@ export const Layout = () => {
                   options={{
                     title: 'Bazar and Drops'
                   }} />
-                <Stack.Screen name="Home" component={Home} />
 
                 <Stack.Screen
                   name="Policies"
