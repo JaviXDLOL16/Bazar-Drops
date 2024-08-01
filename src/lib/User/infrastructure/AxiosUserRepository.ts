@@ -8,8 +8,7 @@ export const createAxiosUserRepository = (): UserRepository => {
     return {
         login: async (user: LoginUser) => {
             const response = await axios.post(`${API_URL}/auth/login`, user);
-            console.log(response.data.data);
-            return response.data;
+            return response.data.data;
         },
         register: async (newUser: RegisterUser) => {
             const response = await axios.post(`${API_URL}/users/create`, newUser);
@@ -17,7 +16,7 @@ export const createAxiosUserRepository = (): UserRepository => {
         },
         getUserById: async (id: number) => {
             const response = await axios.get(`${API_URL}/users/${id}`);
-            return response.data;
+            return response.data.data;
         },
         update: async (id: number, updateData: Partial<RegisterUser>) => {
             await axios.put(`${API_URL}/users/update/${id}`, updateData);

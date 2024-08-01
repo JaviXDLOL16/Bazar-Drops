@@ -17,6 +17,7 @@ import { NewOffer } from 'src/lib/SellerBuyer/domain/Offer';
 import { createAxiosOfferRepository } from 'src/lib/SellerBuyer/infrastructure/AxiosOfferRepository';
 import { createOfferService } from 'src/lib/SellerBuyer/application/OfferService';
 import { useFocusEffect } from '@react-navigation/native';
+import { useAuth } from 'src/ui/contexts/AuthContext';
 
 const repository = createAxiosClothRepository();
 const service = createClothService(repository);
@@ -30,15 +31,24 @@ type Props = NativeStackScreenProps<stackParamList, 'ClothDetails'>;
 export default function ClothDetails({ navigation, route }: Props) {
 
     const { clothId } = route.params as { clothId: number };
+    const { getUserInformation } = useAuth();
 
     const [cloth, setCloth] = useState<ClothForBuyer>();
     const [loading, setLoading] = useState(true);
-    const [newOffer, setNewOffer] = useState<Partial<NewOffer>>({ buyerId: 1, sellerId: 1, clothId: undefined, offer: undefined, statusId: 1 });
+    const [newOffer, setNewOffer] = useState<Partial<NewOffer>>({ buyerId: undefined, sellerId: undefined, clothId: undefined, offer: undefined, statusId: 1 });
     const [isLoading, setIsLoading] = useState(false);
     const [isSold, setIsSold] = useState(false);
+    const [seller, setSeller] = useState<any>();
+    const [user, setUser] = useState<any>();
 
     const getCloth = async () => {
+
+        const result = await getUserInformation!();
+        setUser(result);
+
         const cloth = await service.getById(clothId);
+        const data = await service.getUserByClothId(clothId);
+        setSeller(data.user);
         if (cloth?.status_id === 'vendido') {
             setIsSold(true);
         }
@@ -51,6 +61,9 @@ export default function ClothDetails({ navigation, route }: Props) {
             setIsLoading(true);
             newOffer.clothId = clothId;
             newOffer.offer = cloth?.price;
+            newOffer.sellerId = seller.id
+            newOffer.buyerId = user.id;
+            console.log(newOffer);
             await offerService.save(newOffer as NewOffer);
             alert('Oferta realizada con éxito');
             toggleModal();
@@ -117,7 +130,7 @@ export default function ClothDetails({ navigation, route }: Props) {
                             <View style={{ backgroundColor: Colors.Dark1, padding: 3, borderRadius: 100, justifyContent: 'center', alignItems: 'center' }}>
                                 <Ionicons name="person" size={20} color="white" />
                             </View>
-                            <Text fontWeight='bold' style={{ fontSize: 18 }}>{'----'}</Text>
+                            <Text fontWeight='bold' style={{ fontSize: 18 }}>{seller.name}</Text>
                         </TouchableOpacity>
                     </View>
                 }
@@ -127,7 +140,7 @@ export default function ClothDetails({ navigation, route }: Props) {
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text fontWeight='regular' style={{ fontSize: 18 }}>Lugar de entrega </Text>
                         <TouchableOpacity disabled style={{ backgroundColor: Colors.Dark1, paddingVertical: 3, paddingHorizontal: 5, borderRadius: 8, }}>
-                            <Text fontWeight='bold' style={{ fontSize: 18 }}>{'----'}</Text>
+                            <Text fontWeight='bold' style={{ fontSize: 18 }}>{'Parque central'}</Text>
                         </TouchableOpacity>
                     </View>
                 }

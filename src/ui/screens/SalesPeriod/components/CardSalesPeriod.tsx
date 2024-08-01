@@ -68,7 +68,7 @@ const CardSalesPeriod: React.FC<CardSalesPeriodProps> = ({ cloth }) => {
                                 )
                             }
                         </View>
-                        <View style={{ paddingHorizontal: 6, width: 26, backgroundColor: Colors.Blue4, borderRadius: 5 }}>
+                        <View style={{ paddingHorizontal: 6, backgroundColor: Colors.Blue4, borderRadius: 5 }}>
                             <Text style={{ textAlign: 'center', lineHeight: 22 }} fontWeight='bold'>{sizeSimpleText[cloth.size]}</Text>
                         </View>
                     </View>

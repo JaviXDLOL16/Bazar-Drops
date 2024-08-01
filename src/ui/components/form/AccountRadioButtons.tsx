@@ -10,21 +10,21 @@ interface AccountRadioButtonsProps {
 }
 
 const isRegisterUser = (value: any): value is RegisterUser => {
-    return value === 'vendedor' || value === 'comprador';
+    return value === '1' || value === '2';
 };
 
 const AccountRadioButtons: React.FC<AccountRadioButtonsProps> = ({ value, onValueChange }) => {
     const radioButtons: RadioButtonProps[] = useMemo(() => [
         {
-            id: 'vendedor',
+            id: '1',
             label: 'Vendedor',
-            value: 'vendedor',
+            value: '1',
             color: Colors.Blue,
         },
         {
-            id: 'comprador',
+            id: '2',
             label: 'Comprador',
-            value: 'comprador',
+            value: '2',
             color: Colors.Blue,
         },
     ], []);

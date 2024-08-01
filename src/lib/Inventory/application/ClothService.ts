@@ -8,6 +8,7 @@ export const createClothService = (repository: ClothRepository) => {
         getAllByPediodAndStatusIdAvailable: async (periodId: number) => await repository.getAllByPediodAndStatusIdAvailable(periodId),
         getAllByPediodAndStatusIdSold: async (periodId: number) => await repository.getAllByPediodAndStatusIdSold(periodId),
         getById: async (id: number) => await repository.getById(id),
+        getUserByClothId: async (clothId: number) => await repository.getUserByClothId(clothId),
         save: async (cloth: NewCloth) => await repository.save(cloth),
         delete: async (id: string) => await repository.delete(id)
     };

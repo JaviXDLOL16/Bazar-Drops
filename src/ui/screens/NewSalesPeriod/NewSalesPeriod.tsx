@@ -13,6 +13,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { NewPeriod } from 'src/lib/Inventory/domain/Period'
 import { createAxiosPeriodRepository } from 'src/lib/Inventory/infrastructure/AxiosPeriodRepository'
 import { createPeriodService } from 'src/lib/Inventory/application/PeriodService'
+import { useFocusEffect } from '@react-navigation/native'
+import { useAuth } from 'src/ui/contexts/AuthContext'
+import { formatDateSimple } from 'src/ui/utils/formateDate'
 
 
 type Props = NativeStackScreenProps<stackParamList, 'NewSalesPeriod'>
@@ -22,10 +25,13 @@ const service = createPeriodService(repository);
 
 export default function NewSalesPeriod({ navigation }: Props) {
 
-    const newPeriodEmpty: Partial<NewPeriod> = { start: new Date(), end: undefined, location: '', name: '', status_id: 'actual', user_id: 2 }
+    const { getUserInformation } = useAuth();
+
+    const newPeriodEmpty: Partial<NewPeriod> = { start: formatDateSimple(new Date().toString()), end: undefined, location: '', name: '', status_id: 'actual', user_id: undefined }
 
     const [newPeriod, setNewPeriod] = useState<Partial<NewPeriod>>(newPeriodEmpty)
     const [isLoading, setIsLoading] = useState(false)
+    const [userId, setUserId] = useState(undefined)
 
     const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -33,8 +39,20 @@ export default function NewSalesPeriod({ navigation }: Props) {
 
     const openBottomSheet = () => bottomSheetRef.current?.expand()
 
+    useFocusEffect(
+        React.useCallback(() => {
+            const loadUser = async () => {
+                const result = await getUserInformation!();
+                setUserId(result.id);
+            }
+            loadUser();
+        }, [])
+    );
+
     const savePeriod = async () => {
         setIsLoading(true)
+        newPeriod.user_id = userId
+        console.log(newPeriod)
 
         const { start, end, location, name } = newPeriod
 
@@ -81,7 +99,7 @@ export default function NewSalesPeriod({ navigation }: Props) {
                     <View style={styles.containerHour}>
                         <InputDate
                             value={newPeriod.end}
-                            onChange={(value) => setNewPeriod({ ...newPeriod, end: value })}
+                            onChange={(value) => setNewPeriod({ ...newPeriod, end: formatDateSimple(value) })}
                             loading={isLoading}
                             placeholder='Fecha de fin'
                             title='Fin'

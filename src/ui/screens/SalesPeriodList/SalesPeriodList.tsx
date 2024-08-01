@@ -10,6 +10,9 @@ import { createAxiosPeriodRepository } from 'src/lib/Inventory/infrastructure/Ax
 import { createPeriodService } from 'src/lib/Inventory/application/PeriodService'
 import { Period } from 'src/lib/Inventory/domain/Period'
 import { useFocusEffect } from '@react-navigation/native'
+import { useAuth } from 'src/ui/contexts/AuthContext'
+import Text from 'src/ui/components/Texts/Text'
+import { Colors } from 'src/ui/models/Colors/Colors'
 
 type Props = NativeStackScreenProps<stackParamList, 'SalesPeriodList'>
 
@@ -21,9 +24,22 @@ export default function SalesPeriodList({ navigation }: Props) {
     const [periodList, setPeriodList] = useState<Period[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
+    const { getUserInformation } = useAuth();
+
+    const [userId, setUserId] = useState(null);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setIsLoading(true);
+            getPeriodList();
+        }, [])
+    );
+
+
     const getPeriodList = async () => {
         try {
-            const periods = await service.getAll(2)
+            const result = await getUserInformation!();
+            const periods = await service.getAll(result.id);
             setPeriodList(periods)
         } catch (error: any) {
             alert(error.message);
@@ -31,13 +47,6 @@ export default function SalesPeriodList({ navigation }: Props) {
             setIsLoading(false);
         }
     }
-
-    useFocusEffect(
-        useCallback(() => {
-            setIsLoading(true);
-            getPeriodList();
-        }, [])
-    );
 
     return (
         <ScreenContainer scrollEnable={false} style={styles.container}>
@@ -47,7 +56,17 @@ export default function SalesPeriodList({ navigation }: Props) {
                 <Filter title='Filtrar' />
             </FilterContainer>
             <ScrollView style={styles.scroll}>
-                {periodList.map((period) => <PeriodCard key={period.id} data={period} />)}
+                <>
+                    {isLoading ? (
+                        <Text style={{ color: Colors.Gray2, textAlign: 'center', marginTop: 200, fontSize: 20 }}>Cargando...</Text>
+                    ) : (
+                        periodList.length === 0 ? (
+                            <Text style={{ textAlign: 'center', marginTop: 200, color: Colors.Gray2, fontSize: 18 }}>No hay periodos de venta creados aún</Text>
+                        ) : (
+                            periodList.reverse().map((period) => <PeriodCard key={period.id} data={period} />)
+                        )
+                    )}
+                </>
             </ScrollView>
 
         </ScreenContainer>

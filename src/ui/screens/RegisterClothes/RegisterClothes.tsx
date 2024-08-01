@@ -26,7 +26,9 @@ type Props = NativeStackScreenProps<stackParamList, 'RegisterClothes'>
 
 export default function RegisterClothes({ navigation, route }: Props) {
 
-    const newClothEmpty: Partial<NewCloth> = { buy: 0, description: '', image: '', location: '', period_id: 3, price: 0, sellPrice: 0, size: undefined, status_id: 'disponible', type: undefined }
+    const periodId = route.params?.periodId;
+
+    const newClothEmpty: Partial<NewCloth> = { buy: 0, description: '', image: '', location: '', period_id: periodId, price: 0, sellPrice: 0, size: undefined, status_id: 'disponible', type: undefined }
 
     const [loading, setLoading] = useState(false);
     const [newCloth, setNewCloth] = useState<Partial<NewCloth>>(newClothEmpty);
@@ -82,7 +84,7 @@ export default function RegisterClothes({ navigation, route }: Props) {
             await service.save({ ...newCloth, image: base64Image, sellPrice: newCloth.price } as NewCloth);
 
             Alert.alert('Correcto', 'Prenda guardada en el periodo de ventas', [
-                { text: 'OK', onPress: () => navigation.navigate('SalesPeriod') }
+                { text: 'OK', onPress: () => navigation.goBack() }
             ]);
 
             setNewCloth(newClothEmpty);
