@@ -26,7 +26,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 
 const dataForBuyerPrincipal = [
-  { id: '1', description: 'Playera blanca Bears', size: 'Extra chica', price: 120, image: require('src/ui/assets/images/prenda1.jpeg') },
+  { id: '1', description: 'Playera blanca Bears', size: 'Extra chica', price: 120, image: require('src/ui/assets/images/prenda1.png') },
   { id: '2', description: 'Playera tie dye girasoles', size: 'Mediana', price: 120, image: require('src/ui/assets/images/Prueba2.jpeg') },
   { id: '3', description: 'Playera negra Purple Rain', size: 'Mediana', price: 120, image: require('src/ui/assets/images/prenda3.jpeg') },
   { id: '4', description: 'Playera azul North Face', size: 'Mediana', price: 120, image: require('src/ui/assets/images/prenda3.jpeg') },
