@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { Image, KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { Colors } from 'src/ui/models/Colors/Colors';
 import Text from '../Texts/Text';
 import Button from '../Buttons/Button';
-import Collapsible from 'react-native-collapsible';
-import Input from '../form/Input';
 
 type CarouselItemsBuyerProps = {
     imageSrc: any;
@@ -15,109 +13,135 @@ type CarouselItemsBuyerProps = {
     precio: number;
     numero: any;
     comprador: string;
-    oferta?: number;
+    status?: string;
     lugar: string;
 };
 
-const CarouselItemsBuyer: React.FC<CarouselItemsBuyerProps> = React.memo(({ imageSrc, nombre, precio, fecha, comprador, numero, oferta, lugar }) => {
+const CarouselItemsBuyer: React.FC<CarouselItemsBuyerProps> = React.memo(({ imageSrc, nombre, precio, fecha, comprador, numero, status, lugar }) => {
     const [expanded, setExpanded] = useState(false);
-
-    const toggleExpand = () => {
-        setExpanded(!expanded);
-    };
 
     return (
         <View style={styles.cardContainer}>
-            <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "position"}>
-
-                {oferta ? (
-                    <>
-                        <Text fontWeight='bold' style={styles.textAcceptBuyer}>¡Te han hecho oferta!</Text>
-                        <View style={styles.contData}>
-                            <View style={styles.contImage}>
-                                <Image source={imageSrc} style={styles.image} />
-                            </View>
-                            <View style={styles.contTex}>
-                                <Text style={styles.textData}>{nombre}</Text>
-                                <Text style={styles.textData}>Precio original: ${precio}</Text>
-                                <Text style={styles.textData}>Entrega: {fecha}</Text>
-                                <Text style={styles.textData}>Comprador: {comprador}</Text>
-                                <Text style={styles.textData}>Numero: {numero}</Text>
-                                <Text style={styles.textDataPlace}>Lugar de entrega: {lugar}</Text>
-
-                            </View>
+            {status === 'rechazada' ? (
+                <>
+                    <Text fontWeight='bold' style={styles.textAcceptBuyer}>Oferta rechazada</Text>
+                    <View style={styles.contData}>
+                        <View style={styles.contImage}>
+                            <Image source={imageSrc} style={styles.image} />
                         </View>
-                        <Text fontWeight='bold' style={styles.textResponse}>Oferta del comprador: ${oferta}</Text>
-                        {!expanded && (
+                        <View style={styles.contTex}>
+                            <Text style={styles.textData}>{nombre}</Text>
+                            <Text style={styles.textData}>Precio original: ${precio}</Text>
+                            <Text style={styles.textData}>Entrega: {fecha}</Text>
+                            <Text style={styles.textData}>vendedor: {comprador}</Text>
+                            <Text style={styles.textData}>Numero: {numero}</Text>
+                            <Text style={styles.textDataPlace}>Lugar de entrega: {lugar}</Text>
+                        </View>
+                    </View>
+                </>
+            ) : status === 'aceptada' ? (
+                <>
+                    <Text fontWeight='bold' style={styles.textAcceptBuyer}>Oferta aceptada</Text>
+                    <View style={styles.contData}>
+                        <View style={styles.contImage}>
+                            <Image source={imageSrc} style={styles.image} />
+                        </View>
+                        <View style={styles.contTex}>
+                            <Text style={styles.textData}>{nombre}</Text>
+                            <Text style={styles.textData}>Precio original: ${precio}</Text>
+                            <Text style={styles.textData}>Fecha: {fecha}</Text>
+                            <Text style={styles.textData}>vendedor: {comprador}</Text>
+                            <Text style={styles.textData}>Numero: {numero}</Text>
+                            <Text style={styles.textDataPlace}>Lugar de entrega: {lugar}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.contButtons}>
+                        <View style={{ width: '50%', paddingRight: 5 }}>
                             <Button
-                                onPress={toggleExpand}
+                                onPress={() => { }}
+                                style={{ backgroundColor: Colors.Dark3 }}
                                 textStyle={{ fontSize: 16 }}
-                                title='Responder oferta'
+                                title='Ver en entregas'
                                 size='Small'
-                                style={{ backgroundColor: Colors.Blue2, marginBottom: 15 }}
                             />
-                        )}
-                        <Collapsible collapsed={!expanded}>
-                            <View style={styles.contSend}>
-                                <View style={styles.contInputSend}>
-                                    <Text fontWeight='bold' style={styles.textPutPrice} >Pon tu precio</Text>
-                                    <Input
-                                        placeholder='Precio'
-                                        requeriment=''
-                                    />
-                                </View>
-                                <View style={styles.contButtonSend}>
-                                    <Button
-                                        onPress={() => { }}
-                                        textStyle={{ fontSize: 16 }}
-                                        title='Enviar'
-                                        size='Small'
-                                        style={{ backgroundColor: Colors.Blue }}
-                                    />
-                                </View>
-                            </View>
-                        </Collapsible>
-                    </>
-                ) : (
-                    <>
-                        <Text fontWeight='bold' style={styles.textAcceptBuyer}>¡Un comprador ha aceptado tu oferta!</Text>
-                        <View style={styles.contData}>
-                            <View style={styles.contImage}>
-                                <Image source={imageSrc} style={styles.image} />
-                            </View>
-                            <View style={styles.contTex}>
-                                <Text style={styles.textData}>{nombre}</Text>
-                                <Text style={styles.textData}>Precio: ${precio}</Text>
-                                <Text style={styles.textData}>Fecha: {fecha}</Text>
-                                <Text style={styles.textData}>Comprador: {comprador}</Text>
-                                <Text style={styles.textData}>Numero: {numero}</Text>
-                                <Text style={styles.textDataPlace}>Lugar de entrega: {lugar}</Text>
-                            </View>
                         </View>
-                    </>
-                )}
-                <View style={styles.contButtons}>
-                    <View style={{ flex: 1, paddingRight: 5 }}>
-                        <Button
-                            onPress={() => { }}
-                            style={{ backgroundColor: Colors.Blue3 }}
-                            textStyle={{ fontSize: 16 }}
-                            title='Aceptar'
-                            size='Small'
-                        />
                     </View>
-                    <View style={{ flex: 1, paddingLeft: 5 }}>
-                        <Button
-                            onPress={() => { }}
-                            textStyle={{ fontSize: 16 }}
-                            title='Eliminar'
-                            size='Small'
-                            style={{ backgroundColor: Colors.Red }}
-                        />
+                </>
+            ) : status === 'realizada' ? (
+                <>
+                    <Text fontWeight='bold' style={styles.textAcceptBuyer}>Oferta realizada</Text>
+                    <View style={styles.contData}>
+                        <View style={styles.contImage}>
+                            <Image source={imageSrc} style={styles.image} />
+                        </View>
+                        <View style={styles.contTex}>
+                            <Text style={styles.textData}>{nombre}</Text>
+                            <Text style={styles.textData}>Precio original: ${precio}</Text>
+                            <Text style={styles.textData}>Fecha: {fecha}</Text>
+                            <Text style={styles.textData}>Vendedor: {comprador}</Text>
+                            <Text style={styles.textData}>Numero: {numero}</Text>
+                            <Text style={styles.textDataPlace}>Lugar de entrega: {lugar}</Text>
+                        </View>
                     </View>
-                </View>
-            </KeyboardAvoidingView>
+                    <View style={styles.contButtons}>
+                        <View style={{ flex: 1, paddingRight: 5 }}>
+                            <Button
+                                onPress={() => { }}
+                                style={{ backgroundColor: Colors.Dark3 }}
+                                textStyle={{ fontSize: 16 }}
+                                title='Solicitud enviada'
+                                size='Small'
+                            />
+                        </View>
+                        <View style={{ flex: 1, paddingLeft: 5 }}>
+                            <Button
+                                onPress={() => { }}
+                                textStyle={{ fontSize: 16 }}
+                                title='Eliminar'
+                                size='Small'
+                                style={{ backgroundColor: Colors.Red }}
+                            />
+                        </View>
+                    </View>
+                </>
+            ) : status === 'realizaa' ? (
+                <>
+                    <Text fontWeight='bold' style={styles.textAcceptBuyer}>¡Un comprador ha aceptado tu oferta!</Text>
+                    <View style={styles.contData}>
+                        <View style={styles.contImage}>
+                            <Image source={imageSrc} style={styles.image} />
+                        </View>
+                        <View style={styles.contTex}>
+                            <Text style={styles.textData}>{nombre}</Text>
+                            <Text style={styles.textData}>Precio: ${precio}</Text>
+                            <Text style={styles.textData}>Fecha: {fecha}</Text>
+                            <Text style={styles.textData}>Comprador: {comprador}</Text>
+                            <Text style={styles.textData}>Numero: {numero}</Text>
+                            <Text style={styles.textDataPlace}>Lugar de entrega: {lugar}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.contButtons}>
+                        <View style={{ flex: 1, paddingRight: 5 }}>
+                            <Button
+                                onPress={() => { }}
+                                style={{ backgroundColor: Colors.Blue3 }}
+                                textStyle={{ fontSize: 16 }}
+                                title='Aceptar'
+                                size='Small'
+                            />
+                        </View>
+                        <View style={{ flex: 1, paddingLeft: 5 }}>
+                            <Button
+                                onPress={() => { }}
+                                textStyle={{ fontSize: 16 }}
+                                title='Eliminar'
+                                size='Small'
+                                style={{ backgroundColor: Colors.Red }}
+                            />
+                        </View>
+                    </View>
+                </>
+            ) : null}
         </View>
     );
 });
@@ -130,11 +154,11 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: Colors.Dark2,
         overflow: 'hidden',
-        padding: 20
+        padding: 15
     },
     textAcceptBuyer: {
         color: Colors.White,
-        marginBottom: 20,
+        marginBottom: 10,
     },
     textOferta: {
         color: Colors.White,
@@ -144,10 +168,9 @@ const styles = StyleSheet.create({
     },
     contData: {
         flexDirection: 'row',
-        paddingBottom: 20,
     },
     contImage: {
-        height: 100,
+        height: 125,
         width: 100,
     },
     image: {
@@ -164,6 +187,7 @@ const styles = StyleSheet.create({
     contButtons: {
         flexDirection: 'row',
         width: '100%',
+        marginTop: 10
     },
     textResponse: {
         color: Colors.White,
@@ -180,7 +204,6 @@ const styles = StyleSheet.create({
         width: '48%',
         paddingHorizontal: 20,
         paddingTop: 25
-
     },
     contInputSend: {
         width: '52%'

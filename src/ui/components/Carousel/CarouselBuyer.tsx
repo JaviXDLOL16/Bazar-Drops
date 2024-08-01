@@ -12,7 +12,7 @@ type CarouselBuyerProps = {
         numero: string;
         comprador: string;
         image: any;
-        oferta?: number;
+        status?: string;
         lugar: string;
     }[];
 };
@@ -40,7 +40,7 @@ const CarouselBuyer: React.FC<CarouselBuyerProps> = React.memo(({ data }) => {
                         comprador={item.comprador}
                         imageSrc={item.image}
                         index={index}
-                        oferta={item.oferta}
+                        status={item.status}
                         lugar={item.lugar}
 
                     />

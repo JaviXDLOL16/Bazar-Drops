@@ -17,7 +17,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/ui/assets/images/Prueba2.jpeg'),
-        lugar: 'Calle central y 6 norte poniente'
+        lugar: 'Calle central y 6 norte poniente',
+        status: 'realizada',
     },
     {
         nombre: 'Playera roja under armor',
@@ -27,7 +28,52 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/ui/assets/images/Prueba2.jpeg'),
-        lugar: 'Calle central y 6 norte poniente'
+        lugar: 'Calle central y 6 norte poniente',
+        status: 'rechazada',
+    },
+    {
+        nombre: 'Playera gris trust',
+        talla: 'XS',
+        fecha: 'Miercoles 2:33',
+        comprador: 'Diego Alberto',
+        precio: 122,
+        numero: '961 - 132 - 7185',
+        image: require('src/ui/assets/images/prenda3.jpeg'),
+        lugar: 'Calle central y 6 norte poniente',
+        status: 'aceptada',
+    },
+    {
+        nombre: 'Card 4',
+        talla: 'L',
+        fecha: 'Miercoles 2:33',
+        comprador: 'Diego Alberto',
+        precio: 122,
+        numero: '961 - 132 - 7185',
+        image: require('src/ui/assets/images/prenda3.jpeg'),
+        lugar: 'Calle central y 6 norte poniente',
+        status: 'realizada',
+    },
+    {
+        nombre: 'Card 5',
+        talla: 'XXL',
+        fecha: 'Miercoles 2:33',
+        comprador: 'Diego Alberto',
+        precio: 122,
+        numero: '961 - 132 - 7185',
+        image: require('src/ui/assets/images/prenda1.png'),
+        lugar: 'Calle central y 6 norte poniente',
+        status: 'realizada',
+    },
+    {
+        nombre: 'Playera roja under armor',
+        talla: 'L',
+        fecha: 'Miercoles 2:33',
+        comprador: 'Diego Alberto',
+        precio: 122,
+        numero: '961 - 132 - 7185',
+        image: require('src/ui/assets/images/Prueba2.jpeg'),
+        lugar: 'Calle central y 6 norte poniente',
+        status: 'realizada',
 
     },
     {
@@ -38,7 +84,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/ui/assets/images/prenda3.jpeg'),
-        lugar: 'Calle central y 6 norte poniente'
+        lugar: 'Calle central y 6 norte poniente',
+        status: 'realizada',
 
     },
     {
@@ -49,7 +96,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/ui/assets/images/prenda3.jpeg'),
-        lugar: 'Calle central y 6 norte poniente'
+        lugar: 'Calle central y 6 norte poniente',
+        status: 'realizada',
 
     },
     {
@@ -60,51 +108,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/ui/assets/images/prenda1.png'),
-        lugar: 'Calle central y 6 norte poniente'
-
-    },
-    {
-        nombre: 'Playera roja under armor',
-        talla: 'L',
-        fecha: 'Miercoles 2:33',
-        comprador: 'Diego Alberto',
-        precio: 122,
-        numero: '961 - 132 - 7185',
-        image: require('src/ui/assets/images/Prueba2.jpeg'),
-        lugar: 'Calle central y 6 norte poniente'
-
-    },
-    {
-        nombre: 'Playera gris trust',
-        talla: 'XS',
-        fecha: 'Miercoles 2:33',
-        comprador: 'Diego Alberto',
-        precio: 122,
-        numero: '961 - 132 - 7185',
-        image: require('src/ui/assets/images/prenda3.jpeg'),
-        lugar: 'Calle central y 6 norte poniente'
-
-    },
-    {
-        nombre: 'Card 4',
-        talla: 'L',
-        fecha: 'Miercoles 2:33',
-        comprador: 'Diego Alberto',
-        precio: 122,
-        numero: '961 - 132 - 7185',
-        image: require('src/ui/assets/images/prenda3.jpeg'),
-        lugar: 'Calle central y 6 norte poniente'
-
-    },
-    {
-        nombre: 'Card 5',
-        talla: 'XXL',
-        fecha: 'Miercoles 2:33',
-        comprador: 'Diego Alberto',
-        precio: 122,
-        numero: '961 - 132 - 7185',
-        image: require('src/ui/assets/images/prenda1.png'),
-        lugar: 'Calle central y 6 norte poniente'
+        lugar: 'Calle central y 6 norte poniente',
+        status: 'rechazada',
 
     },
     {
@@ -115,8 +120,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/ui/assets/images/prenda1.png'),
-        oferta: 200,
         lugar: 'Calle central y 6 norte poniente',
+        status: 'realizada',
     },
     {
         nombre: 'Playera roja under armor',
@@ -126,8 +131,8 @@ const data2 = [
         precio: 122,
         numero: '961 - 132 - 7185',
         image: require('src/ui/assets/images/Prueba2.jpeg'),
-        oferta: 10,
         lugar: 'Calle central y 6 norte poniente',
+        status: 'realizada',
     },
 ]
 
