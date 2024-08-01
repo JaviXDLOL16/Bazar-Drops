@@ -16,110 +16,15 @@ import { Cloth } from 'src/lib/Inventory/domain/Cloth'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { stackParamList } from 'App'
 import Graphics from './components/Graphics/Graphics'
+import { useFocusEffect } from '@react-navigation/native'
 
 const repository = createAxiosClothRepository();
 const service = createClothService(repository);
 
-/*const mockClothes: Cloth[] = [
-    {
-        buy: 50,
-        created_at: "Sun, 21 Jul 2024 00:00:00 GMT",
-        description: "Sueter gris de la marca Izod",
-        id: 1,
-        image: "https://i.imgur.com/1blZJ8W.jpeg",
-        location: "Calle central y 2da sur",
-        period_id: 3,
-        price: 90,
-        sellPrice: 90,
-        size: "mediano",
-        sold_at: '',
-        status_id: "disponible",
-        type: "sueter",
-        uuid: "6eb49275-4154-481f-848b-90d69c8c8c8b"
-    },
-    {
-        buy: 50,
-        created_at: "Sun, 21 Jul 2024 00:00:00 GMT",
-        description: "Sueter gris de la marca Izod",
-        id: 2,
-        image: "https://i.imgur.com/1blZJ8W.jpeg",
-        location: "Calle central y 2da sur",
-        period_id: 3,
-        price: 90,
-        sellPrice: 90,
-        size: "mediano",
-        sold_at: '',
-        status_id: "disponible",
-        type: "sueter",
-        uuid: "6eb49275-4154-481f-848b-90d69c8c8c8b"
-    },
-    {
-        buy: 50,
-        created_at: "Sun, 21 Jul 2024 00:00:00 GMT",
-        description: "Sueter gris de la marca Izod",
-        id: 3,
-        image: "https://i.imgur.com/1blZJ8W.jpeg",
-        location: "Calle central y 2da sur",
-        period_id: 3,
-        price: 90,
-        sellPrice: 90,
-        size: "mediano",
-        sold_at: '',
-        status_id: "disponible",
-        type: "sueter",
-        uuid: "6eb49275-4154-481f-848b-90d69c8c8c8b"
-    },
-    {
-        buy: 50,
-        created_at: "Sun, 21 Jul 2024 00:00:00 GMT",
-        description: "Sueter gris de la marca Izod",
-        id: 4,
-        image: "https://i.imgur.com/1blZJ8W.jpeg",
-        location: "Calle central y 2da sur",
-        period_id: 3,
-        price: 90,
-        sellPrice: 90,
-        size: "mediano",
-        sold_at: '',
-        status_id: "disponible",
-        type: "sueter",
-        uuid: "6eb49275-4154-481f-848b-90d69c8c8c8b"
-    },
-    {
-        buy: 50,
-        created_at: "Sun, 21 Jul 2024 00:00:00 GMT",
-        description: "Sueter gris de la marca Izod",
-        id: 5,
-        image: "https://i.imgur.com/1blZJ8W.jpeg",
-        location: "Calle central y 2da sur",
-        period_id: 3,
-        price: 90,
-        sellPrice: 90,
-        size: "mediano",
-        sold_at: '',
-        status_id: "disponible",
-        type: "sueter",
-        uuid: "6eb49275-4154-481f-848b-90d69c8c8c8b"
-    },
-    {
-        buy: 50,
-        created_at: "Sun, 21 Jul 2024 00:00:00 GMT",
-        description: "Sueter gris de la marca Izod",
-        id: 6,
-        image: "https://i.imgur.com/1blZJ8W.jpeg",
-        location: "Calle central y 2da sur",
-        period_id: 3,
-        price: 90,
-        sellPrice: 90,
-        size: "mediano",
-        sold_at: '',
-        status_id: "vendido",
-        type: "sueter",
-        uuid: "6eb49275-4154-481f-848b-90d69c8c8c8b"
-    }
-]*/
 type Props = NativeStackScreenProps<stackParamList, 'SalesPeriod'>;
 export default function SalesPeriod({ navigation, route }: Props) {
+
+    const periodId = route.params?.periodId;
 
     const [clothes, setClothes] = useState<Cloth[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -146,7 +51,7 @@ export default function SalesPeriod({ navigation, route }: Props) {
 
     const getClothes = async () => {
         try {
-            const clothes = await service.getAllByPeriod(3);
+            const clothes = await service.getAllByPeriod(periodId as number);
             setClothes(clothes.reverse());
         } catch (error: any) {
             alert(error.message);
@@ -168,9 +73,12 @@ export default function SalesPeriod({ navigation, route }: Props) {
     };
 
 
-    useEffect(() => {
-        getClothes();
-    }, [])
+    useFocusEffect(
+        React.useCallback(() => {
+            setIsLoading(true);
+            getClothes();
+        }, [])
+    );
 
 
     return (
@@ -198,7 +106,7 @@ export default function SalesPeriod({ navigation, route }: Props) {
                 />
             )}
             <View style={styles.contInformation}>
-                <TouchableOpacity style={styles.buttonMore} onPress={() => { navigation.navigate('RegisterClothes') }}>
+                <TouchableOpacity style={styles.buttonMore} onPress={() => { navigation.navigate('RegisterClothes', { periodId: periodId || 0 }) }}>
                     <Entypo name='plus' size={45} color={Colors.White} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={toggleModal} style={styles.buttonList}>

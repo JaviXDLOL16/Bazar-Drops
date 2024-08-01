@@ -35,10 +35,10 @@ export type stackParamList = {
   NewDelivery: undefined;
   Authentication: undefined;
   SelectCloth: undefined;
-  RegisterClothes: undefined;
+  RegisterClothes: { periodId: number } | undefined;
   BuyerRequest: undefined;
   SalesPeriodList: undefined;
-  SalesPeriod: { clothId: number } | undefined;
+  SalesPeriod: { periodId: number } | undefined;
   NewSalesPeriod: undefined;
   ClothDetails: { clothId: number } | undefined;
   SellerDetails: undefined;
@@ -75,9 +75,9 @@ export const Layout = () => {
               }
             }
           >
-            {true ? (
+            {authState?.authenticated ? (
               <>
-                <Stack.Screen name="Home" component={Home} />
+                {/*} <Stack.Screen name="Home" component={Home} />*/}
                 <Stack.Screen
                   name="Principal"
                   component={Principal}

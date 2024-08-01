@@ -19,7 +19,7 @@ export default function PeriodCard({ data }: PeriodCardProps) {
                 <Text style={styles.headTitle} fontWeight="semibold" numberOfLines={1}>
                     Descripción del periodo de ventas
                 </Text>
-                <TouchableOpacity onPress={() => { navigation.navigate('SalesPeriod') }} style={styles.headButton}>
+                <TouchableOpacity onPress={() => { navigation.navigate('SalesPeriod', { periodId: data.id }) }} style={styles.headButton}>
                     <Text style={[styles.headButtonTitle, { textTransform: 'capitalize' }, data.status_id === 'finalizado' ? { color: Colors.Gray2 } : {}]} fontWeight="semibold">
                         {data.status_id}
                     </Text>
@@ -38,12 +38,7 @@ export default function PeriodCard({ data }: PeriodCardProps) {
                     </Text>
                 </View>
                 <View style={styles.imagesAndDetails}>
-                    <View style={styles.clothImages}>
-                        <Image style={[styles.image, styles.image1]} source={require('src/ui/assets/images/prenda1.jpeg')} />
-                        <Image style={[styles.image]} source={require('src/ui/assets/images/prenda2.jpeg')} />
-                        <Image style={[styles.image]} source={require('src/ui/assets/images/prenda3.jpeg')} />
-                        <Image style={[styles.image]} source={require('src/ui/assets/images/prenda1.jpeg')} />
-                    </View>
+
                     <View style={styles.details}>
                         <View style={styles.detailsColumn1}>
                             <Text fontWeight='regular' style={styles.detailsText}>

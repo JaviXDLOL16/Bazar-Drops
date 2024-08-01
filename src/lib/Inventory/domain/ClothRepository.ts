@@ -4,6 +4,7 @@ export interface ClothRepository {
     getAll(): Promise<ClothForBuyer[]>;
     getAllByPeriod(periodId: number): Promise<Cloth[]>;
     getAllByPediodAndStatusIdAvailable(periodId: number): Promise<Cloth[]>;
+    getUserByClothId(clothId: number): Promise<any[]>;
     getAllByPediodAndStatusIdSold(periodId: number): Promise<Cloth[]>;
     getById(id: number): Promise<ClothForBuyer>;
     save(cloth: NewCloth): Promise<void>;

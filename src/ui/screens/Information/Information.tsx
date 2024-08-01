@@ -22,6 +22,7 @@ export default function Information({ navigation }: Props) {
     const { onLogout, getUserInformation } = useAuth();
 
     const [image, setImage] = useState<string | null>(null);
+    const [user, setUser] = useState({});
 
 
     const pickImage = async () => {
@@ -41,7 +42,7 @@ export default function Information({ navigation }: Props) {
         React.useCallback(() => {
             const loadUser = async () => {
                 const result = await getUserInformation!();
-                console.log(result);
+                setUser(result);
             }
             loadUser();
         }, [])
@@ -68,22 +69,22 @@ export default function Information({ navigation }: Props) {
                         </View>
                     </TouchableOpacity>
                     <View style={styles.containerAccount}>
-                        <Text style={styles.textName}>Leonardo Espinosa</Text>
-                        <Text style={styles.textAccount}>Vendedor</Text>
+                        <Text style={styles.textName}>{user?.name}</Text>
+                        <Text style={styles.textAccount}>{user?.role_id === 1 ? 'Vendedor' : 'Comprador'}</Text>
                     </View>
                 </View>
                 <View style={styles.contSection}>
-                    <EditableSection title={'Editar datos'} >
-                        <Input title='Nombre de usuario' placeholder='Nombre' requeriment='' keyboardType='default' />
-                        <Input title='Correo electronico' placeholder='Correo@gmail.com' requeriment='' keyboardType='email-address' />
-                        <Input title='Celular' placeholder='xxx-xxx-xxxx' requeriment='' keyboardType='number-pad' />
-                        <Input title='Contraseña' placeholder='Escribe la nueva contraseña' requeriment='' keyboardType='default' />
+                    <EditableSection title={'Todos tus datos'} >
+                        <Input title='Nombre de usuario' placeholder={user?.name} requeriment='' keyboardType='default' />
+                        <Input title='Correo electronico' placeholder={user?.email} requeriment='' keyboardType='email-address' />
+                        <Input title='Celular' placeholder={user?.cellphone} requeriment='' keyboardType='number-pad' />
+                        <Input title='Contraseña' placeholder='*******' requeriment='' keyboardType='default' />
                     </EditableSection>
                     <EditableSection title={'Preferencias'}>
                         <TouchableOpacity>
                             <Text style={styles.textCreateAccount}>Crear cuenta de comprador</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('Authentication')}>
+                        <TouchableOpacity onPress={onLogout}>
                             <Text style={styles.textLeave}>Cerrar sesión</Text>
                         </TouchableOpacity>
                     </EditableSection>

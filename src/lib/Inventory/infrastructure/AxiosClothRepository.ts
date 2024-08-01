@@ -26,12 +26,14 @@ export const createAxiosClothRepository = (): ClothRepository => {
 
 
         getAll: async () => {
-            const response = await axios.get(`${inventoryApiUrl}/cloth`);
+            const response = await axios.get(`${inventoryApiUrl}/cloth/all/status?status_id=1`);
             const clothes = response.data.data.map(transformApiToDomainCloth) as ClothForBuyer[];
             return clothes;
         },
         getAllByPeriod: async (periodId: number) => {
             const response = await axios.get(`${inventoryApiUrl}/cloth/period/${periodId}`);
+            console.log(response.data);
+            console.log(response.data.data);
             const clothes = response.data.data.map(transformApiToDomainCloth) as Cloth[];
             return clothes;
         },
@@ -40,6 +42,12 @@ export const createAxiosClothRepository = (): ClothRepository => {
             const response = await axios.get(`${inventoryApiUrl}/cloth/${id}`);
             const cloth = transformApiToDomainCloth(response.data.data) as ClothForBuyer;
             return cloth;
+        },
+
+        getUserByClothId: async (clothId: number) => {
+            const response = await axios.get(`${inventoryApiUrl}/cloth/user/${clothId}`);
+            const user = response.data.data;
+            return user;
         },
         save: async (cloth: NewCloth) => {
             cloth.image = await uploadImageAndReturnURL(cloth.image);

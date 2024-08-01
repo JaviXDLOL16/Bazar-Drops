@@ -19,6 +19,8 @@ import { Cloth, ClothForBuyer } from "src/lib/Inventory/domain/Cloth";
 import { createAxiosClothRepository } from "src/lib/Inventory/infrastructure/AxiosClothRepository";
 import Text from "src/ui/components/Texts/Text";
 import * as SecureStore from 'expo-secure-store';
+import { useAuth } from "src/ui/contexts/AuthContext";
+import { useFocusEffect } from "@react-navigation/native";
 
 
 
@@ -72,18 +74,18 @@ function SellerPrincipal({ navigation }: Props) {
     <>
       <ScrollView showsVerticalScrollIndicator={false} >
         <View style={styles.containerHeader}>
-          <Text fontWeight="semibold" style={{ fontSize: 18 }}>Hola de nuevo</Text>
-          <View style={{ flexDirection: 'row', gap: 20 }}>
-            <ButtonNotifications
-              title='Entregas'
-              number={5}
-              style={{ backgroundColor: Colors.Blue }}
-              onPress={() => { navigation.navigate('DeliveryList') }}
-            />
-
-            <ButtonInformation />
-          </View>
-
+          <ButtonNotifications
+            title='Solicitudes de venta'
+            number={5}
+            onPress={() => { navigation.navigate('BuyerRequest') }}
+          />
+          <ButtonNotifications
+            title='Entregas'
+            number={5}
+            style={{ backgroundColor: Colors.Blue, marginRight: 30 }}
+            onPress={() => { navigation.navigate('DeliveryList') }}
+          />
+          <ButtonInformation />
         </View>
 
         <View style={styles.contSearch}>
@@ -133,18 +135,18 @@ function BuyerPrincipal({ navigation }: Props) {
   return (
     <>
       <View style={styles.containerHeader}>
-        <Text fontWeight="semibold" style={{ fontSize: 18 }}>Hola de nuevo</Text>
-        <View style={{ flexDirection: 'row', gap: 20 }}>
-          <ButtonNotifications
-            title='Entregas'
-            number={5}
-            style={{ backgroundColor: Colors.Blue }}
-            onPress={() => { navigation.navigate('DeliveryList') }}
-          />
-
-          <ButtonInformation />
-        </View>
-
+        <ButtonNotifications
+          title='Solicitudes de venta'
+          number={5}
+          onPress={() => { navigation.navigate('BuyerRequest') }}
+        />
+        <ButtonNotifications
+          title='Entregas'
+          number={5}
+          style={{ backgroundColor: Colors.Blue, marginRight: 30 }}
+          onPress={() => { navigation.navigate('DeliveryList') }}
+        />
+        <ButtonInformation />
       </View>
 
       <View style={styles.contSearch}>
@@ -187,22 +189,19 @@ function BuyerPrincipal({ navigation }: Props) {
 export default function Principal({ navigation, route }: Props) {
   const insets = useSafeAreaInsets();
 
-  const [role, setRole] = useState<string | null>(null);
+  const { getUserInformation } = useAuth();
 
-  useEffect(() => {
+  const [role, setRole] = useState(null);
 
-    const getSecretToken = async () => {
-      try {
-        let result = await SecureStore.getItemAsync('role');
-        setRole(result);
-      } catch (error: any) {
-        alert(error.message);
+  useFocusEffect(
+    React.useCallback(() => {
+      const loadUser = async () => {
+        const result = await getUserInformation!();
+        setRole(result.role_id);
       }
-    }
-
-    getSecretToken();
-
-  }, [])
+      loadUser();
+    }, [])
+  );
 
 
   return (
@@ -210,6 +209,12 @@ export default function Principal({ navigation, route }: Props) {
       paddingTop: Platform.OS === 'ios' ? insets.top : insets.top + 10,
     }}>
       {
+        role === 1 &&
+        <SellerPrincipal navigation={navigation} route={route} />
+      }
+
+      {
+        role === 2 &&
         <BuyerPrincipal navigation={navigation} route={route} />
       }
     </ScreenContainer>

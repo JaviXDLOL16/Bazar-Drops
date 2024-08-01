@@ -50,7 +50,9 @@ export const AuthProvider = ({ children }: any) => {
         try {
             const userId = await SecureStore.getItemAsync('userId');
             if (userId !== null) {
-                return await service.getUserById(parseInt(userId));
+                const user = await service.getUserById(parseInt(userId));
+                console.log(user);
+                return user;
             } else {
                 return { error: true, msg: "User ID is null" };
             }
@@ -70,6 +72,8 @@ export const AuthProvider = ({ children }: any) => {
     const login = async (user: LoginUser) => {
         try {
             const result = await service.login(user);
+
+            console.log(result);
 
             setAuthState({
                 userId: result.user,

@@ -19,14 +19,14 @@ function RegisterForm({ tabToLogin }: { tabToLogin: () => void }) {
         email: '',
         password: '',
         name: '',
-        phoneNumber: '',
-        accountType: undefined,
+        cellphone: '',
+        role_id: undefined,
     });
 
     const handleRegister = async () => {
-        const { email, password, name, phoneNumber, accountType } = newUser;
+        const { email, password, name, cellphone, role_id } = newUser;
 
-        if (!email || !password || !name || !phoneNumber || !accountType) {
+        if (!email || !password || !name || !cellphone || !role_id) {
             Alert.alert('Error', 'Todos los campos son obligatorios');
             setLoading(false);
             return;
@@ -46,17 +46,16 @@ function RegisterForm({ tabToLogin }: { tabToLogin: () => void }) {
             return;
         }
 
-        /* const result = await onRegister!(newUser as RegisterUser);
-         if (result && result.error) {
-             setLoading(false);
-             alert(result.msg)
-         } else {
-             alert('Usuario registrado correctamente');
-             setLoading(false);
-             await onLogin!(newUser as RegisterUser);
-         }*/
+        const result = await onRegister!(newUser as RegisterUser);
+        if (result && result.error) {
+            setLoading(false);
+            alert(result.msg)
+        } else {
+            alert('Usuario registrado correctamente');
+            setLoading(false);
+            await onLogin!(newUser as RegisterUser);
+        }
 
-        navigation.navigate('Principal')
     };
 
     return (
@@ -73,8 +72,8 @@ function RegisterForm({ tabToLogin }: { tabToLogin: () => void }) {
                 />
 
                 <Input
-                    onChangeText={(value) => setNewUser({ ...newUser, phoneNumber: value })}
-                    value={newUser.phoneNumber}
+                    onChangeText={(value) => setNewUser({ ...newUser, cellphone: value })}
+                    value={newUser.cellphone}
                     loading={loading}
                     title='Número de celular'
                     requeriment='*Obligatorio'
@@ -108,8 +107,11 @@ function RegisterForm({ tabToLogin }: { tabToLogin: () => void }) {
                 <Text fontWeight='extrabold' style={styles.notRegistedText}>Tipo de cuenta</Text>
                 <View style={{ marginBottom: 20 }}>
                     <AccountRadioButtons
-                        value={newUser.accountType}
-                        onValueChange={(value) => setNewUser({ ...newUser, accountType: value })}
+                        value={newUser.role_id}
+                        onValueChange={(value) => {
+                            console.log(value);
+                            setNewUser({ ...newUser, role_id: value })
+                        }}
                     />
                 </View>
 
